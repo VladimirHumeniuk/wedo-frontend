@@ -1,26 +1,37 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbIconModule } from '@nebular/theme';
 
+// Modules
 import { SharedModule } from './shared/shared.module';
-import { HomeModule } from './modules/home/home.module';
+import { CoreModule } from './modules/core/core.module';
+
+// Layout components
+import { LayoutComponent } from './layout/layout.component';
+import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.component';
+
+// Components
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LayoutComponent,
+    NavigationBarComponent
   ],
   imports: [
-    SharedModule,
-    HomeModule,
-    BrowserModule,
     BrowserAnimationsModule,
-    NbThemeModule.forRoot({ name: 'default' }),
+    BrowserModule,
+    CoreModule,
+    NbButtonModule,
+    NbEvaIconsModule,
+    NbIconModule,
     NbLayoutModule,
-    NbEvaIconsModule
+    NbThemeModule.forRoot({ name: 'default' }),
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
