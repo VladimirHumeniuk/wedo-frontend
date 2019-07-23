@@ -1,0 +1,41 @@
+:host {
+  width: 100%;
+}
+
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigation-bar__toggle-menu {
+  display: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.navigation-bar__menu {
+  display: flex;
+  align-items: center;
+}
+
+.navigation-bar__menu-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation-bar__menu-item {
+  float: left;
+  padding: 0;
+
+  & ~ & {
+    margin-left: 20px;
+  }
+}
+
+.navigation-bar__logo {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: 700;
+}

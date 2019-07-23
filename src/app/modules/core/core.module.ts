@@ -2,20 +2,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { HomeRoutingModule } from './home-routing.module';
+import { CoreRoutingModule } from './core-routing.module';
 import { HomeComponent } from './pages/home/home.component';
+
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
-    HomeRoutingModule
+    CoreRoutingModule
   ],
   exports: [
     RouterModule
   ],
   providers: []
 })
-export class HomeModule { }
+export class CoreModule { }
