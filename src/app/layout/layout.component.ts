@@ -8,8 +8,8 @@ import { Router, Event, NavigationEnd } from '@angular/router';
 })
 export class LayoutComponent implements OnInit {
 
-  public needHeader: boolean = true
-  private noHeaderRoutes: Array<string> = ['sign-in', 'sign-up']
+  public needNavigation: boolean
+  private noNavigationRoutes: Array<string> = ['sign-in', 'sign-up']
 
   constructor(
     protected router: Router
@@ -19,8 +19,10 @@ export class LayoutComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         const currentUrl = event.url.substr(1)
 
-        if (this.noHeaderRoutes.indexOf(currentUrl) > -1) {
-          this.needHeader = false
+        if (this.noNavigationRoutes.indexOf(currentUrl) > -1) {
+          this.needNavigation = false
+        } else {
+          this.needNavigation = true
         }
       }
     })

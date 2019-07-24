@@ -1,6 +1,7 @@
 <nb-layout>
-  <nb-layout-header *ngIf="needHeader">
-    <wd-navigation-bar>Navigation</wd-navigation-bar>
+  <nb-layout-header>
+    <wd-navigation-bar *ngIf="needNavigation">Navigation</wd-navigation-bar>
+    <wd-go-back-bar *ngIf="!needNavigation"></wd-go-back-bar>
   </nb-layout-header>
 
   <nb-layout-column>

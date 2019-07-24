@@ -3,7 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbButtonModule,
+  NbIconModule
+} from '@nebular/theme';
 
 // Modules
 import { SharedModule } from './shared/shared.module';
@@ -15,12 +20,14 @@ import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.c
 
 // Components
 import { AppComponent } from './app.component';
+import { GoBackBarComponent } from './layout/go-back-bar/go-back-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    GoBackBarComponent
   ],
   imports: [
     BrowserAnimationsModule,
