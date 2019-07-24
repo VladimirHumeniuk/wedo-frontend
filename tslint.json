@@ -12,13 +12,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "ido",
+      "wd",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "ido",
+      "wd",
       "kebab-case"
     ],
     "import-blacklist": [

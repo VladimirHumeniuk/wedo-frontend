@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ido-layout',
+  selector: 'wd-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
