@@ -1,10 +1,6 @@
 <wd-auth-form heading="Sign Up">
-  <form>
-    <div class="form-control-group">
-      <label for="email" class="form-control-group__label">Email</label>
-      <input id="email" name="email" type="text" nbInput>
-    </div>
-
-
+  <form [formGroup]="signUpForm">
+    <wd-input-group name="email" [parentForm]="signUpForm"></wd-input-group>
+    <wd-input-group name="password" [parentForm]="signUpForm"></wd-input-group>
   </form>
 </wd-auth-form>
