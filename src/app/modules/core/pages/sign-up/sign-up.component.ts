@@ -11,6 +11,17 @@ export class SignUpComponent implements OnInit {
   public signUpForm: FormGroup
   private emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
 
+  public options = [
+    {
+      value: "company",
+      title: "We are Company"
+    },
+    {
+      value: "freelancer",
+      title: "I'm a Freelancer"
+    }
+  ]
+
   constructor(
     private formBuilder: FormBuilder,
   ) { }
@@ -26,12 +37,28 @@ export class SignUpComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
         Validators.maxLength(24)
+      ]],
+      confirmPassword: ['', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(24)
+      ]],
+      accountType: ['', [
+        Validators.required
+      ]],
+      termsAndConditions: ['', [
+        Validators.required
       ]]
     })
   }
 
+  onChange() {
+    this.signUpForm.valueChanges.subscribe(val => console.log(val))
+  }
+
   ngOnInit() {
     this.formInit()
+    this.onChange()
   }
 
 }

@@ -9,6 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class InputGroupComponent {
 
   @Input() name: string
+  @Input() label: string
   @Input() type: string
   @Input() placeholder: string
   @Input() parentForm: FormGroup

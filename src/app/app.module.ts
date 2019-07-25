@@ -20,14 +20,12 @@ import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.c
 
 // Components
 import { AppComponent } from './app.component';
-import { GoBackBarComponent } from './layout/go-back-bar/go-back-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LayoutComponent,
-    NavigationBarComponent,
-    GoBackBarComponent
+    NavigationBarComponent
   ],
   imports: [
     BrowserAnimationsModule,

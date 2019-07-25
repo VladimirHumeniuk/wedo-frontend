@@ -1,6 +1,47 @@
 <wd-auth-form heading="Sign Up">
   <form [formGroup]="signUpForm">
-    <wd-input-group name="email" [parentForm]="signUpForm"></wd-input-group>
-    <wd-input-group name="password" [parentForm]="signUpForm"></wd-input-group>
+
+    <wd-form-item>
+      <wd-input-group
+      name="email"
+      [parentForm]="signUpForm"
+      placeholder="Email"></wd-input-group>
+    </wd-form-item>
+
+    <wd-form-item>
+      <wd-input-group
+      name="password"
+      [parentForm]="signUpForm"
+      placeholder="Password"></wd-input-group>
+    </wd-form-item>
+
+    <wd-form-item>
+      <wd-input-group
+      name="confirmPassword"
+      label="Repeat password"
+      [parentForm]="signUpForm"
+      placeholder="Confirm password"></wd-input-group>
+    </wd-form-item>
+
+    <wd-form-item>
+      <wd-select-group
+      name="accountType"
+      label="Account type"
+      [options]="options"
+      [parentForm]="signUpForm"
+      placeholder="Who you are"></wd-select-group>
+    </wd-form-item>
+
+    <wd-form-item>
+      <nb-checkbox
+      name="termsAndConditions"
+      formControlName="termsAndConditions">
+        Agree to <a href="#">Terms & Conditions</a>
+      </nb-checkbox>
+    </wd-form-item>
+
+    <wd-form-item>
+      <button nbButton hero fullWidth size="large" type="submit">Create account</button>
+    </wd-form-item>
   </form>
 </wd-auth-form>

@@ -1,0 +1,27 @@
+.go-back-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.go-back-bar__button {
+  display: flex;
+  align-items: center;
+}
+
+.go-back-bar__icon {
+  font-size: 2rem;
+}
+
+.auth-form {
+  height: 100%;
+}
+
+.auth-form__body {
+  max-width: 35rem;
+  margin: auto;
+}
+
+.auth-form__heading {
+  text-align: center;
+}

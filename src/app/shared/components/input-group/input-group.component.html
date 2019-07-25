@@ -2,7 +2,7 @@
   <label
   class="input-group__label"
   for="{{name}}">
-    {{name | titlecase}}
+    {{label ? label : (name | titlecase)}}
   </label>
 
   <input
@@ -12,6 +12,7 @@
   type="{{type}}"
   placeholder="{{placeholder}}"
   [formControlName]="name"
+  fieldSize="large"
   nbInput
   fullWidth>
 </div>

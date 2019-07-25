@@ -1,0 +1,20 @@
+<div class="select-group" [formGroup]="parentForm">
+  <label
+  class="select-group__label"
+  for="{{name}}">
+    {{label ? label : (name | titlecase)}}
+  </label>
+
+  <nb-select
+  id="{{name}}"
+  placeholder="{{placeholder}}"
+  [formControlName]="name"
+  size="large"
+  fullWidth>
+    <nb-option
+    *ngFor="let option of options"
+    value="{{option.value}}">
+      {{option.title}}
+    </nb-option>
+  </nb-select>
+</div>

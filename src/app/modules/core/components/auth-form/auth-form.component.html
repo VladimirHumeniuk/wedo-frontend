@@ -1,7 +1,14 @@
-<nb-card>
-  <nb-card-body>
-    <h1>{{heading}}</h1>
+<nb-card class="auth-form">
+  <nb-card-header class="go-back-bar">
+    <a class="go-back-bar__button" routerLink='/'>
+      <nb-icon class="go-back-bar__icon" icon="arrow-back-outline"></nb-icon>
+    </a>
+  </nb-card-header>
 
-    <ng-content></ng-content>
+  <nb-card-body>
+    <div class="auth-form__body">
+      <h1 class="auth-form__heading">{{heading}}</h1>
+      <ng-content></ng-content>
+    </div>
   </nb-card-body>
 </nb-card>
