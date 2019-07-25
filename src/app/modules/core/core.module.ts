@@ -7,7 +7,8 @@ import {
   NbCardModule,
   NbIconModule,
   NbCheckboxModule,
-  NbButtonModule
+  NbButtonModule,
+  NbIconModule
 } from '@nebular/theme';
 
 import { CoreRoutingModule } from './core-routing.module';
@@ -32,7 +33,8 @@ import { AuthFormComponent } from './components/auth-form/auth-form.component';
     NbCardModule,
     NbIconModule,
     NbCheckboxModule,
-    NbButtonModule
+    NbButtonModule,
+    NbIconModule
    ],
   exports: [
     RouterModule
