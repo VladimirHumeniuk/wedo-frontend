@@ -1,0 +1,20 @@
+<div class="input-group" [formGroup]="parentForm">
+  <label
+  class="input-group__label"
+  for="{{name}}">
+    {{label ? label : (name | titlecase)}}
+  </label>
+
+  <input
+  id="{{name}}"
+  class="input-group__input"
+  name="{{name}}"
+  type="{{type}}"
+  placeholder="{{placeholder}}"
+  [formControlName]="name"
+  fieldSize="large"
+  status="{{status}}"
+  nbInput
+  [attr.disabled]="disabled"
+  fullWidth>
+</div>

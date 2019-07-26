@@ -1,0 +1,36 @@
+.go-back-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.go-back-bar__button {
+  display: flex;
+  align-items: center;
+}
+
+.go-back-bar__icon {
+  font-size: 2rem;
+}
+
+.auth-form {
+  height: 100%;
+  margin: 0;
+}
+
+.auth-form__container {
+  display: flex;
+  width: 100%;
+}
+
+.auth-form__body {
+  max-width: 35rem;
+  width: 100%;
+  margin: auto;
+}
+
+.auth-form__heading {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}

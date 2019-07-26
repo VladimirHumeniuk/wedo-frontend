@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, Event, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'wd-layout',
@@ -7,9 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
 
-  constructor() { }
+  public needNavigation: boolean
+  private noNavigationRoutes: Array<string> = ['sign-in', 'sign-up']
 
-  ngOnInit() {
+  constructor(
+    protected router: Router
+  ) {
+
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        const currentUrl = event.url.substr(1)
+
+        if (this.noNavigationRoutes.indexOf(currentUrl) > -1) {
+          this.needNavigation = false
+        } else {
+          this.needNavigation = true
+        }
+      }
+    })
   }
+
+  ngOnInit() {}
 
 }

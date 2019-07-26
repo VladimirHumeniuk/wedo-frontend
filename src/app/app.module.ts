@@ -3,7 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbIconModule } from '@nebular/theme';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbButtonModule,
+  NbIconModule
+} from '@nebular/theme';
 
 // Modules
 import { SharedModule } from './shared/shared.module';
