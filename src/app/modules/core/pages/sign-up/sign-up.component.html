@@ -42,7 +42,6 @@
       [status]="getInputStatus('confirmPassword')"
       label="Repeat password"
       [parentForm]="signUpForm"
-      [disabled]="signUpForm.controls['password'].value.length === 0"
       placeholder="Confirm password"></wd-input-group>
       <wd-form-explain *ngIf="
       signUpForm.controls['confirmPassword'].errors &&
