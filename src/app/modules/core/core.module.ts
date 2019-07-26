@@ -2,14 +2,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFirestore } from '@angular/fire/firestore';
 
 import {
   NbCardModule,
   NbIconModule,
   NbCheckboxModule,
   NbButtonModule,
-  NbIconModule
+  NbSpinnerModule
 } from '@nebular/theme';
+
+import { environment } from '../../../environments/environment';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { HomeComponent } from './pages/home/home.component';
@@ -25,6 +30,8 @@ import { AuthFormComponent } from './components/auth-form/auth-form.component';
     AuthFormComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
@@ -34,11 +41,13 @@ import { AuthFormComponent } from './components/auth-form/auth-form.component';
     NbIconModule,
     NbCheckboxModule,
     NbButtonModule,
-    NbIconModule
+    NbSpinnerModule
    ],
   exports: [
     RouterModule
   ],
-  providers: []
+  providers: [
+    AngularFirestore
+  ]
 })
 export class CoreModule { }

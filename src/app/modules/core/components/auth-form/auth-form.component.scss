@@ -14,15 +14,23 @@
 }
 
 .auth-form {
-  height: calc(100% - 2 * 2rem);
+  height: 100%;
   margin: 0;
+}
+
+.auth-form__container {
+  display: flex;
+  width: 100%;
 }
 
 .auth-form__body {
   max-width: 35rem;
+  width: 100%;
   margin: auto;
 }
 
 .auth-form__heading {
   text-align: center;
+  margin-top: 0;
+  margin-bottom: 2rem;
 }

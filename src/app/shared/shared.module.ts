@@ -10,12 +10,16 @@ import {
 import { InputGroupComponent } from './components/input-group/input-group.component';
 import { SelectGroupComponent } from './components/select-group/select-group.component';
 import { FormItemComponent } from './components/form-item/form-item.component';
+import { KeysPipe } from './pipes/keys.pipe';
+import { FormExplainComponent } from './components/form-explain/form-explain.component';
 
 @NgModule({
   declarations: [
     InputGroupComponent,
     SelectGroupComponent,
-    FormItemComponent
+    FormItemComponent,
+    KeysPipe,
+    FormExplainComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,9 @@ import { FormItemComponent } from './components/form-item/form-item.component';
   exports: [
     InputGroupComponent,
     SelectGroupComponent,
-    FormItemComponent
+    FormItemComponent,
+    FormExplainComponent,
+    KeysPipe
   ]
 })
 export class SharedModule { }

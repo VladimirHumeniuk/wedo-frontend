@@ -1,47 +1,102 @@
 <wd-auth-form heading="Sign Up">
-  <form [formGroup]="signUpForm">
+  <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
 
     <wd-form-item>
       <wd-input-group
       name="email"
+      type="email"
+      [status]="getInputStatus('email')"
       [parentForm]="signUpForm"
       placeholder="Email"></wd-input-group>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['email'].errors &&
+      signUpForm.controls['email'].dirty &&
+      signUpForm.controls['password'].touched"
+      controlName="email"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signUpForm.controls['email'].errors"
+      ></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>
       <wd-input-group
       name="password"
+      type="password"
+      [status]="getInputStatus('password')"
       [parentForm]="signUpForm"
       placeholder="Password"></wd-input-group>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['password'].errors &&
+      signUpForm.controls['password'].dirty &&
+      signUpForm.controls['password'].touched"
+      controlName="password"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signUpForm.controls['password'].errors"
+      ></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>
       <wd-input-group
       name="confirmPassword"
+      type="password"
+      [status]="getInputStatus('confirmPassword')"
       label="Repeat password"
       [parentForm]="signUpForm"
+      [disabled]="signUpForm.controls['password'].value.length === 0"
       placeholder="Confirm password"></wd-input-group>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['confirmPassword'].errors &&
+      signUpForm.controls['confirmPassword'].dirty &&
+      signUpForm.controls['password'].touched"
+      controlName="confirmPassword"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signUpForm.controls['confirmPassword'].errors"
+      ></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>
       <wd-select-group
       name="accountType"
       label="Account type"
-      [options]="options"
+      [status]="getInputStatus('accountType')"
+      [options]="accountTypes"
       [parentForm]="signUpForm"
       placeholder="Who you are"></wd-select-group>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['accountType'].errors &&
+      signUpForm.controls['accountType'].dirty"
+      controlName="accountType"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signUpForm.controls['accountType'].errors"
+      ></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>
       <nb-checkbox
-      name="termsAndConditions"
-      formControlName="termsAndConditions">
-        Agree to <a href="#">Terms & Conditions</a>
+      name="acceptTermsAndConditions"
+      formControlName="acceptTermsAndConditions">
+        Agree to <a href="#" class="text-decoration-none">Terms & Conditions</a>
       </nb-checkbox>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['acceptTermsAndConditions'].errors &&
+      signUpForm.controls['acceptTermsAndConditions'].dirty"
+      controlName="acceptTermsAndConditions"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signUpForm.controls['acceptTermsAndConditions'].errors"
+      ></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>
-      <button nbButton hero fullWidth size="large" type="submit">Create account</button>
+      <button
+      nbButton
+      hero
+      fullWidth
+      [disabled]="signUpForm.invalid"
+      [nbSpinner]="loading"
+      size="large"
+      type="submit">
+        Create account
+      </button>
     </wd-form-item>
   </form>
 
@@ -54,5 +109,5 @@
     </p>
   </div>
 
-  <p class="text-center">Already have an account? <a href="#">Sign In</a></p>
+  <p class="text-center">Already have an account? <a href="#" class="text-decoration-none">Sign In</a></p>
 </wd-auth-form>

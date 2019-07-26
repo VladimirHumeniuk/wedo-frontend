@@ -15,6 +15,7 @@ export class SelectGroupComponent {
 
   @Input() name: string
   @Input() label: string
+  @Input() status: string
   @Input() placeholder: string
   @Input() parentForm: FormGroup
   @Input() options: SelectOption

@@ -11,8 +11,10 @@ export class InputGroupComponent {
   @Input() name: string
   @Input() label: string
   @Input() type: string
+  @Input() status: string
   @Input() placeholder: string
   @Input() parentForm: FormGroup
+  @Input() disabled: boolean
 
   constructor() { }
 

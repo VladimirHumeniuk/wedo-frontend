@@ -24,19 +24,32 @@ export class AuthService {
     })
   }
 
-  public createUserWithEmailAndPassword(email: string, password: string): Promise<void> {
+  public createUserWithEmailAndPassword(formData: any): Promise<void> {
+    const {
+      email,
+      accountType,
+      acceptTermsAndConditions,
+      password
+    } = formData
+
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((response: firebase.auth.UserCredential) => {
-        const user = response.user
+        const user: User = {
+          uid: response.user.uid,
+          email: email,
+          accountType: accountType,
+          acceptTermsAndConditions: acceptTermsAndConditions
+        }
 
-        console.log(user)
+        this.sendEmailVerification()
+        this.setUserData(user)
       }).catch(error => { throw error })
   }
 
   private setUserData(user: User): Promise<void> {
     const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${user.uid}`)
 
-    return userLink.set(userLink, { merge: true })
+    return userLink.set(user, { merge: true })
   }
 
   public sendEmailVerification(): Promise<void> {
