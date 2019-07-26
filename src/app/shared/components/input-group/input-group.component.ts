@@ -14,7 +14,6 @@ export class InputGroupComponent {
   @Input() status: string
   @Input() placeholder: string
   @Input() parentForm: FormGroup
-  @Input() disabled: boolean
 
   constructor() { }
 
