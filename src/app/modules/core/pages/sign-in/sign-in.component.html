@@ -1,0 +1,45 @@
+<wd-auth-form heading="Sign In">
+  <form [formGroup]="signInForm">
+
+    <wd-form-item>
+      <wd-input-group
+      name="email"
+      type="email"
+      [parentForm]="signInForm"
+      placeholder="Email"></wd-input-group>
+      <wd-form-explain *ngIf="
+      signInForm.controls['email'].errors &&
+      signInForm.controls['email'].dirty &&
+      signInForm.controls['password'].touched"
+      controlName="email"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signInForm.controls['email'].errors"
+      ></wd-form-explain>
+    </wd-form-item>
+
+    <wd-form-item>
+      <wd-input-group
+      name="password"
+      type="password"
+      [parentForm]="signInForm"
+      placeholder="Password"></wd-input-group>
+      <wd-form-explain *ngIf="
+      signInForm.controls['password'].errors &&
+      signInForm.controls['password'].dirty &&
+      signInForm.controls['password'].touched"
+      controlName="password"
+      [errorsText]="explainMessages"
+      [errorsCodes]="signInForm.controls['password'].errors"
+      ></wd-form-explain>
+    </wd-form-item>
+
+    <wd-form-item>
+      <nb-checkbox
+      name="rememberUser"
+      formControlName="rememberUser">
+        Remember me
+      </nb-checkbox>
+    </wd-form-item>
+
+  </form>
+</wd-auth-form>

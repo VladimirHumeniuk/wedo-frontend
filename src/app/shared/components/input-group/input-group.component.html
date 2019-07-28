@@ -13,7 +13,9 @@
   placeholder="{{placeholder}}"
   [formControlName]="name"
   fieldSize="large"
-  status="{{status}}"
+  [status]="status"
+  (blur)="getStatus()"
+  (focus)="resetStatus()"
   nbInput
   fullWidth>
 </div>

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { FormControlService } from '../../services';
 
 class SelectOption {
   value: string;
@@ -15,11 +16,22 @@ export class SelectGroupComponent {
 
   @Input() name: string
   @Input() label: string
-  @Input() status: string
   @Input() placeholder: string
   @Input() parentForm: FormGroup
   @Input() options: SelectOption
 
-  constructor() { }
+  public status: string
+
+  public getStatus(): void {
+    this.status = this.formControlService.getControlStatus(this.name, this.parentForm)
+  }
+
+  public resetStatus(): void {
+    this.status = null
+  }
+
+  constructor(
+    public formControlService: FormControlService
+  ) { }
 
 }

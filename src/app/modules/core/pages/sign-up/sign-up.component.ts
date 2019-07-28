@@ -81,18 +81,17 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  public getInputStatus(control: string): string {
-    const validated = this.signUpForm.controls[control].dirty && this.signUpForm.controls[control].touched
-
-    if (validated) {
-      if (this.signUpForm.controls[control].errors) {
-        return 'danger'
+  public passwordOnChange() {
+    const confirmPassword = this.signUpForm.get('confirmPassword')
+    this.signUpForm.get('password').valueChanges.subscribe((value: string) => {
+      if (value.length >= 6) {
+        confirmPassword.enable()
+      } else if (value.length === 0) {
+        confirmPassword.reset({value: '', disabled: true})
+      } else {
+        confirmPassword.disable()
       }
-
-      if (this.signUpForm.controls[control].valid) {
-        return 'success'
-      }
-    }
+    })
   }
 
   public signUp(): boolean {
@@ -118,6 +117,8 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.formInit()
+    this.signUpForm.get('confirmPassword').disable()
+    this.passwordOnChange()
   }
 
 }
