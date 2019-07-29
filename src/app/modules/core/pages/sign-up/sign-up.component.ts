@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { MustMatch } from 'src/app/shared/helpers';
+import { emailRegexp } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-sign-up',
@@ -11,7 +12,7 @@ import { MustMatch } from 'src/app/shared/helpers';
 export class SignUpComponent implements OnInit {
 
   public signUpForm: FormGroup
-  private emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  private emailRegex: RegExp = emailRegexp
 
   public loading: boolean = false
 
@@ -31,6 +32,7 @@ export class SignUpComponent implements OnInit {
   public explainMessages = {
     email: {
       required: "Email is required",
+      inUse: "The email address is already in use by another account",
       pattern: "Email address is not valid"
     },
     password: {
@@ -81,18 +83,20 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  public getInputStatus(control: string): string {
-    const validated = this.signUpForm.controls[control].dirty && this.signUpForm.controls[control].touched
+  public passwordOnChange() {
+    const confirmPassword = this.signUpForm.get('confirmPassword')
+    this.signUpForm.get('password').valueChanges.subscribe((value: string) => {
 
-    if (validated) {
-      if (this.signUpForm.controls[control].errors) {
-        return 'danger'
+      if (value) {
+        if (value.length >= 6) {
+          confirmPassword.enable()
+        } else if (value.length === 0) {
+          confirmPassword.reset({value: '', disabled: true})
+        } else {
+          confirmPassword.disable()
+        }
       }
-
-      if (this.signUpForm.controls[control].valid) {
-        return 'success'
-      }
-    }
+    })
   }
 
   public signUp(): boolean {
@@ -106,10 +110,23 @@ export class SignUpComponent implements OnInit {
       const formData = this.signUpForm.value
 
       this.authService.createUserWithEmailAndPassword(formData)
-        .then(() => this.loading = false)
+        .then(() => {
+          this.loading = false
+          this.signUpForm.reset()
+        })
         .catch(error => {
           this.loading = false
-          console.log(error)
+
+          if (error.code === 'auth/email-already-in-use') {
+            const control = this.signUpForm.get('email')
+
+            control.setErrors({
+              'inUse': {
+                message: this.explainMessages.email.inUse
+              }})
+          }
+
+          throw Error(error)
         })
     }
 
@@ -118,6 +135,8 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.formInit()
+    this.signUpForm.get('confirmPassword').disable()
+    this.passwordOnChange()
   }
 
 }

@@ -43,6 +43,10 @@ export class AuthService {
 
         this.sendEmailVerification()
         this.setUserData(user)
+
+        this.ngZone.run(() => {
+          this.router.navigate(['/'])
+        })
       }).catch(error => { throw error })
   }
 
@@ -65,7 +69,9 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
-  public signInWithEmailAndPassword(email: string, password: string): Promise<void> {
+  public signInWithEmailAndPassword(formData: any): Promise<void> {
+    const { email, password, rememberUser } = formData
+
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.ngZone.run(() => {

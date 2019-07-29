@@ -5,13 +5,12 @@
       <wd-input-group
       name="email"
       type="email"
-      [status]="getInputStatus('email')"
       [parentForm]="signUpForm"
       placeholder="Email"></wd-input-group>
       <wd-form-explain *ngIf="
       signUpForm.controls['email'].errors &&
       signUpForm.controls['email'].dirty &&
-      signUpForm.controls['password'].touched"
+      signUpForm.controls['email'].touched"
       controlName="email"
       [errorsText]="explainMessages"
       [errorsCodes]="signUpForm.controls['email'].errors"
@@ -22,7 +21,6 @@
       <wd-input-group
       name="password"
       type="password"
-      [status]="getInputStatus('password')"
       [parentForm]="signUpForm"
       placeholder="Password"></wd-input-group>
       <wd-form-explain *ngIf="
@@ -39,14 +37,13 @@
       <wd-input-group
       name="confirmPassword"
       type="password"
-      [status]="getInputStatus('confirmPassword')"
       label="Repeat password"
       [parentForm]="signUpForm"
       placeholder="Confirm password"></wd-input-group>
       <wd-form-explain *ngIf="
       signUpForm.controls['confirmPassword'].errors &&
       signUpForm.controls['confirmPassword'].dirty &&
-      signUpForm.controls['password'].touched"
+      signUpForm.controls['confirmPassword'].touched"
       controlName="confirmPassword"
       [errorsText]="explainMessages"
       [errorsCodes]="signUpForm.controls['confirmPassword'].errors"
@@ -57,7 +54,6 @@
       <wd-select-group
       name="accountType"
       label="Account type"
-      [status]="getInputStatus('accountType')"
       [options]="accountTypes"
       [parentForm]="signUpForm"
       placeholder="Who you are"></wd-select-group>
@@ -99,14 +95,7 @@
     </wd-form-item>
   </form>
 
-  <div class="social-login text-center">
-    <p>or enter with:</p>
-    <p class="social-login__icons">
-      <a href="#"><nb-icon icon="google"></nb-icon></a>
-      <a href="#"><nb-icon icon="facebook"></nb-icon></a>
-      <a href="#"><nb-icon icon="twitter"></nb-icon></a>
-    </p>
-  </div>
+  <wd-login-methods></wd-login-methods>
 
-  <p class="text-center">Already have an account? <a href="#" class="text-decoration-none">Sign In</a></p>
+  <p class="text-center">Already have an account? <a routerLink='/sign-in' class="text-decoration-none">Login</a></p>
 </wd-auth-form>

@@ -1,9 +1,13 @@
 <div class="input-group" [formGroup]="parentForm">
-  <label
-  class="input-group__label"
-  for="{{name}}">
-    {{label ? label : (name | titlecase)}}
-  </label>
+  <div class="input-group__header">
+    <label
+    class="input-group__label"
+    for="{{name}}">
+      {{label ? label : (name | titlecase)}}
+    </label>
+
+    <a *ngIf="helperTitle && helperLink" routerLink="{{helperLink}}" class="input-group__helper">{{helperTitle}}</a>
+  </div>
 
   <input
   id="{{name}}"
@@ -13,7 +17,9 @@
   placeholder="{{placeholder}}"
   [formControlName]="name"
   fieldSize="large"
-  status="{{status}}"
+  [status]="status"
+  (blur)="getStatus()"
+  (focus)="resetStatus()"
   nbInput
   fullWidth>
 </div>

@@ -10,7 +10,9 @@
   placeholder="{{placeholder}}"
   [formControlName]="name"
   size="large"
-  status={{status}}
+  [status]="status"
+  (blur)="getStatus()"
+  (focus)="resetStatus()"
   fullWidth>
     <nb-option
     *ngFor="let option of options"
