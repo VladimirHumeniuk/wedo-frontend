@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { MustMatch } from 'src/app/shared/helpers';
+import { emailRegexp } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-sign-up',
@@ -11,7 +12,7 @@ import { MustMatch } from 'src/app/shared/helpers';
 export class SignUpComponent implements OnInit {
 
   public signUpForm: FormGroup
-  private emailRegex: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  private emailRegex: RegExp = emailRegexp
 
   public loading: boolean = false
 
@@ -31,6 +32,7 @@ export class SignUpComponent implements OnInit {
   public explainMessages = {
     email: {
       required: "Email is required",
+      inUse: "The email address is already in use by another account",
       pattern: "Email address is not valid"
     },
     password: {
@@ -105,10 +107,23 @@ export class SignUpComponent implements OnInit {
       const formData = this.signUpForm.value
 
       this.authService.createUserWithEmailAndPassword(formData)
-        .then(() => this.loading = false)
+        .then(() => {
+          this.loading = false
+          this.signUpForm.reset()
+        })
         .catch(error => {
           this.loading = false
-          console.log(error)
+
+          if (error.code === 'auth/email-already-in-use') {
+            const control = this.signUpForm.get('email')
+
+            control.setErrors({
+              'inUse': {
+                message: this.explainMessages.email.inUse
+              }})
+          }
+
+          throw Error(error)
         })
     }
 

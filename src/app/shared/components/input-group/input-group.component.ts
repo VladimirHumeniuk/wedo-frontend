@@ -14,6 +14,8 @@ export class InputGroupComponent implements OnInit {
   @Input() type: string
   @Input() placeholder: string
   @Input() parentForm: FormGroup
+  @Input() helperLink: string
+  @Input() helperTitle: string
 
   public status: string
 

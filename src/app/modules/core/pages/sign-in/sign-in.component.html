@@ -1,5 +1,5 @@
 <wd-auth-form heading="Sign In">
-  <form [formGroup]="signInForm">
+  <form [formGroup]="signInForm" (ngSubmit)="signIn()">
 
     <wd-form-item>
       <wd-input-group
@@ -22,6 +22,8 @@
       name="password"
       type="password"
       [parentForm]="signInForm"
+      helperTitle="Forgot Password?"
+      helperLink="/reset-password"
       placeholder="Password"></wd-input-group>
       <wd-form-explain *ngIf="
       signInForm.controls['password'].errors &&
@@ -41,5 +43,21 @@
       </nb-checkbox>
     </wd-form-item>
 
+    <wd-form-item>
+      <button
+      nbButton
+      hero
+      fullWidth
+      [disabled]="signInForm.invalid"
+      [nbSpinner]="loading"
+      size="large"
+      type="submit">
+        Sign In
+      </button>
+    </wd-form-item>
   </form>
+
+  <wd-login-methods></wd-login-methods>
+
+  <p class="text-center">Don't have an account? <a routerLink='/sign-up' class="text-decoration-none">Register</a></p>
 </wd-auth-form>
