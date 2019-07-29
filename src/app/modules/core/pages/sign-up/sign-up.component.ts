@@ -86,12 +86,15 @@ export class SignUpComponent implements OnInit {
   public passwordOnChange() {
     const confirmPassword = this.signUpForm.get('confirmPassword')
     this.signUpForm.get('password').valueChanges.subscribe((value: string) => {
-      if (value.length >= 6) {
-        confirmPassword.enable()
-      } else if (value.length === 0) {
-        confirmPassword.reset({value: '', disabled: true})
-      } else {
-        confirmPassword.disable()
+
+      if (value) {
+        if (value.length >= 6) {
+          confirmPassword.enable()
+        } else if (value.length === 0) {
+          confirmPassword.reset({value: '', disabled: true})
+        } else {
+          confirmPassword.disable()
+        }
       }
     })
   }

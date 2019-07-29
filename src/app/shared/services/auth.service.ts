@@ -43,6 +43,10 @@ export class AuthService {
 
         this.sendEmailVerification()
         this.setUserData(user)
+
+        this.ngZone.run(() => {
+          this.router.navigate(['/'])
+        })
       }).catch(error => { throw error })
   }
 

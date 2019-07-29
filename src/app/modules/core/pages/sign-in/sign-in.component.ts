@@ -56,7 +56,10 @@ export class SignInComponent implements OnInit {
       const formData = this.signInForm.value
 
       this.authService.signInWithEmailAndPassword(formData)
-        .then(() => this.loading = false)
+        .then(() => {
+          this.loading = false
+          this.signInForm.reset()
+        })
         .catch(error => {
           this.loading = false
 
