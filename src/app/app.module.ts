@@ -13,6 +13,7 @@ import {
 // Modules
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './modules/core/core.module';
+import {  }
 
 // Layout components
 import { LayoutComponent } from './layout/layout.component';
@@ -20,6 +21,7 @@ import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.c
 
 // Components
 import { AppComponent } from './app.component';
+import { GraphQLModule } from './modules/graphql/graphql.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     BrowserModule,
     CoreModule,
+    GraphQLModule,
     NbButtonModule,
     NbEvaIconsModule,
     NbIconModule,
