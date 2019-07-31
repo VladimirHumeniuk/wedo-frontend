@@ -1,0 +1,20 @@
+<wd-auth-form heading="Thank you for registering!">
+  <wd-form-item class="text-center">
+    <p>
+      We have sent a confirmation email to <strong>user email</strong>
+    </p>
+    <p>
+      Please check your email and click on the link to verify your email address.
+    </p>
+    <p>
+      If it doesn’t appear within a few minutes, check your spam folder.
+    </p>
+  </wd-form-item>
+  <wd-form-item class="text-center">
+    <button nbButton hero (click)="resendEmail()" [disabled]="holdTimer">
+      {{holdTimer ? 'Re-send again after:' : 'Re-send email'}}
+      <br *ngIf="holdTimer"/>
+      <countdown *ngIf="holdTimer" [config]="{leftTime: 5, demand: !holdTimer, template: '$!h!:$!m!:$!s!'}" (finished)="holdTimer = !holdTimer"></countdown>
+    </button>
+  </wd-form-item>
+</wd-auth-form>

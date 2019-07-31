@@ -75,7 +75,7 @@ export class AuthService {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.ngZone.run(() => {
-          this.router.navigate(['/'])
+          this.router.navigate(['/verify-email'])
         })
       }).catch(error => { throw error })
   }
