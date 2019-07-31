@@ -6,6 +6,8 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestore } from '@angular/fire/firestore';
 
+import { CountdownModule } from 'ngx-countdown';
+
 import {
   NbCardModule,
   NbIconModule,
@@ -24,6 +26,11 @@ import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
+import { AccountComponent } from './pages/account/account.component';
+import { EmailVerifiedComponent } from './pages/email-verified/email-verified.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { RequestPasswordComponent } from './pages/request-password/request-password.component';
+import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -31,11 +38,17 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     SignUpComponent,
     AuthFormComponent,
     SignInComponent,
-    LoginMethodsComponent
+    LoginMethodsComponent,
+    AccountComponent,
+    EmailVerifiedComponent,
+    ResetPasswordComponent,
+    RequestPasswordComponent,
+    VerifyEmailComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    CountdownModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
@@ -46,7 +59,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     NbCheckboxModule,
     NbButtonModule,
     NbSpinnerModule
-   ],
+  ],
   exports: [
     RouterModule
   ],

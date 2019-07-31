@@ -4,6 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { AccountComponent } from './pages/account/account.component';
+import { RequestPasswordComponent } from './pages/request-password/request-password.component';
+import { EmailVerifiedComponent } from './pages/email-verified/email-verified.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
 const routes: Routes = [
   {
@@ -17,6 +22,28 @@ const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent
+  },
+  {
+    path: 'verify-email',
+    component: VerifyEmailComponent
+  },
+  {
+    path: 'account',
+    component: AccountComponent,
+    children: [
+      {
+        path: 'request-password',
+        component: RequestPasswordComponent
+      },
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent
+      },
+      {
+        path: 'email-verified',
+        component: EmailVerifiedComponent
+      }
+    ]
   }
 ];
 
