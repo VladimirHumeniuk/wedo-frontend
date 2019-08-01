@@ -9,17 +9,28 @@
     <a *ngIf="helperTitle && helperLink" routerLink="{{helperLink}}" class="input-group__helper">{{helperTitle}}</a>
   </div>
 
-  <input
-  id="{{name}}"
+  <div
   class="input-group__input"
-  name="{{name}}"
-  type="{{type}}"
-  placeholder="{{placeholder}}"
-  [formControlName]="name"
-  fieldSize="large"
-  [status]="status"
-  (blur)="getStatus()"
-  (focus)="resetStatus()"
-  nbInput
-  fullWidth>
+  [class.input-group__input--private]='isPrivate'>
+    <input
+    id="{{name}}"
+    name="{{name}}"
+    type="{{type}}"
+    placeholder="{{placeholder}}"
+    [formControlName]="name"
+    fieldSize="large"
+    [status]="status"
+    (blur)="getStatus()"
+    (focus)="resetStatus()"
+    nbInput
+    fullWidth>
+
+    <button
+    *ngIf="isPrivate"
+    class="input-group__private-toggler"
+    aria-hidden="true"
+    (click)="showPassword()">
+      <nb-icon class="input-group__private-icon" [icon]="passVisible ? 'eye-off-outline' : 'eye-outline'"></nb-icon>
+    </button>
+  </div>
 </div>
