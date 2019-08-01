@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   NbInputModule,
+  NbIconModule,
   NbSelectModule
 } from '@nebular/theme';
 
@@ -29,6 +30,7 @@ import { FormExplainComponent } from './components/form-explain/form-explain.com
     ReactiveFormsModule,
     NbInputModule,
     NbSelectModule,
+    NbIconModule
   ],
   exports: [
     InputGroupComponent,
