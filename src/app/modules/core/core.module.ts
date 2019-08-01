@@ -13,7 +13,8 @@ import {
   NbIconModule,
   NbCheckboxModule,
   NbButtonModule,
-  NbSpinnerModule
+  NbSpinnerModule,
+  NbAlertModule
 } from '@nebular/theme';
 
 import { environment } from '../../../environments/environment';
@@ -58,7 +59,8 @@ import { VerifyEmailComponent } from './pages/verify-email/verify-email.componen
     NbIconModule,
     NbCheckboxModule,
     NbButtonModule,
-    NbSpinnerModule
+    NbSpinnerModule,
+    NbAlertModule
   ],
   exports: [
     RouterModule

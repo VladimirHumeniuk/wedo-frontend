@@ -13,8 +13,8 @@ export class LayoutComponent implements OnInit {
     'sign-in',
     'sign-up',
     'verify-email',
+    'request-password',
     'account/email-verified',
-    'account/request-password',
     'account/reset-password'
   ]
 

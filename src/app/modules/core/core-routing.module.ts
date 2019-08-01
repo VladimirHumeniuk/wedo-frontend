@@ -28,13 +28,13 @@ const routes: Routes = [
     component: VerifyEmailComponent
   },
   {
+    path: 'request-password',
+    component: RequestPasswordComponent
+  },
+  {
     path: 'account',
     component: AccountComponent,
     children: [
-      {
-        path: 'request-password',
-        component: RequestPasswordComponent
-      },
       {
         path: 'reset-password',
         component: ResetPasswordComponent

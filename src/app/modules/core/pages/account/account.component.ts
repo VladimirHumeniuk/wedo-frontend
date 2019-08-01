@@ -20,8 +20,6 @@ export class AccountComponent implements OnInit {
   }
 
   private resolveMode(mode: string): void {
-    console.log('mode', mode)
-
     switch (mode) {
       case 'resetPassword':
         this.router.navigate(['/account/reset-password'], {
