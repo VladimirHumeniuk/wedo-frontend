@@ -14,7 +14,7 @@ export class AuthFormComponent {
     private location: Location
   ) { }
 
-  protected goBack(): void {
+  public goBack(): void {
     this.location.back()
   }
 }
