@@ -11,10 +11,10 @@
     </p>
   </wd-form-item>
   <wd-form-item class="text-center">
-    <button nbButton hero (click)="resendEmail()" [disabled]="holdTimer">
+    <button nbButton fullWidth hero (click)="resendEmail()" [disabled]="holdTimer">
       {{holdTimer ? 'Re-send again after:' : 'Re-send email'}}
       <br *ngIf="holdTimer"/>
-      <countdown *ngIf="holdTimer" [config]="{leftTime: 5, demand: !holdTimer, template: '$!h!:$!m!:$!s!'}" (finished)="holdTimer = !holdTimer"></countdown>
+      <countdown *ngIf="holdTimer" [config]="{leftTime: 180, demand: !holdTimer, template: '$!h!:$!m!:$!s!'}" (finished)="holdTimer = !holdTimer"></countdown>
     </button>
   </wd-form-item>
 </wd-auth-form>

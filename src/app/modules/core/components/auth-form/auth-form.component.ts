@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'wd-auth-form',
@@ -9,5 +10,11 @@ export class AuthFormComponent {
 
   @Input() heading: string
 
-  constructor() { }
+  constructor(
+    private location: Location
+  ) { }
+
+  protected goBack(): void {
+    this.location.back()
+  }
 }
