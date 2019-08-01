@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-form-explain',
@@ -8,8 +9,9 @@ import { Component, Input } from '@angular/core';
 export class FormExplainComponent {
 
   @Input() errorsCodes: Array<any>
-  @Input() errorsText: Array<any>
   @Input() controlName: string
+
+  public errorsText = FORMS_MESSAGES
 
   constructor() { }
 

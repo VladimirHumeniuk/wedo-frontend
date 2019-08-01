@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
-import { emailRegexp } from 'src/app/shared/constants';
+import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-request-password',
@@ -11,20 +11,11 @@ import { emailRegexp } from 'src/app/shared/constants';
 export class RequestPasswordComponent implements OnInit {
 
   public requestPasswordForm: FormGroup
-  private emailRegex: RegExp = emailRegexp
+  private emailRegex: RegExp = EMAIL_REGEXP
 
   public loading: boolean = false
   public holdTimer: boolean = false
   public emailSent: boolean = false
-
-  public explainMessages = {
-    email: {
-      generic: "We have unforeseen problems with this email address. Check the address or try again later",
-      required: "Email is required",
-      userNotFound: "We have no user record corresponding to this email address",
-      toManyRequests: "We have blocked all requests from this device due to unusual activity. Try again later."
-    }
-  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -66,7 +57,7 @@ export class RequestPasswordComponent implements OnInit {
             case 'auth/user-not-found':
               control.setErrors({
                 'userNotFound': {
-                  message: this.explainMessages.email.userNotFound
+                  message: FORMS_MESSAGES.email.userNotFound
                 }
               })
               break
@@ -74,7 +65,7 @@ export class RequestPasswordComponent implements OnInit {
             case 'auth/too-many-requests':
               control.setErrors({
                 'toManyRequests': {
-                  message: this.explainMessages.email.toManyRequests
+                  message: FORMS_MESSAGES.email.toManyRequests
                 }
               })
               break
@@ -82,7 +73,7 @@ export class RequestPasswordComponent implements OnInit {
             default:
               control.setErrors({
                 'generic': {
-                  message: this.explainMessages.email.generic
+                  message: FORMS_MESSAGES.email.generic
                 }
               })
               break
@@ -93,6 +84,10 @@ export class RequestPasswordComponent implements OnInit {
     }
 
     return
+  }
+
+  public resendEmail(): void {
+    this.emailSent = false
   }
 
   ngOnInit() {

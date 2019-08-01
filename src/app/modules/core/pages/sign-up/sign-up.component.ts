@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { MustMatch } from 'src/app/shared/helpers';
-import { emailRegexp } from 'src/app/shared/constants';
+import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-sign-up',
@@ -12,7 +12,7 @@ import { emailRegexp } from 'src/app/shared/constants';
 export class SignUpComponent implements OnInit {
 
   public signUpForm: FormGroup
-  private emailRegex: RegExp = emailRegexp
+  private emailRegex: RegExp = EMAIL_REGEXP
 
   public loading: boolean = false
 
@@ -27,30 +27,7 @@ export class SignUpComponent implements OnInit {
     }
   ]
 
-  private passwordLength = { min: 6, max: 24 }
-
-  public explainMessages = {
-    email: {
-      required: "Email is required",
-      inUse: "The email address is already in use by another account",
-      pattern: "Email address is not valid"
-    },
-    password: {
-      minlength: `Password min length: ${this.passwordLength.min}`,
-      maxlength: `Password max length: ${this.passwordLength.max}`,
-      required: "Password is required"
-    },
-    confirmPassword: {
-      required: "Please confirm password",
-      mustMatch: "Passwords must match"
-    },
-    accountType: {
-      required: "Choose account type"
-    },
-    acceptTermsAndConditions: {
-      required: "Please indicate that you have read and agree to the Terms and Conditions"
-    }
-  }
+  private passwordLength = { min: 6, max: 32 }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -122,7 +99,7 @@ export class SignUpComponent implements OnInit {
 
             control.setErrors({
               'inUse': {
-                message: this.explainMessages.email.inUse
+                message: FORMS_MESSAGES.email.inUse
               }})
           }
 

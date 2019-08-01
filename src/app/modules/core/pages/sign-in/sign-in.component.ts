@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
-import { emailRegexp } from 'src/app/shared/constants';
+import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-sign-in',
@@ -11,20 +11,9 @@ import { emailRegexp } from 'src/app/shared/constants';
 export class SignInComponent implements OnInit {
 
   public signInForm: FormGroup
-  private emailRegex: RegExp = emailRegexp
+  private emailRegex: RegExp = EMAIL_REGEXP
 
   public loading: boolean = false
-
-  public explainMessages = {
-    email: {
-      required: "Email is required",
-      pattern: "Email address is not valid"
-    },
-    password: {
-      required: "Password is required",
-      wrongPassword: "The password is invalid or the user with this email does not exist"
-    },
-  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,7 +57,7 @@ export class SignInComponent implements OnInit {
 
             control.setErrors({
               'wrongPassword': {
-                message: this.explainMessages.password.wrongPassword
+                message: FORMS_MESSAGES.password.wrongPassword
               }})
           }
 
