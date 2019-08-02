@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/shared/services';
-import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService, UserService } from 'src/app/shared/services';
+import { ActivatedRoute, Params } from '@angular/router';
+import { User } from 'src/app/shared/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'wd-email-verified',
@@ -9,14 +11,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class EmailVerifiedComponent implements OnInit {
 
-  public user: any
+  public user: User
 
   private oobCode: string
 
   constructor(
     private authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.oobCode = params.oobCode
@@ -24,11 +26,15 @@ export class EmailVerifiedComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.userSource.subscribe(data => {
-      this.user = data
+    this.activatedRoute.data.subscribe((routeData: Observable<firebase.User>) => {
+      let data = routeData['data']
+
+      if (data) {
+        this.user = data
+      }
     })
 
-    this.authService.handleVerifyEmail(this.oobCode)
+    this.authService.handleVerifyEmail(this.oobCode, this.user.uid)
   }
 
 }
