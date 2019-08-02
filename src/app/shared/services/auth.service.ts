@@ -2,7 +2,8 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { map } from 'rxjs/operators'
+import { Subject, Observable } from 'rxjs';
 import { User } from '../models';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { User } from '../models';
 })
 export class AuthService {
 
-  public userSource: BehaviorSubject<any> = new BehaviorSubject(null)
+  public userSource: Subject<any> = new Subject()
   public user = this.userSource.asObservable()
 
   constructor(
@@ -37,6 +38,7 @@ export class AuthService {
         const user: User = {
           uid: response.user.uid,
           email: email,
+          emailVerified: response.user.emailVerified,
           accountType: accountType,
           acceptTermsAndConditions: acceptTermsAndConditions
         }
@@ -58,6 +60,18 @@ export class AuthService {
 
   public sendEmailVerification(): Promise<void> {
     return this.fireAuth.auth.currentUser.sendEmailVerification()
+  }
+
+  public handleVerifyEmail(actionCode: string): Promise<void> {
+    return this.fireAuth.auth.applyActionCode(actionCode)
+      .then(() => {
+        const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${this.user.uid}`)
+
+        userLink.set({
+          emailVerified: true
+        }, { merge: true })
+      })
+      .catch(error => { throw error })
   }
 
   public verifyEmail(user: User): void {

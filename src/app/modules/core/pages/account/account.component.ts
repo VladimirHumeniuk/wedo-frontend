@@ -15,8 +15,9 @@ export class AccountComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {
-    this.activatedRoute.queryParams.subscribe((map: Params) => map)
-    this.queryParams = this.activatedRoute.snapshot.queryParams
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.queryParams = params
+    })
   }
 
   private resolveMode(mode: string): void {
