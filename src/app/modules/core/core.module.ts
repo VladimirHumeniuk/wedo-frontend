@@ -33,6 +33,8 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { RequestPasswordComponent } from './pages/request-password/request-password.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
+import { UserResolver } from 'src/app/shared/resolvers/user.resolver';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -66,7 +68,8 @@ import { VerifyEmailComponent } from './pages/verify-email/verify-email.componen
     RouterModule
   ],
   providers: [
-    AngularFirestore
+    AngularFirestore,
+    UserResolver
   ]
 })
 export class CoreModule { }

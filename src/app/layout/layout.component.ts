@@ -24,7 +24,11 @@ export class LayoutComponent implements OnInit {
 
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        const currentUrl = event.url.substr(1)
+        let currentUrl = event.url.substr(1)
+
+        if (currentUrl.indexOf('?') > -1) {
+          currentUrl = currentUrl.substr(0, event.url.indexOf('?') - 1)
+        }
 
         if (this.noNavigationRoutes.indexOf(currentUrl) !== -1) {
           this.needNavigation = false
