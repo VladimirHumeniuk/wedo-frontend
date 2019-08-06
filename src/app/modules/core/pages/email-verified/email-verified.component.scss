@@ -1,0 +1,8 @@
+.email-verified__spinner {
+  width: 100%;
+  height: 40px;
+
+  &:empty {
+    display: none;
+  }
+}

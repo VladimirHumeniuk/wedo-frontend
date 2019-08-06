@@ -13,6 +13,10 @@ export class EmailVerifiedComponent implements OnInit {
 
   public user: User
 
+  load = true
+
+  public emailVerified: boolean
+  public tokenExpired: boolean
   private oobCode: string
 
   constructor(
@@ -35,6 +39,13 @@ export class EmailVerifiedComponent implements OnInit {
     })
 
     this.authService.handleVerifyEmail(this.oobCode, this.user.uid)
+      .then(() => {
+        this.emailVerified = true
+      })
+      .catch(error => {
+        this.tokenExpired = true
+        throw new Error(error)
+      })
   }
 
 }
