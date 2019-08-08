@@ -12,11 +12,9 @@ import { Observable } from 'rxjs';
 export class EmailVerifiedComponent implements OnInit {
 
   public user: User
-
-  load = true
-
   public emailVerified: boolean
   public tokenExpired: boolean
+
   private oobCode: string
 
   constructor(
@@ -38,7 +36,8 @@ export class EmailVerifiedComponent implements OnInit {
       }
     })
 
-    this.authService.handleVerifyEmail(this.oobCode, this.user.uid)
+    if (this.user) {
+      this.authService.verifyEmail(this.oobCode, this.user.uid)
       .then(() => {
         this.emailVerified = true
       })
@@ -46,6 +45,9 @@ export class EmailVerifiedComponent implements OnInit {
         this.tokenExpired = true
         throw new Error(error)
       })
+    } else {
+      this.tokenExpired = true
+    }
   }
 
 }
