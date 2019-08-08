@@ -59,7 +59,7 @@ export class AuthService {
     return this.fireAuth.auth.currentUser.sendEmailVerification()
   }
 
-  public handleVerifyEmail(actionCode: string, uid: string): Promise<void> {
+  public verifyEmail(actionCode: string, uid: string): Promise<void> {
     return this.fireAuth.auth.applyActionCode(actionCode)
       .then(() => {
         const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${uid}`)
@@ -71,12 +71,13 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
-  public verifyEmail(user: User): void {
-    console.log(user)
-  }
-
   public sendPasswordResetEmail(email: string): Promise<void> {
     return this.fireAuth.auth.sendPasswordResetEmail(email)
+      .catch(error => { throw error })
+  }
+
+  public updatePassword(actionCode: string, newPassword: string): Promise<void> {
+    return this.fireAuth.auth.confirmPasswordReset(actionCode, newPassword)
       .catch(error => { throw error })
   }
 

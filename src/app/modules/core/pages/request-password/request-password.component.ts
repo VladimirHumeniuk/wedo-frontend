@@ -11,11 +11,12 @@ import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 export class RequestPasswordComponent implements OnInit {
 
   public requestPasswordForm: FormGroup
-  private emailRegex: RegExp = EMAIL_REGEXP
+  public loading: boolean
+  public holdTimer: boolean
+  public emailSent: boolean
+  public email: string
 
-  public loading: boolean = false
-  public holdTimer: boolean = false
-  public emailSent: boolean = false
+  private emailRegex: RegExp = EMAIL_REGEXP
 
   constructor(
     private formBuilder: FormBuilder,
@@ -47,6 +48,7 @@ export class RequestPasswordComponent implements OnInit {
           this.loading = false
           this.requestPasswordForm.reset()
           this.emailSent = true
+          this.email = formData.email
           this.holdTimer = true
         })
         .catch(error => {

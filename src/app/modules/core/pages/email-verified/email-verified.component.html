@@ -8,19 +8,19 @@
   </div>
 
   <wd-form-item class="text-center">
-    <ng-template [ngIf]="emailVerified">
+    <ng-container *ngIf="emailVerified">
       <p>
         Email address <strong>{{user?.email}}</strong> successfully verified.
       </p>
       <p>
         Now you can use all the features of our site.
       </p>
-    </ng-template>
+    </ng-container>
 
-    <ng-template [ngIf]="tokenExpired">
+    <ng-container *ngIf="tokenExpired">
       <p>The action token is invalid.</p>
       <p>This can happen if the token is malformed, expired, or has already been used.</p>
-    </ng-template>
+    </ng-container>
   </wd-form-item>
 
   <p class="text-center">Go to <a routerLink="/" class="text-decoration-none">home page</a></p>

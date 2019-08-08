@@ -28,6 +28,7 @@
     <button
     *ngIf="isPrivate"
     class="input-group__private-toggler"
+    tabindex="-1"
     aria-hidden="true"
     (click)="showPassword()">
       <nb-icon class="input-group__private-icon" [icon]="passVisible ? 'eye-off-outline' : 'eye-outline'"></nb-icon>

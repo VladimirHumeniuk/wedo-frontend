@@ -60,7 +60,7 @@ export class SignUpComponent implements OnInit {
     })
   }
 
-  public passwordOnChange() {
+  private passwordOnChange(): void {
     const confirmPassword = this.signUpForm.get('confirmPassword')
     this.signUpForm.get('password').valueChanges.subscribe((value: string) => {
 

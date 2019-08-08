@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services';
+import { MustMatch } from 'src/app/shared/helpers';
+import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-reset-password',
@@ -7,9 +12,85 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor() { }
+  public changePasswordForm: FormGroup
+  public loading: boolean
+  public passwordUpdated: boolean
+  public tokenExpired: boolean
+
+  private oobCode: string
+  private passwordLength = { min: 6, max: 32 }
+
+  constructor(
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder
+  ) {
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.oobCode = params.oobCode
+    })
+  }
+
+  private formInit(): void {
+    this.changePasswordForm = this.formBuilder.group({
+      password: ['', [
+        Validators.required,
+        Validators.minLength(this.passwordLength.min),
+        Validators.maxLength(this.passwordLength.max)
+      ]],
+      confirmPassword: ['', [
+        Validators.required,
+      ]],
+    }, {
+      validators: MustMatch('password', 'confirmPassword')
+    })
+  }
+
+  private passwordOnChange(): void {
+    const confirmPassword = this.changePasswordForm.get('confirmPassword')
+    this.changePasswordForm.get('password').valueChanges.subscribe((value: string) => {
+
+      if (value) {
+        if (value.length >= 6) {
+          confirmPassword.enable()
+        } else if (value.length === 0) {
+          confirmPassword.reset({value: '', disabled: true})
+        } else {
+          confirmPassword.disable()
+        }
+      }
+    })
+  }
+
+  public updatePassword(): void {
+    this.loading = true
+
+    if (this.changePasswordForm.invalid) {
+      this.loading = false
+    }
+
+    if (this.changePasswordForm.valid) {
+      const { password } = this.changePasswordForm.value
+
+      this.authService.updatePassword(this.oobCode, password)
+        .then(() => {
+          this.loading = false
+          this.passwordUpdated = true
+          this.changePasswordForm.reset()
+        })
+        .catch(error => {
+          this.loading = false
+
+          if (error.code === 'auth/expired-action-code') {
+            this.tokenExpired = true
+          }
+        })
+    }
+  }
 
   ngOnInit() {
+    this.formInit()
+    this.changePasswordForm.get('confirmPassword').disable()
+    this.passwordOnChange()
   }
 
 }
