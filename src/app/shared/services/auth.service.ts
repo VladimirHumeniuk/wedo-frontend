@@ -15,7 +15,7 @@ export class AuthService {
     private fireStore: AngularFirestore,
     private fireAuth: AngularFireAuth,
     private router: Router,
-    private ngZone: NgZone,
+    private ngZone: NgZone
   ) { }
 
   public getCurrent(): Observable<firebase.User> {
@@ -87,7 +87,7 @@ export class AuthService {
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
         this.ngZone.run(() => {
-          this.router.navigate(['/verify-email'])
+          this.router.navigate(['/'])
         })
       }).catch(error => { throw error })
   }

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { CountdownModule } from 'ngx-countdown';
@@ -51,6 +52,7 @@ import { UserResolver } from 'src/app/shared/resolvers/user.resolver';
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    AngularFireFunctionsModule,
     CountdownModule,
     FormsModule,
     ReactiveFormsModule,
