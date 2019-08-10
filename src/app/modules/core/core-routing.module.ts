@@ -9,8 +9,7 @@ import { RequestPasswordComponent } from './pages/request-password/request-passw
 import { EmailVerifiedComponent } from './pages/email-verified/email-verified.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
-
-import { UserResolver } from 'src/app/shared/resolvers/user.resolver'
+import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
 
 const routes: Routes = [
   {
@@ -44,7 +43,10 @@ const routes: Routes = [
       {
         path: 'email-verified',
         component: EmailVerifiedComponent,
-        resolve: { data: UserResolver },
+      },
+      {
+        path: 'invalid-action-code',
+        component: InvalidActionCodeComponent
       }
     ]
   }
@@ -52,7 +54,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [UserResolver]
+  exports: [RouterModule]
 })
 export class CoreRoutingModule { }

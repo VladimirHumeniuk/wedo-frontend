@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, UserService } from 'src/app/shared/services';
+import { AuthService, CloudApiService } from 'src/app/shared/services';
 import { ActivatedRoute, Params } from '@angular/router';
-import { User } from 'src/app/shared/models';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'wd-email-verified',
@@ -11,16 +9,16 @@ import { Observable } from 'rxjs';
 })
 export class EmailVerifiedComponent implements OnInit {
 
-  public user: User
   public emailVerified: boolean
   public tokenExpired: boolean
+  public email: string
 
   private oobCode: string
 
   constructor(
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private userService: UserService
+    private cloudApi: CloudApiService
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.oobCode = params.oobCode
@@ -28,26 +26,26 @@ export class EmailVerifiedComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.data.subscribe((routeData: Observable<firebase.User>) => {
-      let data = routeData['data']
+    this.authService.checkActionCode(this.oobCode)
+      .then((codeInfo: firebase.auth.ActionCodeInfo) => {
+        const { email } = codeInfo.data
 
-      if (data) {
-        this.user = data
-      }
-    })
+        this.email = email
 
-    if (this.user) {
-      this.authService.verifyEmail(this.oobCode, this.user.uid)
-      .then(() => {
-        this.emailVerified = true
+        this.cloudApi.getUserByEmail(email)
+          .then((data: firebase.auth.UserCredential) => {
+            const { uid } = data.user
+
+            this.authService.verifyEmail(this.oobCode, uid)
+              .then(() => {
+                this.emailVerified = true
+              })
+              .catch(error => {
+                this.tokenExpired = true
+                throw new Error(error)
+              })
+          })
       })
-      .catch(error => {
-        this.tokenExpired = true
-        throw new Error(error)
-      })
-    } else {
-      this.tokenExpired = true
-    }
   }
 
 }
