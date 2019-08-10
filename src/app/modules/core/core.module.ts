@@ -35,6 +35,7 @@ import { RequestPasswordComponent } from './pages/request-password/request-passw
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
 import { UserResolver } from 'src/app/shared/resolvers/user.resolver';
+import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { UserResolver } from 'src/app/shared/resolvers/user.resolver';
     EmailVerifiedComponent,
     ResetPasswordComponent,
     RequestPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    InvalidActionCodeComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

@@ -71,6 +71,11 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
+  public checkActionCode(code: string): Promise<firebase.auth.ActionCodeInfo> {
+    return this.fireAuth.auth.checkActionCode(code)
+      .catch(error => { throw error })
+  }
+
   public sendPasswordResetEmail(email: string): Promise<void> {
     return this.fireAuth.auth.sendPasswordResetEmail(email)
       .catch(error => { throw error })

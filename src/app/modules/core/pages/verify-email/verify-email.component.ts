@@ -24,7 +24,6 @@ export class VerifyEmailComponent implements OnInit {
         this.loader = false
       }).catch(error => {
         throw new Error(error)
-        console.error(error)
       })
   }
 

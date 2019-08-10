@@ -15,7 +15,8 @@ export class LayoutComponent implements OnInit {
     'verify-email',
     'request-password',
     'account/email-verified',
-    'account/reset-password'
+    'account/reset-password',
+    'account/invalid-action-code'
   ]
 
   constructor(

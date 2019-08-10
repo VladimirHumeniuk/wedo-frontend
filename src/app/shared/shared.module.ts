@@ -14,6 +14,7 @@ import { SelectGroupComponent } from './components/select-group/select-group.com
 import { FormItemComponent } from './components/form-item/form-item.component';
 import { KeysPipe } from './pipes/keys.pipe';
 import { FormExplainComponent } from './components/form-explain/form-explain.component';
+import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormExplainComponent } from './components/form-explain/form-explain.com
     SelectGroupComponent,
     FormItemComponent,
     KeysPipe,
-    FormExplainComponent
+    FormExplainComponent,
+    FromCamelCasePipe
   ],
   imports: [
     RouterModule,
@@ -37,7 +39,8 @@ import { FormExplainComponent } from './components/form-explain/form-explain.com
     SelectGroupComponent,
     FormItemComponent,
     FormExplainComponent,
-    KeysPipe
+    KeysPipe,
+    FromCamelCasePipe
   ]
 })
 export class SharedModule { }
