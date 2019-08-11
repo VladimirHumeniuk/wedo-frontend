@@ -9,18 +9,28 @@
     </button>
 
     <ul class="navigation-bar__menu-items">
+
       <li class="navigation-bar__menu-item">
         <a nbButton outline routerLink='/sign-in'>
           <nb-icon icon="log-in-outline"></nb-icon>
           Sign In
         </a>
       </li>
+
       <li class="navigation-bar__menu-item">
         <a nbButton hero routerLink='/sign-up'>
           <nb-icon icon="person-add-outline"></nb-icon>
           Sign Up
         </a>
       </li>
+
+      <li class="navigation-bar__menu-item">
+        <button nbButton hero (click)="signOut()">
+          <nb-icon icon="person-add-outline"></nb-icon>
+          Sign Out
+        </button>
+      </li>
+
     </ul>
   </div>
 </div>
