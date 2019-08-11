@@ -7,6 +7,10 @@ export function userReducer(state: User, action: UserActions.Actions) {
     case UserActions.SAVE_USER:
       return [action.payload]
 
+    case UserActions.REMOVE_USER:
+      state = undefined
+      return state
+
     default:
         return state
   }

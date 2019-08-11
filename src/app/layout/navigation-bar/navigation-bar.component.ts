@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/shared/services';
 
 @Component({
   selector: 'wd-navigation-bar',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
+
+  public signOut(): void {
+    this.authService.signOut()
+  }
 
   ngOnInit() {
   }

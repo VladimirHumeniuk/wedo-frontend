@@ -13,8 +13,6 @@ export class SaveUser implements Action {
 
 export class RemoveUser implements Action {
   readonly type = REMOVE_USER
-
-  constructor (public payload: string) {}
 }
 
 export type Actions = SaveUser | RemoveUser

@@ -6,7 +6,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, MetaReducer } from '@ngrx/store';
 
 import { CountdownModule } from 'ngx-countdown';
 
@@ -38,7 +38,9 @@ import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-
 
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
 
-import { userReducer } from '../../reducers';
+import { userReducer, localStorageSyncReducer } from '../../reducers';
+
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [

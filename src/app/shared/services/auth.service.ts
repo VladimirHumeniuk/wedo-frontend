@@ -99,8 +99,10 @@ export class AuthService {
         const { uid } = this.fireAuth.auth.currentUser
 
         this.fireStore.collection('users').doc(uid).ref.get()
-          .then(data => {
-            this.store.dispatch(new UserActions.SaveUser(data.data()))
+          .then((data: firebase.firestore.DocumentSnapshot) => {
+            const user = data.data() as User
+
+            this.store.dispatch(new UserActions.SaveUser(user))
           })
           .finally(() => {
             this.ngZone.run(() => {
@@ -113,6 +115,9 @@ export class AuthService {
   public signOut(): Promise<void> {
     return this.fireAuth.auth.signOut()
       .then(() => {
+        this.store.dispatch(new UserActions.RemoveUser())
+      })
+      .finally(() => {
         this.ngZone.run(() => {
           this.router.navigate(['/'])
         })
