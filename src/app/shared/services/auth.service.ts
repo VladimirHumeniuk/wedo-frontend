@@ -2,9 +2,12 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
+import { AppState } from './../../app.state';
 import { User } from '../models';
+import * as UserActions from './../../actions/user.action';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +18,8 @@ export class AuthService {
     private fireStore: AngularFirestore,
     private fireAuth: AngularFireAuth,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private store: Store<AppState>
   ) { }
 
   public getCurrent(): Observable<firebase.User> {
@@ -91,9 +95,18 @@ export class AuthService {
 
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
-        this.ngZone.run(() => {
-          this.router.navigate(['/'])
-        })
+
+        const { uid } = this.fireAuth.auth.currentUser
+
+        this.fireStore.collection('users').doc(uid).ref.get()
+          .then(data => {
+            this.store.dispatch(new UserActions.SaveUser(data.data()))
+          })
+          .finally(() => {
+            this.ngZone.run(() => {
+              this.router.navigate(['/'])
+            })
+          })
       }).catch(error => { throw error })
   }
 

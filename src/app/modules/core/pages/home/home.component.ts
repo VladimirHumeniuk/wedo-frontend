@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { User } from './../../../../shared/models';
+import { AppState } from './../../../../app.state';
 
 @Component({
   selector: 'wd-home',
@@ -7,7 +11,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  user: Observable<User>
+
+  constructor(
+    private store: Store<AppState>
+  ) {
+    this.user = store.select('user')
+  }
 
   ngOnInit() {
   }
