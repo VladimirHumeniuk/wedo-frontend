@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -15,6 +16,7 @@ import * as UserActions from './../../actions/user.action';
 export class AuthService {
 
   constructor(
+    private userService: UserService,
     private fireStore: AngularFirestore,
     private fireAuth: AngularFireAuth,
     private router: Router,
@@ -95,20 +97,13 @@ export class AuthService {
 
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
       .then(() => {
-
-        const { uid } = this.fireAuth.auth.currentUser
-
-        this.fireStore.collection('users').doc(uid).ref.get()
-          .then((data: firebase.firestore.DocumentSnapshot) => {
-            const user = data.data() as User
-
-            this.store.dispatch(new UserActions.SaveUser(user))
-          })
-          .finally(() => {
+        this.userService.user$.subscribe((user: User) => {
+          if (user) {
             this.ngZone.run(() => {
               this.router.navigate(['/'])
             })
-          })
+          }
+        })
       }).catch(error => { throw error })
   }
 
@@ -116,11 +111,6 @@ export class AuthService {
     return this.fireAuth.auth.signOut()
       .then(() => {
         this.store.dispatch(new UserActions.RemoveUser())
-      })
-      .finally(() => {
-        this.ngZone.run(() => {
-          this.router.navigate(['/'])
-        })
       })
   }
 }
