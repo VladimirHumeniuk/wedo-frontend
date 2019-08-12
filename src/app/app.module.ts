@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
@@ -21,6 +21,9 @@ import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.c
 // Components
 import { AppComponent } from './app.component';
 
+// Reducers
+import { reducers, metaReducers } from './reducers';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +40,7 @@ import { AppComponent } from './app.component';
     NbLayoutModule,
     NbThemeModule.forRoot({ name: 'default' }),
     SharedModule,
+    StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [],
   bootstrap: [AppComponent]

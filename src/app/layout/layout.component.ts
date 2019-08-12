@@ -1,5 +1,7 @@
+import { Alert } from './../shared/models/alert.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
+import { AlertsMessagesService } from './../shared/services';
 
 @Component({
   selector: 'wd-layout',
@@ -19,10 +21,12 @@ export class LayoutComponent implements OnInit {
     'account/invalid-action-code'
   ]
 
-  constructor(
-    protected router: Router
-  ) {
+  public alerts: Alert[]
 
+  constructor(
+    private router: Router,
+    private alertsMessagesService: AlertsMessagesService
+  ) {
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         let currentUrl = event.url.substr(1)
@@ -37,6 +41,10 @@ export class LayoutComponent implements OnInit {
           this.needNavigation = true
         }
       }
+    })
+
+    this.alertsMessagesService.alerts$.subscribe(alerts => {
+      this.alerts = alerts
     })
   }
 

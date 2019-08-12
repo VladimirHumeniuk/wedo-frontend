@@ -1,0 +1,26 @@
+.alert {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert__controls {
+  display: flex;
+  align-items: center;
+  color: inherit;
+}
+
+.alert__icon {
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  background-color: transparent;
+  color: inherit;
+  line-height: 1;
+
+  &:focus {
+    outline: 0;
+    opacity: .5;
+  }
+}

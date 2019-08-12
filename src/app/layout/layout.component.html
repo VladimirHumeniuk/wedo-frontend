@@ -4,6 +4,11 @@
   </nb-layout-header>
 
   <nb-layout-column>
+    <wd-alert-message
+    *ngFor="let alert of alerts; let i = index"
+    [alert]="alert"
+    [index]="i"
+    ></wd-alert-message>
     <router-outlet></router-outlet>
   </nb-layout-column>
 </nb-layout>
