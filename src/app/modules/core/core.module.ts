@@ -6,7 +6,6 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { StoreModule, MetaReducer } from '@ngrx/store';
 
 import { CountdownModule } from 'ngx-countdown';
 
@@ -38,9 +37,6 @@ import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-
 
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
 
-import { userReducer, localStorageSyncReducer } from '../../reducers';
-
-const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
 @NgModule({
   declarations: [
@@ -72,9 +68,6 @@ const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
     NbButtonModule,
     NbSpinnerModule,
     NbAlertModule,
-    StoreModule.forRoot({
-      user: userReducer
-    })
   ],
   exports: [
     RouterModule

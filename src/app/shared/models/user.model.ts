@@ -3,5 +3,6 @@ export interface User {
   email: string;
   emailVerified: boolean;
   accountType: string;
+  createdAt: Date;
   acceptTermsAndConditions: boolean;
 }

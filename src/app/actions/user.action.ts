@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { User } from './../shared/models/user.model';
+import { User } from './../shared/models';
 
 export const SAVE_USER   = '[USER] Save'
 export const REMOVE_USER = '[USER] Remove'

@@ -43,6 +43,7 @@ export class AuthService {
           email: email,
           emailVerified: response.user.emailVerified,
           accountType: accountType,
+          createdAt: new Date(),
           acceptTermsAndConditions: acceptTermsAndConditions
         }
 

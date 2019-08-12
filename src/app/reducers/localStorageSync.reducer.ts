@@ -1,9 +1,9 @@
 import { ActionReducer, MetaReducer } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
-export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+export function _localStorageSync(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({
-    keys: ['user'],
+    keys: ['alert'],
     rehydrate: true,
     removeOnUndefined: true
   })(reducer);

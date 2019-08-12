@@ -1,2 +1,4 @@
+export * from './reducers';
 export * from './user.reducer';
-export * from './localStorageSync.reducer';
+export * from './alert.reducer';
+export * from './meta.reducer';

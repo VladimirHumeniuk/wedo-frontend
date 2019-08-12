@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
+  NbAlertModule,
   NbInputModule,
   NbIconModule,
   NbSelectModule
@@ -15,6 +16,7 @@ import { FormItemComponent } from './components/form-item/form-item.component';
 import { KeysPipe } from './pipes/keys.pipe';
 import { FormExplainComponent } from './components/form-explain/form-explain.component';
 import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
+import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +25,15 @@ import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
     FormItemComponent,
     KeysPipe,
     FormExplainComponent,
-    FromCamelCasePipe
+    FromCamelCasePipe,
+    AlertMessageComponent
   ],
   imports: [
     RouterModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NbAlertModule,
     NbInputModule,
     NbSelectModule,
     NbIconModule
@@ -40,7 +44,8 @@ import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
     FormItemComponent,
     FormExplainComponent,
     KeysPipe,
-    FromCamelCasePipe
+    FromCamelCasePipe,
+    AlertMessageComponent
   ]
 })
 export class SharedModule { }

@@ -28,6 +28,7 @@
     "eva-icons": "^1.1.1",
     "firebase": "^6.3.1",
     "ngrx-store-localstorage": "^8.0.0",
+    "ngrx-store-logger": "^0.2.3",
     "ngx-countdown": "^3.2.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",

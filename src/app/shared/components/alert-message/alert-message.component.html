@@ -1,0 +1,23 @@
+<nb-alert
+class="alert"
+[status]="alert.status">
+  <span>
+    {{alert.message}}
+  </span>
+
+  <span class="alert__controls">
+    <a
+    *ngIf="alert.adviseUrl"
+    [routerLink]="alert.adviseUrl"
+    class="alert__icon">
+      <nb-icon icon="question-mark-circle-outline"></nb-icon>
+    </a>
+
+    <button
+
+    (click)="close()"
+    class="alert__icon">
+      <nb-icon icon="close-circle-outline"></nb-icon>
+    </button>
+  </span>
+</nb-alert>
