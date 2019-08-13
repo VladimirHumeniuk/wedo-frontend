@@ -1,3 +1,5 @@
+import { Alert } from './alert.model';
+
 export interface User {
   uid: string;
   email: string;
@@ -5,4 +7,5 @@ export interface User {
   accountType: string;
   createdAt: Date;
   acceptTermsAndConditions: boolean;
+  alerts?: Alert;
 }

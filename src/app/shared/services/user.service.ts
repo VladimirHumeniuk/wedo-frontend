@@ -7,6 +7,7 @@ import { AppState } from './../../app.state';
 import { AlertsMessagesService } from './alerts-messages.service';
 import { User } from './../models/user.model';
 import * as UserActions from './../../actions/user.action';
+import { ALERTS } from '../constants/index'
 
 @Injectable({
   providedIn: 'root'
@@ -29,12 +30,11 @@ export class UserService {
         .then((data: firebase.firestore.DocumentSnapshot) => {
           const user = data.data() as User
 
-          if (user.emailVerified) {
-            this.alertsMessageService.addAlert({
-              message: "Your email address has not been verified. Verify your email address to use all the features of the application.",
-              status: "danger",
-              adviseUrl: "/"
-            })
+          if (user.emailVerified && !user.alerts['user/email-not-verified']) {
+            this.fireStore.collection('users').doc(`${user.uid}`)
+            .set({alerts: {
+              'user/email-not-verified': ALERTS.user['email-not-verified']
+            }}, { merge: true })
           }
 
           this.store.dispatch(new UserActions.SaveUser(user))
