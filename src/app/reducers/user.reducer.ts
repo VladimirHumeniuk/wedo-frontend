@@ -5,7 +5,7 @@ import * as UserActions from '../actions/user.action';
 export function userReducer(state: User, action: UserActions.Actions) {
   switch(action.type) {
     case UserActions.SAVE_USER:
-      return [action.payload]
+      return action.payload
 
     case UserActions.REMOVE_USER:
       state = undefined
