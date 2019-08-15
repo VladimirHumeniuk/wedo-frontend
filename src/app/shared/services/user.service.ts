@@ -13,7 +13,7 @@ import { ALERTS } from '../constants'
 })
 export class UserService {
 
-  public user$: Observable<User> = this.store.select('user')
+  public user$ = this.store.select('user')
 
   constructor(
     private fireStore: AngularFirestore,

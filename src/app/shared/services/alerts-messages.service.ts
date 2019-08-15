@@ -35,7 +35,7 @@ export class AlertsMessagesService {
 
         this.fireStore.collection('alerts').doc(uid).valueChanges()
           .subscribe((alerts: Alert[]) => {
-            if ((!alerts || !alerts['email-not-verified']) && emailVerified) {
+            if ((!alerts || !alerts['email-not-verified']) && !emailVerified) {
               this.addAlert(uid, ALERTS['email-not-verified'])
             }
 
