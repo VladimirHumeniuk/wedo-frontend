@@ -12,6 +12,7 @@ import { EmailVerifiedComponent } from './pages/email-verified/email-verified.co
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
+import { ResendVerificationEmailComponent } from './pages/resend-verification-email/resend-verification-email.component';
 
 const routes: Routes = [
   {
@@ -33,8 +34,14 @@ const routes: Routes = [
     component: VerifyEmailComponent
   },
   {
+    path: 'resend-verification-email',
+    component: ResendVerificationEmailComponent,
+    canActivate: [isUser]
+  },
+  {
     path: 'request-password',
-    component: RequestPasswordComponent
+    component: RequestPasswordComponent,
+    canActivate: [isGuest]
   },
   {
     path: 'account',

@@ -36,6 +36,7 @@ import { VerifyEmailComponent } from './pages/verify-email/verify-email.componen
 import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
 
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
+import { ResendVerificationEmailComponent } from './pages/resend-verification-email/resend-verification-email.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     ResetPasswordComponent,
     RequestPasswordComponent,
     VerifyEmailComponent,
-    InvalidActionCodeComponent
+    InvalidActionCodeComponent,
+    ResendVerificationEmailComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

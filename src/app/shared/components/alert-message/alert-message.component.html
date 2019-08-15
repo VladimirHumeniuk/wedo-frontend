@@ -14,7 +14,7 @@ class="alert"
     </a>
 
     <button
-
+    *ngIf="alert.closable"
     (click)="close()"
     class="alert__icon">
       <nb-icon icon="close-circle-outline"></nb-icon>
