@@ -17,7 +17,7 @@ export class AlertMessageComponent {
   ) {}
 
   public close(): void {
-    this.alertsMessageService.removeAlert(this.index, this.alert.code)
+    this.alertsMessageService.removeAlert(this.alert.code)
   }
 
 }

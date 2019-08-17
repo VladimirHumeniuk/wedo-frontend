@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { UserService, AlertsMessagesService } from './../../../../shared/services';
+import { UserService, AuthService, AlertsMessagesService } from './../../../../shared/services';
 import { User, Alert } from './../../../../shared/models';
 import { AppState } from './../../../../app.state';
 
@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
+    private authService: AuthService,
     private userService: UserService,
     private alertsService: AlertsMessagesService
   ) {
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }

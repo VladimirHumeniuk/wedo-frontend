@@ -1,14 +1,18 @@
 <nb-layout>
-  <nb-layout-header *ngIf="needNavigation">
-    <wd-navigation-bar>Navigation</wd-navigation-bar>
+  <nb-layout-header *ngIf="accountRouters">
+    <wd-navigation-bar></wd-navigation-bar>
   </nb-layout-header>
 
   <nb-layout-column class="layout__column">
-    <wd-alert-message
-    *ngFor="let alert of alerts; let i = index"
-    [alert]="alert"
-    [index]="i"
-    ></wd-alert-message>
+
+    <ng-container *ngIf="accountRouters">
+      <wd-alert-message
+      *ngFor="let alert of alerts; let i = index"
+      [alert]="alert"
+      [index]="i"
+      ></wd-alert-message>
+    </ng-container>
+
     <router-outlet></router-outlet>
   </nb-layout-column>
 </nb-layout>

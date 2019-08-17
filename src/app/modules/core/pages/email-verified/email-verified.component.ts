@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService, CloudApiService } from 'src/app/shared/services';
+import { AuthService, CloudApiService, AlertsMessagesService } from 'src/app/shared/services';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
@@ -17,6 +17,7 @@ export class EmailVerifiedComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private alertsService: AlertsMessagesService,
     private activatedRoute: ActivatedRoute,
     private cloudApi: CloudApiService
   ) {
@@ -33,12 +34,13 @@ export class EmailVerifiedComponent implements OnInit {
         this.email = email
 
         this.cloudApi.getUserByEmail(email)
-          .then((data: firebase.auth.UserCredential) => {
-            const { uid } = data.user
+          .then((data: firebase.User) => {
+            const { uid } = data
 
             this.authService.verifyEmail(this.oobCode, uid)
               .then(() => {
                 this.emailVerified = true
+                this.alertsService.removeAlert('email-not-verified', uid)
               })
               .catch(error => {
                 this.tokenExpired = true

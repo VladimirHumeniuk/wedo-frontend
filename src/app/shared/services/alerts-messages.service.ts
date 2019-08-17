@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -33,9 +34,11 @@ export class AlertsMessagesService {
 
         this.uid = uid
 
-        this.fireStore.collection('alerts').doc(uid).valueChanges()
-          .subscribe((alerts: Alert[]) => {
-            if ((!alerts || !alerts['email-not-verified']) && !emailVerified) {
+        this.fireStore.collection('alerts').doc(uid).ref.get()
+          .then((data: firebase.firestore.DocumentSnapshot) => {
+            const alerts = data.data() as Alert[]
+
+            if ((!alerts || alerts && !alerts['email-not-verified']) && !emailVerified) {
               this.addAlert(uid, ALERTS['email-not-verified'])
             }
 
@@ -62,11 +65,15 @@ export class AlertsMessagesService {
       }, { merge: true })
   }
 
-  public removeAlert(index: number, code: string): void {
-    this.fireStore.collection('alerts').doc(this.uid)
+  public removeAlert(code: string, uid: string = this.uid): void {
+    this.fireStore.collection('alerts').doc(uid)
       .update({[code.toString()]: firebase.firestore.FieldValue.delete()})
       .then(() => {
-        this.store.dispatch(new AlertActions.RemoveAlert(index))
+        this.alerts.forEach((alert: Alert, index: number) => {
+          if (alert.code === code) {
+            this.store.dispatch(new AlertActions.RemoveAlert(index))
+          }
+        })
       })
   }
 
