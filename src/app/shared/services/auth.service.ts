@@ -51,7 +51,7 @@ export class AuthService {
         this.setUserData(user)
 
         this.ngZone.run(() => {
-          this.router.navigate(['/'])
+          this.router.navigate(['/verify-email'])
         })
       }).catch(error => { throw error })
   }
@@ -69,11 +69,15 @@ export class AuthService {
   public verifyEmail(actionCode: string, uid: string): Promise<void> {
     return this.fireAuth.auth.applyActionCode(actionCode)
       .then(() => {
-        const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${uid}`)
+        const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.collection('users').doc(uid)
 
         userLink.set({
           emailVerified: true
         }, { merge: true })
+
+        userLink.valueChanges().subscribe((user: User) => {
+          this.store.dispatch(new UserActions.SaveUser(user))
+        })
       })
       .catch(error => { throw error })
   }
@@ -113,5 +117,11 @@ export class AuthService {
       .then(() => {
         this.store.dispatch(new UserActions.RemoveUser())
       })
+  }
+
+  public deleteUser() {
+    this.fireAuth.auth.currentUser.delete()
+    this.fireStore.collection('users').doc(this.fireAuth.auth.currentUser.uid).delete()
+    this.fireStore.collection('alerts').doc(this.fireAuth.auth.currentUser.uid).delete()
   }
 }

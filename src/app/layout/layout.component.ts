@@ -10,8 +10,8 @@ import { AlertsMessagesService } from './../shared/services';
 })
 export class LayoutComponent implements OnInit {
 
-  public needNavigation: boolean
-  private noNavigationRoutes: Array<string> = [
+  public accountRouters: boolean
+  private accountRoutersLinks: Array<string> = [
     'sign-in',
     'sign-up',
     'verify-email',
@@ -36,10 +36,10 @@ export class LayoutComponent implements OnInit {
           currentUrl = currentUrl.substr(0, event.url.indexOf('?') - 1)
         }
 
-        if (this.noNavigationRoutes.indexOf(currentUrl) !== -1) {
-          this.needNavigation = false
+        if (this.accountRoutersLinks.indexOf(currentUrl) !== -1) {
+          this.accountRouters = false
         } else {
-          this.needNavigation = true
+          this.accountRouters = true
         }
       }
     })
