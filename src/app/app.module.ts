@@ -22,7 +22,7 @@ import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.c
 import { AppComponent } from './app.component';
 
 // Reducers
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers } from './store/reducers';
 
 @NgModule({
   declarations: [

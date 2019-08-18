@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angul
 import { Observable } from 'rxjs';
 import { AppState } from './../../app.state';
 import { User } from './../models/user.model';
-import * as UserActions from './../../actions/user.action';
+import * as UserActions from './../../store/actions/user.action';
 import { ALERTS } from '../constants'
 
 @Injectable({

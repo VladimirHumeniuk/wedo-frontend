@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
-import * as UserActions from './../../actions/user.action';
+import * as UserActions from './../../store/actions/user.action';
 
 @Injectable({
   providedIn: 'root'

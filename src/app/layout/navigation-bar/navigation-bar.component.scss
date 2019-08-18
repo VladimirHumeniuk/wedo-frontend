@@ -1,3 +1,5 @@
+@import '../../../styles/variables/variables';
+
 :host {
   width: 100%;
 }
@@ -38,4 +40,6 @@
   text-decoration: none;
   font-size: 24px;
   font-weight: 700;
+  font-family: $ff-comfortaa;
+  font-weight: $fw-bold;
 }

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { isUser, isGuest } from './guards/auth.guard';
 
+import { UserResolver } from 'src/app/shared/resolvers/user.resolver'
+
 import { HomeComponent } from './pages/home/home.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
@@ -16,7 +18,7 @@ import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: HomeComponent
   },
   {
     path: 'sign-up',
@@ -60,6 +62,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [isGuest, isUser]
+  providers: [isGuest, isUser, UserResolver]
 })
 export class CoreRoutingModule { }

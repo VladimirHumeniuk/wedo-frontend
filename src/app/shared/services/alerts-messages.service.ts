@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from './../../app.state';
-import * as AlertActions from './../../actions/alert.action';
+import * as AlertActions from './../../store/actions/alert.action';
 import * as firebase from 'firebase/app';
 import { User, Alert } from '../models';
 import { ALERTS } from './../constants/alerts';
@@ -29,7 +29,7 @@ export class AlertsMessagesService {
     })
 
     this.userService.user$.subscribe((user: User) => {
-      if (user) {
+      if (user && user.uid) {
         const { uid, emailVerified } = user
 
         this.uid = uid

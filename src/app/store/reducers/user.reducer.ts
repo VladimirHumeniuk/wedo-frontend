@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { User } from '../shared/models';
+import { User } from '../../shared/models';
 import * as UserActions from '../actions/user.action';
 
 export function userReducer(state: User, action: UserActions.Actions) {
@@ -8,10 +8,10 @@ export function userReducer(state: User, action: UserActions.Actions) {
       return action.payload
 
     case UserActions.REMOVE_USER:
-      state = undefined
+      state = null
       return state
 
     default:
-        return state
+      return state
   }
 }
