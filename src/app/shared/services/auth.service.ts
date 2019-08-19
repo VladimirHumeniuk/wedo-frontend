@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
-import * as UserActions from './../../actions/user.action';
+import * as UserActions from './../../store/actions/user.action';
 
 @Injectable({
   providedIn: 'root'
@@ -113,10 +113,7 @@ export class AuthService {
   }
 
   public signOut(): Promise<void> {
-    return this.fireAuth.auth.signOut()
-      .then(() => {
-        this.store.dispatch(new UserActions.RemoveUser())
-      })
+    return this.fireAuth.auth.signOut();
   }
 
   public deleteUser() {

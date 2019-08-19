@@ -1,18 +1,24 @@
-<nb-layout>
-  <nb-layout-header *ngIf="accountRouters">
-    <wd-navigation-bar></wd-navigation-bar>
-  </nb-layout-header>
+<ng-container *ngIf="!loading">
+  <nb-layout>
 
-  <nb-layout-column class="layout__column">
+    <!-- Start: Header -->
+    <nb-layout-header *ngIf="accountRouters">
+      <wd-navigation-bar></wd-navigation-bar>
+    </nb-layout-header>
+    <!-- End: Header -->
 
-    <ng-container *ngIf="accountRouters">
-      <wd-alert-message
-      *ngFor="let alert of alerts; let i = index"
-      [alert]="alert"
-      [index]="i"
-      ></wd-alert-message>
-    </ng-container>
+    <nb-layout-column class="layout__column">
 
-    <router-outlet></router-outlet>
-  </nb-layout-column>
-</nb-layout>
+      <!-- Start: Alerts -->
+      <ng-container *ngIf="accountRouters">
+        <wd-alert-message
+        *ngFor="let alert of alerts; let i = index"
+        [alert]="alert"
+        [index]="i"></wd-alert-message>
+      </ng-container>
+      <!-- End: Alerts -->
+
+      <router-outlet></router-outlet>
+    </nb-layout-column>
+  </nb-layout>
+</ng-container>

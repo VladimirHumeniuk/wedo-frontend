@@ -7,5 +7,4 @@ export interface User {
   accountType: string;
   createdAt: Date;
   acceptTermsAndConditions: boolean;
-  alerts?: Alert;
 }

@@ -1,5 +1,5 @@
 import { MetaReducer, ActionReducer, Action } from '@ngrx/store';
-import { AppState } from './../app.state';
+import { AppState } from './../../app.state';
 import { _localStorageSync } from './localStorageSync.reducer';
 import { REMOVE_USER } from '../actions/user.action';
 

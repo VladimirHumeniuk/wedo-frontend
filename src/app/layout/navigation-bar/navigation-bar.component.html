@@ -1,6 +1,6 @@
 <div class="navigation-bar">
   <a class="navigation-bar__logo" routerLink='/'>
-    wd
+    gib.do
   </a>
 
   <div class="navigation-bar__menu">
@@ -10,30 +10,30 @@
 
     <ul class="navigation-bar__menu-items">
 
-      <li class="navigation-bar__menu-item">
+      <li *ngIf="!user.uid" class="navigation-bar__menu-item">
         <a nbButton outline routerLink='/sign-in'>
           <nb-icon icon="log-in-outline"></nb-icon>
           Sign In
         </a>
       </li>
 
-      <li class="navigation-bar__menu-item">
+      <li *ngIf="!user.uid" class="navigation-bar__menu-item">
         <a nbButton hero routerLink='/sign-up'>
           <nb-icon icon="person-add-outline"></nb-icon>
           Sign Up
         </a>
       </li>
 
-      <li class="navigation-bar__menu-item">
+      <li *ngIf="user.uid" class="navigation-bar__menu-item">
         <button nbButton hero (click)="signOut()">
           <nb-icon icon="person-add-outline"></nb-icon>
           Sign Out
         </button>
       </li>
 
-      <li (click)="delete()" class="navigation-bar__menu-item">
+      <!-- <li (click)="delete()" class="navigation-bar__menu-item">
         delete
-      </li>
+      </li> -->
 
     </ul>
   </div>

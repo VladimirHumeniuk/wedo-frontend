@@ -16,7 +16,7 @@ import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: HomeComponent
   },
   {
     path: 'sign-up',

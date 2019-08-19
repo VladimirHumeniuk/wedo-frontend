@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Alert } from './../shared/models';
+import { Alert } from './../../shared/models';
 
 export const ADD_ALERT   = '[ALERT] Add'
 export const REMOVE_ALERT = '[ALERT] Remove'

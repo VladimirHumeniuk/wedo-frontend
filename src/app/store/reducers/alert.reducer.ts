@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Alert } from '../shared/models';
+import { Alert } from '../../shared/models';
 import * as AlertActions from '../actions/alert.action';
 
 export function alertReducer(state: Alert[] = [], action: AlertActions.Actions) {
