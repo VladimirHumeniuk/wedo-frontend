@@ -7,32 +7,31 @@ import { AppState } from './../../app.state';
 import { User } from './../models/user.model';
 import * as UserActions from './../../store/actions/user.action';
 import { ALERTS } from '../constants'
+import { from } from 'rxjs';
+import { map, tap } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService {
 
-  public user$ = this.store.select('user')
+    public user$ = this.store.select('user');
 
-  constructor(
-    private fireStore: AngularFirestore,
-    private fireAuth: AngularFireAuth,
-    private store: Store<AppState>
-  ) {
-    this.fireAuth.authState.subscribe((auth: firebase.User) => {
-      if (auth) {
-        const { uid } = auth
+    constructor(
+        private fireStore: AngularFirestore,
+        private fireAuth: AngularFireAuth,
+        private store: Store<AppState>
+    ) {
+    }
 
-        this.fireStore.collection('users').doc(uid).ref.get()
-        .then((data: firebase.firestore.DocumentSnapshot) => {
-          const user = data.data() as User
+    public getUser(uid: string): Observable<User> {
+        const source$ = from(this.fireStore.collection('users').doc(uid).ref.get())
+            .pipe(map((data: firebase.firestore.DocumentSnapshot) => data.data() as User));
+        return source$;
+    }
 
-          this.store.dispatch(new UserActions.SaveUser(user))
-        })
-      } else {
-        this.store.dispatch(new UserActions.RemoveUser())
-      }
-    })
-  }
+    public getAuth(): Observable<{ uid: string }> {
+        const source$ = this.fireAuth.authState as Observable<{uid: string}>;
+        return source$;
+    }
 }

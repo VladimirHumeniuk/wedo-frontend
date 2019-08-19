@@ -7,7 +7,8 @@ import {
   NbThemeModule,
   NbLayoutModule,
   NbButtonModule,
-  NbIconModule
+  NbIconModule,
+  NbSpinnerModule
 } from '@nebular/theme';
 
 // Modules
@@ -23,6 +24,8 @@ import { AppComponent } from './app.component';
 
 // Reducers
 import { reducers, metaReducers } from './store/reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from './store/effects/user.effect';
 
 @NgModule({
   declarations: [
@@ -38,9 +41,11 @@ import { reducers, metaReducers } from './store/reducers';
     NbEvaIconsModule,
     NbIconModule,
     NbLayoutModule,
+    NbSpinnerModule,
     NbThemeModule.forRoot({ name: 'default' }),
     SharedModule,
-    StoreModule.forRoot(reducers, { metaReducers })
+    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot([UserEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]

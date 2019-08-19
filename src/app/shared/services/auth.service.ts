@@ -113,10 +113,7 @@ export class AuthService {
   }
 
   public signOut(): Promise<void> {
-    return this.fireAuth.auth.signOut()
-      .then(() => {
-        this.store.dispatch(new UserActions.RemoveUser())
-      })
+    return this.fireAuth.auth.signOut();
   }
 
   public deleteUser() {
