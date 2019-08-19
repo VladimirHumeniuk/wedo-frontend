@@ -1,81 +1,81 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
+import { AngularFireModule } from "@angular/fire";
 import { AngularFirestore } from '@angular/fire/firestore';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { CountdownModule } from 'ngx-countdown';
 
 import {
-  NbCardModule,
-  NbIconModule,
-  NbCheckboxModule,
+  NbAlertModule,
   NbButtonModule,
-  NbSpinnerModule,
-  NbAlertModule
+  NbCardModule,
+  NbCheckboxModule,
+  NbIconModule,
+  NbSpinnerModule
 } from '@nebular/theme';
 
+// Environments
 import { environment } from '../../../environments/environment';
 
+// Modules
+import { CoreRoutingModule } from './core-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 
-import { CoreRoutingModule } from './core-routing.module';
-
-import { UserResolver } from 'src/app/shared/resolvers/user.resolver';
-
-import { HomeComponent } from './pages/home/home.component';
-import { SignUpComponent } from './pages/sign-up/sign-up.component';
-import { SignInComponent } from './pages/sign-in/sign-in.component';
-import { AuthFormComponent } from './components/auth-form/auth-form.component';
+// Pages
 import { AccountComponent } from './pages/account/account.component';
 import { EmailVerifiedComponent } from './pages/email-verified/email-verified.component';
-import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
-import { RequestPasswordComponent } from './pages/request-password/request-password.component';
-import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
+import { HomeComponent } from './pages/home/home.component';
 import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
+import { RequestPasswordComponent } from './pages/request-password/request-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { SignInComponent } from './pages/sign-in/sign-in.component';
+import { SignUpComponent } from './pages/sign-up/sign-up.component';
+import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 
+// Components
+import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
 
 @NgModule({
   declarations: [
-    HomeComponent,
-    SignUpComponent,
-    AuthFormComponent,
-    SignInComponent,
-    LoginMethodsComponent,
     AccountComponent,
+    AuthFormComponent,
     EmailVerifiedComponent,
-    ResetPasswordComponent,
+    HomeComponent,
+    InvalidActionCodeComponent,
+    LoginMethodsComponent,
     RequestPasswordComponent,
-    VerifyEmailComponent,
-    InvalidActionCodeComponent
+    ResetPasswordComponent,
+    SignInComponent,
+    SignUpComponent,
+    VerifyEmailComponent
   ],
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireFunctionsModule,
-    CountdownModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
+    AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     CoreRoutingModule,
-    NbCardModule,
-    NbIconModule,
-    NbCheckboxModule,
-    NbButtonModule,
-    NbSpinnerModule,
+    CountdownModule,
+    FormsModule,
     NbAlertModule,
+    NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
+    NbIconModule,
+    NbSpinnerModule,
+    ReactiveFormsModule,
+    SharedModule
   ],
   exports: [
     RouterModule
   ],
   providers: [
-    AngularFirestore,
-    UserResolver
+    AngularFirestore
   ]
 })
 export class CoreModule { }

@@ -45,7 +45,7 @@ export class LayoutComponent extends SafeComponent implements OnInit {
 
     this.router.events
         .pipe(
-            takeUntil(this.unsubscriber)
+          takeUntil(this.unsubscriber)
         )
         .subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
@@ -65,14 +65,14 @@ export class LayoutComponent extends SafeComponent implements OnInit {
 
     this.alertsMessagesService.alerts$.
         pipe(
-            takeUntil(this.unsubscriber)
+          takeUntil(this.unsubscriber)
         ).subscribe(alerts => {
       this.alerts = alerts
     })
   }
 
   ngOnInit() {
-      this.store.dispatch(new GetUser());
+    this.store.dispatch(new GetUser());
   }
 
 }

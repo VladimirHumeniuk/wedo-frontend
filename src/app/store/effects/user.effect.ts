@@ -10,26 +10,25 @@ import { Authenticated, NotAuthenticated, AuthError } from 'src/app/store/action
 @Injectable()
 export class UserEffects {
 
-    constructor(
-        private readonly actions: Actions,
-        private readonly userService: UserService) {
+  constructor(
+    private readonly actions: Actions,
+    private readonly userService: UserService
+  ) { }
 
-    }
-
-    @Effect()
-    getUser$: Observable<Action> = this.actions.pipe(
-        ofType('[AUTH] Get User'),
-        switchMap(x => this.userService.getAuth()),
-        map((authData: any) => authData && authData.uid || null),
-        switchMap(uid => {
-            if (uid) {
-                return this.userService.getUser(uid).pipe(
-                    map(user => new Authenticated(user))
-                );
-            } else {
-                return of(new NotAuthenticated());
-            }
-        }),
-        catchError(x => of(new AuthError()))
-    );
+  @Effect()
+  getUser$: Observable<Action> = this.actions.pipe(
+    ofType('[AUTH] Get User'),
+    switchMap(x => this.userService.getAuth()),
+    map((authData: any) => authData && authData.uid || null),
+    switchMap(uid => {
+      if (uid) {
+        return this.userService.getUser(uid).pipe(
+          map(user => new Authenticated(user))
+        );
+      } else {
+        return of(new NotAuthenticated());
+      }
+    }),
+    catchError(x => of(new AuthError()))
+  );
 }
