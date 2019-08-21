@@ -17,6 +17,7 @@ import { KeysPipe } from './pipes/keys.pipe';
 import { FormExplainComponent } from './components/form-explain/form-explain.component';
 import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
+import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AlertMessageComponent } from './components/alert-message/alert-message.
     KeysPipe,
     FormExplainComponent,
     FromCamelCasePipe,
-    AlertMessageComponent
+    AlertMessageComponent,
+    FileDropzoneComponent
   ],
   imports: [
     RouterModule,
@@ -45,7 +47,8 @@ import { AlertMessageComponent } from './components/alert-message/alert-message.
     FormExplainComponent,
     KeysPipe,
     FromCamelCasePipe,
-    AlertMessageComponent
+    AlertMessageComponent,
+    FileDropzoneComponent
   ]
 })
 export class SharedModule { }
