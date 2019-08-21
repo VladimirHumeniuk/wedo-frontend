@@ -12,6 +12,7 @@ import { EmailVerifiedComponent } from './pages/email-verified/email-verified.co
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
+import { MyCardComponent } from './pages/my-card/my-card.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,11 @@ const routes: Routes = [
         component: InvalidActionCodeComponent
       }
     ]
+  },
+  {
+    path: 'my-card',
+    component: MyCardComponent,
+    canActivate: [isUser]
   }
 ];
 

@@ -35,6 +35,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
+import { MyCardComponent } from './pages/my-card/my-card.component';
 
 // Components
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
@@ -52,7 +53,8 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     ResetPasswordComponent,
     SignInComponent,
     SignUpComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    MyCardComponent
   ],
   imports: [
     AngularFireAuthModule,

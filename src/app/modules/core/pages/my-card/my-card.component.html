@@ -1,0 +1,42 @@
+<nb-card>
+  <nb-card-header>My card</nb-card-header>
+  <nb-card-body>
+    <div class="my-card my-card--company">
+      <div class="my-card__info">
+        <form [formGroup]="myCardForm">
+          <wd-form-item>
+            <wd-input-group
+            name="title"
+            type="text"
+            [parentForm]="myCardForm"
+            placeholder="Company name"></wd-input-group>
+          </wd-form-item>
+
+          <wd-form-item>
+            <wd-input-group
+            name="phone"
+            type="text"
+            [parentForm]="myCardForm"
+            placeholder="Phone number"></wd-input-group>
+          </wd-form-item>
+
+          <wd-form-item>
+            <wd-input-group
+            name="email"
+            type="email"
+            [parentForm]="myCardForm"
+            placeholder="Email address"></wd-input-group>
+          </wd-form-item>
+
+          <wd-form-item>
+            <wd-input-group
+            name="address"
+            type="text"
+            [parentForm]="myCardForm"
+            placeholder="Company address"></wd-input-group>
+          </wd-form-item>
+        </form>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
