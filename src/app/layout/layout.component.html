@@ -2,23 +2,32 @@
   <nb-layout>
 
     <!-- Start: Header -->
-    <nb-layout-header *ngIf="accountRouters">
+    <nb-layout-header *ngIf="accountRouters" class="layout__header">
       <wd-navigation-bar></wd-navigation-bar>
     </nb-layout-header>
     <!-- End: Header -->
 
     <nb-layout-column class="layout__column">
 
-      <!-- Start: Alerts -->
-      <ng-container *ngIf="accountRouters">
-        <wd-alert-message
-        *ngFor="let alert of alerts; let i = index"
-        [alert]="alert"
-        [index]="i"></wd-alert-message>
-      </ng-container>
-      <!-- End: Alerts -->
+      <!-- Start: Svg Curve -->
+      <svg class="curve-top" *ngIf="accountRouters" viewBox="0 0 1842 276" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <path d="M921,275 C1605.83309,275 2161,-0.5 2161,-0.5 C2161,-0.5 1605.83309,-276 921,-276 C236.16691,-276 -319,-0.5 -319,-0.5 C-319,-0.5 236.16691,275 921,275 Z" stroke="#fdd92b" fill="#fdd92b"></path>
+      </svg>
 
-      <router-outlet></router-outlet>
+      <!-- End: Svg Curve -->
+
+      <div class="layout__content">
+        <!-- Start: Alerts -->
+        <ng-container *ngIf="accountRouters">
+          <wd-alert-message
+          *ngFor="let alert of alerts; let i = index"
+          [alert]="alert"
+          [index]="i"></wd-alert-message>
+        </ng-container>
+        <!-- End: Alerts -->
+
+        <router-outlet></router-outlet>
+      </div>
     </nb-layout-column>
   </nb-layout>
 </ng-container>

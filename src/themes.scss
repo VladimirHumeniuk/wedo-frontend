@@ -1,11 +1,31 @@
 @import '~@nebular/theme/styles/theming';
 @import '~@nebular/theme/styles/themes/default';
+@import 'styles/variables/variables';
 
 $nb-themes: nb-register-theme((
 
   layout-padding: 2rem,
   layout-medium-padding: 1.45em,
   layout-small-padding: 1em,
+  layout-background-color: $c-neutral,
+
+  header-background-color: $c-primary,
+  header-shadow: none,
+
+  button-rectangle-border-radius: 9px,
+
+  button-filled-info-background-color: #fff,
+  button-filled-info-border-color: #fff,
+  button-filled-info-text-color: $c-font-dark,
+  button-filled-info-hover-border-color: $c-gray-50,button-filled-info-hover-background-color: $c-gray-50,
+  button-filled-info-focus-border-color: $c-gray-100,
+  button-filled-info-active-background-color: $c-gray-100,
+  button-filled-info-active-border-color: $c-gray-100,
+
+  button-ghost-info-text-color: $c-gray-800,
+  button-ghost-info-focus-text-color: $c-gray-900,
+  button-ghost-info-hover-color: $c-gray-700,
+  button-ghost-info-active-text-color: $c-gray-1000,
 
 ), default, default);
 
