@@ -3,6 +3,7 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -61,6 +62,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     AngularFireFunctionsModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
+    BrowserAnimationsModule,
     CoreRoutingModule,
     CountdownModule,
     FormsModule,

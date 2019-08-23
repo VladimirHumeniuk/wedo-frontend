@@ -1,12 +1,25 @@
-<div class="dropzone">
+<div class="dropzone" [formGroup]="parentForm">
   <label class="dropzone__label">
 
     <span class="dropzone__icon">
       <nb-icon icon="image-outline"></nb-icon>
     </span>
 
-    <span class="dropzone__title">Upload card image</span>
-    <span class="dropzone__subtitle">max file size: 180kb</span>
-    <input class="dropzone__input" type="file">
+    <span [@hideInfo]="!selectedFiles ? 'initial' : 'final'">
+      <span class="dropzone__title">Upload card image</span>
+      <span class="dropzone__subtitle">max file size: {{maxSize}}kb</span>
+    </span>
+
+    <span></span>
+
+    <input
+    id="{{name}}"
+    type="file"
+    name="{{name}}"
+    class="dropzone__input"
+    [formControlName]="name"
+    (change)="detectFiles($event)">
   </label>
+
+  <span class="wave" [@waves]="!selectedFiles ? 'initial' : 'final'"></span>
 </div>

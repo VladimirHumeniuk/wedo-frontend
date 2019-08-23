@@ -10,7 +10,12 @@
           placeholder="Company name"></wd-input-group>
         </wd-form-item>
 
-        <wd-file-dropzone class="my-card__dropzone"></wd-file-dropzone>
+        <wd-file-dropzone
+        class="my-card__dropzone"
+        name="image"
+        maxSize="180"
+        [parentForm]="myCardForm"
+        ></wd-file-dropzone>
       </nb-card-body>
     </nb-card>
 

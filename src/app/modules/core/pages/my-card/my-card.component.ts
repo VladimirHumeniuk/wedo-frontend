@@ -25,6 +25,9 @@ export class MyCardComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(20)
       ]],
+      image: [null, [
+        Validators.required,
+      ]],
       phone: ['', [
         Validators.minLength(3),
         Validators.maxLength(20)

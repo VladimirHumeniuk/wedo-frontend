@@ -7,6 +7,7 @@
   position: relative;
   border: 2px dashed #edf1f7;
   border-radius: 9px;
+  overflow: hidden;
 }
 
 .dropzone__label {
@@ -64,7 +65,6 @@
     height: 100%;
     border-radius: 50%;
     background-color: inherit;
-
     z-index: 0;
   }
 
