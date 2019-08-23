@@ -1,16 +1,17 @@
 <div class="dropzone" [formGroup]="parentForm">
   <label class="dropzone__label">
 
-    <span class="dropzone__icon">
-      <nb-icon icon="image-outline"></nb-icon>
+    <span
+    class="dropzone__icon"
+    [@slideDown]="!selectedFile ? 'initial' : 'final'"
+    (click)="selectedFile ? clear($event) : null">
+      <nb-icon [icon]="selectedFile ? 'trash-2-outline' : 'image-outline'"></nb-icon>
     </span>
 
-    <span [@hideInfo]="!selectedFiles ? 'initial' : 'final'">
+    <span [@hide]="!selectedFile ? 'initial' : 'final'">
       <span class="dropzone__title">Upload card image</span>
       <span class="dropzone__subtitle">max file size: {{maxSize}}kb</span>
     </span>
-
-    <span></span>
 
     <input
     id="{{name}}"
@@ -19,7 +20,12 @@
     class="dropzone__input"
     [formControlName]="name"
     (change)="detectFiles($event)">
-  </label>
 
-  <span class="wave" [@waves]="!selectedFiles ? 'initial' : 'final'"></span>
+    <span
+    class="dropzone__preview"
+    [@blurImage]="!selectedFile ? 'initial' : 'final'">
+      <img [src]="fileUrl" [alt]="selectedFile?.name">
+    </span>
+
+  </label>
 </div>
