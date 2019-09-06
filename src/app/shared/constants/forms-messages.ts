@@ -23,5 +23,9 @@ export const FORMS_MESSAGES = {
   },
   acceptTermsAndConditions: {
     required: "Please indicate that you have read and agree to the Terms and Conditions"
+  },
+  imageUpload: {
+    type: `Uploaded file is not a valid image.\nOnly JPG, JPEG and PNG files are allowed.`,
+    size: "Image exceeded maximum size of"
   }
 }

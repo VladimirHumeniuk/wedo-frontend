@@ -1,16 +1,25 @@
-<div class="dropzone" [formGroup]="parentForm">
+<div
+class="dropzone"
+[ngClass]="{'dropzone--invalid': validationErrors.length > 0, 'dropzone--valid': selectedFile}"
+[formGroup]="parentForm">
   <label class="dropzone__label">
 
     <span
     class="dropzone__icon"
     [@slideDown]="!selectedFile ? 'initial' : 'final'"
     (click)="selectedFile ? clear($event) : null">
-      <nb-icon [icon]="selectedFile ? 'trash-2-outline' : 'image-outline'"></nb-icon>
+      <nb-icon [icon]="icon"></nb-icon>
     </span>
 
     <span [@hide]="!selectedFile ? 'initial' : 'final'">
-      <span class="dropzone__title">Upload card image</span>
-      <span class="dropzone__subtitle">max file size: {{maxSize}}kb</span>
+      <ng-container *ngIf="validationErrors.length === 0">
+        <span class="dropzone__title">Upload card image</span>
+        <span class="dropzone__subtitle">max file size: {{maxSize}}kb</span>
+      </ng-container>
+
+      <ng-container *ngIf="validationErrors.length > 0">
+        <span class="dropzone__title dropzone__title--invalid"><b>Upload failed:</b></span>
+      </ng-container>
     </span>
 
     <input
@@ -25,6 +34,12 @@
     class="dropzone__preview"
     [@blurImage]="!selectedFile ? 'initial' : 'final'">
       <img [src]="fileUrl" [alt]="selectedFile?.name">
+    </span>
+
+    <span
+    *ngFor="let error of validationErrors"
+    class="dropzone__error">
+      {{ error.message }}
     </span>
 
   </label>

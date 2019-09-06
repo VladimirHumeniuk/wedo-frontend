@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Upload } from '../../models/upload';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-file-dropzone',
@@ -54,20 +55,48 @@ export class FileDropzoneComponent implements OnInit {
   public selectedFile: FileList
   public uploadData: Upload
   public fileUrl: string | ArrayBuffer
+  public validationErrors: Array<ValidationErrors> = []
+  public icon: string = 'image-outline'
 
   private fileReader: FileReader = new FileReader()
+  private imageRegexp: RegExp = new RegExp('(.*?)\.(jpg|png|jpeg)$')
 
   constructor() { }
 
   public detectFiles(event): void {
     if (event.target.files.length > 0) {
       const file = event.target.files[0]
-      this.selectedFile = file
+      const { name, size, type } = file
+      const isImage = this.imageRegexp.test(type.toLowerCase())
+      const isValidSize = size <= (this.maxSize * 1000)
 
-      this.fileReader.readAsDataURL(file);
+      if (isValidSize && isImage) {
+        this.selectedFile = file
+        this.icon = 'trash-2-outline'
 
-      this.fileReader.onload = () => {
-        this.fileUrl = this.fileReader.result
+        this.fileReader.readAsDataURL(file);
+
+        this.fileReader.onload = () => {
+          this.fileUrl = this.fileReader.result
+        }
+      } else {
+        const control = this.parentForm.get(this.name)
+
+          if (!isImage) {
+            control.setErrors({
+              'type': {
+                message: FORMS_MESSAGES.imageUpload.type
+              }
+            })
+          }
+
+          if (!isValidSize) {
+            control.setErrors({
+              'size': {
+                message: `${FORMS_MESSAGES.imageUpload.size} ${this.maxSize}kb`
+              }
+            })
+        }
       }
     }
   }
@@ -80,6 +109,17 @@ export class FileDropzoneComponent implements OnInit {
   }
 
   ngOnInit() {
+    const formControl = this.parentForm.get(this.name)
+
+    formControl.statusChanges.subscribe((status: string) => {
+      if (status === 'VALID') this.validationErrors = []
+      if (status === 'INVALID') {
+        this.icon = 'refresh-outline'
+        Object.values(formControl.errors).forEach((error: ValidationErrors) => {
+          this.validationErrors.push(error)
+        })
+      }
+    })
   }
 
 }
