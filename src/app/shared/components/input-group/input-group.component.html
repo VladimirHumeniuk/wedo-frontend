@@ -13,6 +13,7 @@
   class="input-group__input"
   [class.input-group__input--private]='isPrivate'>
     <input
+    *ngIf="type !== 'tel'"
     id="{{name}}"
     name="{{name}}"
     type="{{type}}"
@@ -25,9 +26,32 @@
     nbInput
     fullWidth>
 
+    <input
+    *ngIf="type === 'tel'"
+    id="{{name}}"
+    name="{{name}}"
+    type="{{type}}"
+    placeholder="{{placeholder}}"
+    [formControlName]="name"
+    fieldSize="large"
+    [status]="status"
+    (blur)="getStatus()"
+    (focus)="resetStatus()"
+    [dropSpecialCharacters]="false"
+    [validation]="false"
+    nbInput
+    mask="+000 000 000000000"
+    fullWidth>
+
+    <span
+    *ngIf="type === 'tel'"
+    class="input-group__addon input-group__addon--phone">
+      {{ phoneNumber?.country }}
+    </span>
+
     <button
     *ngIf="isPrivate"
-    class="input-group__private-toggler"
+    class="input-group__addon"
     tabindex="-1"
     aria-hidden="true"
     (click)="showPassword()">

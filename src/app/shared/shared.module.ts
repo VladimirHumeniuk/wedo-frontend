@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask'
 
 import {
   NbAlertModule,
@@ -31,6 +32,7 @@ import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.
     FileDropzoneComponent
   ],
   imports: [
+    NgxMaskModule.forRoot(),
     RouterModule,
     CommonModule,
     FormsModule,

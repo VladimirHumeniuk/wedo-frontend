@@ -24,9 +24,16 @@
         <wd-form-item>
           <wd-input-group
           name="phone"
-          type="text"
+          type="tel"
           [parentForm]="myCardForm"
           placeholder="Phone number"></wd-input-group>
+          <wd-form-explain *ngIf="
+          myCardForm.controls['phone'].errors &&
+          myCardForm.controls['phone'].dirty &&
+          myCardForm.controls['phone'].touched"
+          controlName="phone"
+          [errorsCodes]="myCardForm.controls['phone'].errors"
+          ></wd-form-explain>
         </wd-form-item>
 
         <wd-form-item>

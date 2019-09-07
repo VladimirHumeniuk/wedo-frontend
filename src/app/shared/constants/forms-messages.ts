@@ -27,5 +27,8 @@ export const FORMS_MESSAGES = {
   imageUpload: {
     type: `Uploaded file is not a valid image.\nOnly JPG, JPEG and PNG files are allowed.`,
     size: "Image exceeded maximum size of"
+  },
+  phone: {
+    invalid: `Invalid phone number`
   }
 }

@@ -33,7 +33,7 @@ class="dropzone"
     <span
     class="dropzone__preview"
     [@blurImage]="!selectedFile ? 'initial' : 'final'">
-      <img [src]="fileUrl" [alt]="selectedFile?.name">
+      <img *ngIf="selectedFile" [src]="fileUrl" [alt]="selectedFile?.name">
     </span>
 
     <span

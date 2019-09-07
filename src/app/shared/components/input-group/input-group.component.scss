@@ -31,16 +31,23 @@
   }
 }
 
-.input-group__private-toggler {
+.input-group__addon {
   position: absolute;
   right: .2em;
   top: 50%;
+  padding: 1px 7px;
   transform: translateY(-50%);
   background-color: transparent;
   z-index: 1;
   border: 0;
   color: #1a2138;
   cursor: pointer;
+
+  &--phone {
+    font-size: 11px;
+    padding: 1px 9px;
+    cursor: default;
+  }
 }
 
 .input-group__private-icon {

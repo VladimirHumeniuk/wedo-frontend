@@ -23,13 +23,10 @@ export class MyCardComponent implements OnInit {
       title: ['', [
         Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(20)
+        Validators.maxLength(34)
       ]],
-      image: [null, []],
-      phone: ['', [
-        Validators.minLength(3),
-        Validators.maxLength(20)
-      ]],
+      image: [null],
+      phone: [''],
       address: ['', [
         Validators.minLength(3),
         Validators.maxLength(20)
