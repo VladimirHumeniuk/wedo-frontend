@@ -52,7 +52,7 @@ export class FileDropzoneComponent implements OnInit {
   @Input() maxSize: number
   @Input() parentForm: FormGroup
 
-  public selectedFile: FileList
+  public selectedFile: any
   public uploadData: Upload
   public fileUrl: string | ArrayBuffer
   public validationErrors: Array<ValidationErrors> = []
@@ -69,6 +69,9 @@ export class FileDropzoneComponent implements OnInit {
       const { name, size, type } = file
       const isImage = this.imageRegexp.test(type.toLowerCase())
       const isValidSize = size <= (this.maxSize * 1000)
+
+      this.fileUrl = null
+      this.selectedFile = null
 
       if (isValidSize && isImage) {
         this.selectedFile = file
@@ -106,6 +109,7 @@ export class FileDropzoneComponent implements OnInit {
     this.parentForm.get(this.name).reset()
     this.fileUrl = null
     this.selectedFile = null
+    this.icon = 'image-outline'
   }
 
   ngOnInit() {

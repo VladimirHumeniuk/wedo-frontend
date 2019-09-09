@@ -19,10 +19,12 @@ export class InputGroupComponent implements OnInit {
   @Input() helperLink: string
   @Input() helperTitle: string
   @Input() isPrivate: boolean
+  @Input() rows: number
+  @Input() maxlength: number
 
   public status: string
   public passVisible: boolean = false
-  private phoneNumber: PhoneNumber
+  public phoneNumber: PhoneNumber
 
   public getStatus() {
     this.status = this.formControlService.getControlStatus(this.name, this.parentForm)
@@ -69,8 +71,6 @@ export class InputGroupComponent implements OnInit {
             })
           }
         }
-
-        console.log('formControl.errors', formControl.errors);
       })
     }
   }

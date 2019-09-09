@@ -1,57 +1,71 @@
 <div class="my-card my-card--company">
-  <form [formGroup]="myCardForm" class="my-card__info">
-    <nb-card class="my-card__card">
-      <nb-card-body class="my-card__form-group">
-        <wd-form-item>
-          <wd-input-group
-          name="title"
-          type="text"
+  <form [formGroup]="myCardForm">
+    <div class="my-card__info">
+      <nb-card class="my-card__card">
+        <nb-card-body class="my-card__form-group">
+          <wd-form-item>
+            <wd-input-group
+            name="title"
+            type="text"
+            [parentForm]="myCardForm"
+            placeholder="Company name"></wd-input-group>
+          </wd-form-item>
+
+          <wd-file-dropzone
+          class="my-card__dropzone"
+          name="image"
+          maxSize="250"
           [parentForm]="myCardForm"
-          placeholder="Company name"></wd-input-group>
-        </wd-form-item>
+          ></wd-file-dropzone>
+        </nb-card-body>
+      </nb-card>
 
-        <wd-file-dropzone
-        class="my-card__dropzone"
-        name="image"
-        maxSize="250"
-        [parentForm]="myCardForm"
-        ></wd-file-dropzone>
-      </nb-card-body>
-    </nb-card>
+      <nb-card class="my-card__card">
+        <nb-card-body class="my-card__form-group">
+          <wd-form-item>
+            <wd-input-group
+            name="phone"
+            type="tel"
+            [parentForm]="myCardForm"
+            placeholder="Phone number"></wd-input-group>
+            <wd-form-explain *ngIf="
+            myCardForm.controls['phone'].errors &&
+            myCardForm.controls['phone'].dirty &&
+            myCardForm.controls['phone'].touched"
+            controlName="phone"
+            [errorsCodes]="myCardForm.controls['phone'].errors"
+            ></wd-form-explain>
+          </wd-form-item>
 
-    <nb-card class="my-card__card">
-      <nb-card-body class="my-card__form-group">
-        <wd-form-item>
-          <wd-input-group
-          name="phone"
-          type="tel"
-          [parentForm]="myCardForm"
-          placeholder="Phone number"></wd-input-group>
-          <wd-form-explain *ngIf="
-          myCardForm.controls['phone'].errors &&
-          myCardForm.controls['phone'].dirty &&
-          myCardForm.controls['phone'].touched"
-          controlName="phone"
-          [errorsCodes]="myCardForm.controls['phone'].errors"
-          ></wd-form-explain>
-        </wd-form-item>
+          <wd-form-item>
+            <wd-input-group
+            name="email"
+            type="email"
+            [parentForm]="myCardForm"
+            placeholder="Email address"></wd-input-group>
+          </wd-form-item>
 
-        <wd-form-item>
-          <wd-input-group
-          name="email"
-          type="email"
-          [parentForm]="myCardForm"
-          placeholder="Email address"></wd-input-group>
-        </wd-form-item>
-
-        <wd-form-item>
           <wd-input-group
           name="address"
-          type="text"
+          type="textarea"
+          [rows]="3"
           [parentForm]="myCardForm"
           placeholder="Company address"></wd-input-group>
-        </wd-form-item>
-      </nb-card-body>
-    </nb-card>
+        </nb-card-body>
+      </nb-card>
+    </div>
+
+    <div class="my-card__description">
+      <nb-card class="my-card__card">
+        <nb-card-body class="my-card__form-group">
+          <wd-form-item>
+            <wd-wysiwyg
+            label="Company information"
+            [parentForm]="myCardForm"
+            name="body"></wd-wysiwyg>
+          </wd-form-item>
+        </nb-card-body>
+      </nb-card>
+    </div>
   </form>
 </div>

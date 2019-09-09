@@ -25,6 +25,24 @@
   position: relative;
 }
 
+.input-group__textarea {
+  resize: none;
+  font-weight: initial !important;
+}
+
+.input-group__textarea-length {
+  position: absolute;
+  font-size: 0.7rem;
+  bottom: 0.9rem;
+  right: 1.12rem;
+  color: #8f9bb3;
+
+  span:first-child::after {
+    content: "/";
+    letter-spacing: 2px;
+  }
+}
+
 .input-group__input--private {
   input {
     padding-right: 2rem;

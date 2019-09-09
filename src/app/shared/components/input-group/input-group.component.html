@@ -13,7 +13,7 @@
   class="input-group__input"
   [class.input-group__input--private]='isPrivate'>
     <input
-    *ngIf="type !== 'tel'"
+    *ngIf="type !== 'tel' && type !== 'textarea'"
     id="{{name}}"
     name="{{name}}"
     type="{{type}}"
@@ -42,6 +42,23 @@
     nbInput
     mask="+000 000 000000000"
     fullWidth>
+
+    <textarea
+    *ngIf="type === 'textarea'"
+    class="input-group__textarea"
+    nbInput
+    fullWidth
+    rows="{{rows}}"
+    fieldSize="large"
+    [formControlName]="name"
+    [attr.maxlength]="maxlength"
+    placeholder="{{placeholder}}">
+    </textarea>
+
+    <span *ngIf="maxlength" class="input-group__textarea-length">
+      <span>{{ parentForm.controls[name].value.length }}</span>
+      <span>{{ maxlength }}</span>
+    </span>
 
     <span
     *ngIf="type === 'tel'"

@@ -1,7 +1,11 @@
 .my-card__info {
   display: flex;
+  margin-bottom: 2rem;
+}
+
+.my-card__info,
+.my-card__description {
   width: 100%;
-  margin: 0 10px;
 }
 
 .my-card__card {

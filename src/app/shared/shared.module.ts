@@ -6,6 +6,8 @@ import { NgxMaskModule } from 'ngx-mask'
 
 import {
   NbAlertModule,
+  NbButtonModule,
+  NbTooltipModule,
   NbInputModule,
   NbIconModule,
   NbSelectModule
@@ -19,6 +21,8 @@ import { FormExplainComponent } from './components/form-explain/form-explain.com
 import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
 import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.component';
+import { WysiwygComponent } from './components/wysiwyg/wysiwyg.component';
+import { ContentEditableDirective } from './directives/content-editable.directive';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,9 @@ import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.
     FormExplainComponent,
     FromCamelCasePipe,
     AlertMessageComponent,
-    FileDropzoneComponent
+    FileDropzoneComponent,
+    WysiwygComponent,
+    ContentEditableDirective
   ],
   imports: [
     NgxMaskModule.forRoot(),
@@ -38,9 +44,11 @@ import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.
     FormsModule,
     ReactiveFormsModule,
     NbAlertModule,
+    NbButtonModule,
     NbInputModule,
     NbSelectModule,
-    NbIconModule
+    NbIconModule,
+    NbTooltipModule
   ],
   exports: [
     InputGroupComponent,
@@ -50,7 +58,9 @@ import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.
     KeysPipe,
     FromCamelCasePipe,
     AlertMessageComponent,
-    FileDropzoneComponent
+    FileDropzoneComponent,
+    WysiwygComponent,
+    ContentEditableDirective
   ]
 })
 export class SharedModule { }

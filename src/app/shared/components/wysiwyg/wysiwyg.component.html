@@ -1,0 +1,99 @@
+<div class="wysiwyg" [formGroup]="parentForm">
+  <div class="wysiwyg__header">
+    <label
+    class="wysiwyg__label"
+    for="{{name}}">
+      {{label ? label : (name | titlecase)}}
+    </label>
+  </div>
+
+  <div class="wysiwyg__controls">
+    <div class="wysiwyg__control-left">
+      <div class="wysiwyg__controls-formats">
+        <div class="wysiwyg__button" nbTooltip="Bold">
+          <button
+          class="wysiwyg__control-bold"
+          nbButton
+          (click)="formatText('bold')"
+          status="warning">B</button>
+        </div>
+
+        <div class="wysiwyg__button" nbTooltip="Italic">
+          <button
+          class="wysiwyg__control-italic"
+          nbButton
+          (click)="formatText('italic')"
+          status="warning">i</button>
+        </div>
+
+        <div class="wysiwyg__button" nbTooltip="Underline">
+          <button
+          class="wysiwyg__control-underline"
+          nbButton
+          (click)="formatText('underline')"
+          status="warning">U</button>
+        </div>
+      </div>
+
+      <div class="wysiwyg__controls-formats">
+        <div class="wysiwyg__button" nbTooltip="Unordered List">
+          <button
+          nbButton
+          class="wysiwyg__control-list"
+          (click)="formatText('insertUnorderedList')"
+          status="warning">
+            <nb-icon
+            class="wysiwyg__control-icon"
+            icon="list-outline"></nb-icon>
+          </button>
+        </div>
+
+        <div class="wysiwyg__button" nbTooltip="Ordered List">
+          <button
+          nbButton
+          class="wysiwyg__control-list"
+          (click)="formatText('insertOrderedList')"
+          status="warning">
+            <svg class="fr-svg" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#3d3c38"><path d="M2.5,16h2v.5h-1v1h1V18h-2v1h3V15h-3Zm1-7h1V5h-2V6h1Zm-1,2H4.3L2.5,13.1V14h3V13H3.7l1.8-2.1V10h-3Zm5-5V8h14V6Zm0,12h14V16H7.5Zm0-5h14V11H7.5Z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wysiwyg__control-left">
+      <div nbTooltip="Undo" class="wysiwyg__button">
+        <button
+        nbButton
+        class="wysiwyg__control-undo"
+        (click)="formatText('undo')"
+        [disabled]="!dirty"
+        status="warning">
+          <nb-icon
+          class="wysiwyg__control-icon"
+          icon="undo-outline"></nb-icon>
+        </button>
+      </div>
+
+      <div nbTooltip="Redo" class="wysiwyg__button">
+        <button
+        nbButton
+        class="wysiwyg__control-redo"
+        (click)="formatText('redo')"
+        [disabled]="redo === 0"
+        status="warning">
+          <nb-icon
+          class="wysiwyg__control-icon"
+          icon="undo-outline"></nb-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+  class="wysiwyg__content"
+  [formControlName]="name"
+  propValueAccessor="innerHTML"
+  contenteditable="true"
+  nbInput
+  fullWidth></div>
+</div>
