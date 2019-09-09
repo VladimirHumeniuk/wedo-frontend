@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask'
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   NbAlertModule,
   NbButtonModule,
@@ -23,6 +24,7 @@ import { AlertMessageComponent } from './components/alert-message/alert-message.
 import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.component';
 import { WysiwygComponent } from './components/wysiwyg/wysiwyg.component';
 import { ContentEditableDirective } from './directives/content-editable.directive';
+import { SelectComponent } from './components/select/select.component';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,11 @@ import { ContentEditableDirective } from './directives/content-editable.directiv
     AlertMessageComponent,
     FileDropzoneComponent,
     WysiwygComponent,
-    ContentEditableDirective
+    ContentEditableDirective,
+    SelectComponent
   ],
   imports: [
+    NgSelectModule,
     NgxMaskModule.forRoot(),
     RouterModule,
     CommonModule,
@@ -60,7 +64,8 @@ import { ContentEditableDirective } from './directives/content-editable.directiv
     AlertMessageComponent,
     FileDropzoneComponent,
     WysiwygComponent,
-    ContentEditableDirective
+    ContentEditableDirective,
+    SelectComponent
   ]
 })
 export class SharedModule { }

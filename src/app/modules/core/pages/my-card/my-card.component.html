@@ -64,11 +64,11 @@
             </div>
 
             <div>
-              <wd-input-group
-              name="email"
-              type="email"
+              <wd-select
+              name="Category"
               [parentForm]="myCardForm"
-              placeholder="Email address"></wd-input-group>
+              placeholder="Show in category"
+              [items]="categories"></wd-select>
             </div>
           </wd-form-item>
 

@@ -14,6 +14,8 @@ export class MyCardComponent implements OnInit {
 
   private emailRegex: RegExp = EMAIL_REGEXP
 
+  public categories = ['Finance', 'Cars']
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
