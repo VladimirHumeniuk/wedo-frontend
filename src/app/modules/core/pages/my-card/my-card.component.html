@@ -22,27 +22,54 @@
 
       <nb-card class="my-card__card">
         <nb-card-body class="my-card__form-group">
-          <wd-form-item>
-            <wd-input-group
-            name="phone"
-            type="tel"
-            [parentForm]="myCardForm"
-            placeholder="Phone number"></wd-input-group>
-            <wd-form-explain *ngIf="
-            myCardForm.controls['phone'].errors &&
-            myCardForm.controls['phone'].dirty &&
-            myCardForm.controls['phone'].touched"
-            controlName="phone"
-            [errorsCodes]="myCardForm.controls['phone'].errors"
-            ></wd-form-explain>
+          <wd-form-item isDouble="true">
+            <div>
+              <wd-input-group
+              name="phone"
+              type="tel"
+              [parentForm]="myCardForm"
+              placeholder="Phone number"></wd-input-group>
+              <wd-form-explain *ngIf="
+              myCardForm.controls['phone'].errors &&
+              myCardForm.controls['phone'].dirty &&
+              myCardForm.controls['phone'].touched"
+              controlName="phone"
+              [errorsCodes]="myCardForm.controls['phone'].errors"
+              ></wd-form-explain>
+            </div>
+
+            <div>
+              <wd-input-group
+              name="email"
+              type="email"
+              [parentForm]="myCardForm"
+              placeholder="Email address"></wd-input-group>
+            </div>
           </wd-form-item>
 
-          <wd-form-item>
-            <wd-input-group
-            name="email"
-            type="email"
-            [parentForm]="myCardForm"
-            placeholder="Email address"></wd-input-group>
+          <wd-form-item isDouble="true">
+            <div>
+              <wd-input-group
+              name="website"
+              type="text"
+              [parentForm]="myCardForm"
+              placeholder="Your website"></wd-input-group>
+              <wd-form-explain *ngIf="
+              myCardForm.controls['website'].errors &&
+              myCardForm.controls['website'].dirty &&
+              myCardForm.controls['website'].touched"
+              controlName="website"
+              [errorsCodes]="myCardForm.controls['website'].errors"
+              ></wd-form-explain>
+            </div>
+
+            <div>
+              <wd-input-group
+              name="email"
+              type="email"
+              [parentForm]="myCardForm"
+              placeholder="Email address"></wd-input-group>
+            </div>
           </wd-form-item>
 
           <wd-input-group
@@ -64,6 +91,16 @@
             [parentForm]="myCardForm"
             name="body"></wd-wysiwyg>
           </wd-form-item>
+
+          <div class="my-card__submit">
+            <div class="my-card__submit-controls">
+              <nb-checkbox formControlName="publish">Publish my card</nb-checkbox>
+              <button
+              nbButton
+              status="warning"
+              type="submit">Save</button>
+            </div>
+          </div>
         </nb-card-body>
       </nb-card>
     </div>

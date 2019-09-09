@@ -1,3 +1,16 @@
 .form-item {
   margin-bottom: 2rem;
 }
+
+.form-item--double {
+  display: flex;
+  margin-left: -5px;
+  margin-right: -5px;
+
+  ::ng-deep {
+    > * {
+      margin: 0 5px;
+      flex: 1;
+    }
+  }
+}

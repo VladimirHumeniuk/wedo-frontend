@@ -27,16 +27,18 @@ export class MyCardComponent implements OnInit {
       ]],
       image: [null],
       phone: [''],
-      address: [''],
       email: ['', [
         Validators.pattern(this.emailRegex),
         Validators.minLength(3),
         Validators.maxLength(20)
       ]],
+      website: [''],
+      address: [''],
       body: ['', [
         Validators.minLength(0),
         Validators.maxLength(20)
-      ]]
+      ]],
+      publish: [false]
     })
   }
 
