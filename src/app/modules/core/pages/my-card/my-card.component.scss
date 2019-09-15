@@ -1,16 +1,16 @@
-.my-card__info {
-  display: flex;
-  margin-bottom: 2rem;
-}
+@import '../../../../../styles/variables/variables';
 
-.my-card__info,
-.my-card__description {
-  width: 100%;
-}
+.my-card__form {
+  display: grid;
+  grid-gap: 15px;
 
-.my-card__card {
-  flex: 1;
-  margin: 0 10px;
+  @media (min-width: $md-tablet) {
+    grid-gap: 20px;
+  }
+
+  @media (min-width: $md-tablet-landscape) {
+    grid-template-columns: 1fr minmax(0, 1fr);
+  }
 }
 
 .my-card__form-group {
@@ -27,4 +27,37 @@
 .my-card__submit-controls {
   display: flex;
   justify-content: flex-end;
+}
+
+.my-card__card {
+  margin-bottom: 0;
+}
+
+.my-card__submit {
+  @media (min-width: $md-tablet-landscape) {
+    grid-column-start: 2;
+  }
+}
+
+.my-card__description {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep {
+    .wysiwyg,
+    .my-card__text-editor,
+    .my-card__card {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .wysiwyg__header {
+      align-items: flex-start;
+    }
+
+    .wysiwyg__content {
+      height: 100%;
+    }
+  }
 }

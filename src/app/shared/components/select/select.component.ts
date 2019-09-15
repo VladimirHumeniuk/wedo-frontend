@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent {
 
   @Input() items: Array<any>
   @Input() parentForm: FormGroup
@@ -15,8 +15,5 @@ export class SelectComponent implements OnInit {
   @Input() label: string
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -1,3 +1,6 @@
-<p class="form-explain" *ngFor="let error of errorsCodes | keys">
-  {{errorsText[controlName][error]}}
+<p
+class="form-explain"
+[ngClass]="{'form-explain--relative': isRelative}"
+*ngIf="errors">
+  {{ errors[0].message }}
 </p>

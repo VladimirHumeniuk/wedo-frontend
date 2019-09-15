@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, AfterViewInit, Input, ElementRef } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import { FORMS_MESSAGES } from './../../constants/forms-messages';
+import { functions } from 'firebase';
 
 @Component({
   selector: 'wd-wysiwyg',
@@ -11,11 +13,15 @@ export class WysiwygComponent implements OnInit {
   @Input() parentForm: FormGroup
   @Input() label: string
   @Input() name: string
+  @Input() maxLength: number
 
   public dirty: boolean
   public redo: number = 0
+  public length: number = 0
 
-  constructor() { }
+  constructor(
+    private elementRef: ElementRef
+  ) { }
 
   public formatText(style: string): void {
     document.execCommand(style)
@@ -28,18 +34,39 @@ export class WysiwygComponent implements OnInit {
     }
 
     if (style === 'redo') {
-      console.log('this.redo', this.redo);
       this.redo--
     }
   }
 
   ngOnInit() {
+    const htmlRegexp = /<[^>]*>|&nbsp;/g
     const formControl = this.parentForm.get(this.name)
 
     formControl.valueChanges.subscribe((value: string) => {
+      this.length = value.replace(htmlRegexp, '').length
+
       if (formControl.dirty) {
         this.dirty = true
       }
+
+      if (this.length > this.maxLength) {
+        formControl.setErrors({
+          'length': {
+            message: `Maximum character exceeded: ${this.maxLength}`
+          }
+        })
+      }
+    })
+  }
+
+  ngAfterViewInit() {
+    const content: HTMLElement = this.elementRef.nativeElement.querySelector('.wysiwyg__content')
+
+    content.addEventListener('paste', (event: ClipboardEvent) => {
+      event.preventDefault()
+      const text = event.clipboardData.getData('text/plain')
+
+      document.execCommand('insertHTML', false, text);
     })
   }
 

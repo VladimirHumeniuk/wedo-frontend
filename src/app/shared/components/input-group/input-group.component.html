@@ -50,6 +50,9 @@
     fullWidth
     rows="{{rows}}"
     fieldSize="large"
+    [status]="status"
+    (blur)="getStatus()"
+    (focus)="resetStatus()"
     [formControlName]="name"
     [attr.maxlength]="maxlength"
     placeholder="{{placeholder}}">

@@ -19,8 +19,7 @@
 .select {
   ::ng-deep {
     .ng-select {
-      border-radius: 0.25rem;
-      cursor: text;
+      border-radius: .25rem;
 
       &:hover {
         .ng-select-container {
@@ -34,6 +33,12 @@
     }
 
     .ng-valid {
+      &:hover {
+        .ng-select-container {
+          border-color: #00997a;
+        }
+      }
+
       .ng-select-container {
         border-color: $c-success;
       }
@@ -48,8 +53,13 @@
       transition-property: border, background-color, color, box-shadow;
       transition-timing-function: ease-in;
       line-height: 1.5rem;
-      font-size: 0.9375rem;
-      border-radius: 0.25rem;
+      font-size: .9375rem;
+      border-radius: .25rem;
+      cursor: pointer;
+
+      input {
+        cursor: text !important;
+      }
     }
 
     .ng-value,
@@ -72,7 +82,19 @@
       transition-duration: .15s;
       transition-property: border, background-color, color, box-shadow;
       transition-timing-function: ease-in;
-      box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+      box-shadow: 0 .5rem 1rem 0 rgba(44, 51, 73, .1);
+    }
+
+    .ng-invalid.ng-touched {
+      &:hover {
+        .ng-select-container {
+          border-color: #b81d5b;
+        }
+      }
+
+      .ng-select-container  {
+        border-color: $c-error;
+      }
     }
 
     .ng-value,
@@ -89,8 +111,8 @@
     }
 
     .ng-option {
-      padding: 0.6875rem 1.125rem;
-      font-size: 0.9375rem;
+      padding: .6875rem 1.125rem;
+      font-size: .9375rem;
       transition-duration: .15s;
       transition-property: background-color, color;
       transition-timing-function: ease-in;
@@ -107,7 +129,7 @@
 
     .ng-input {
       top: 0 !important;
-      padding: 0.6875rem 1.125rem !important;
+      padding: .6875rem 1.125rem !important;
 
       input {
         color: $c-font-dark;
@@ -115,7 +137,7 @@
     }
 
     .ng-select-focused {
-      box-shadow: 0 0 0 0.375rem #e4e9f2;
+      box-shadow: 0 0 0 .375rem #e4e9f2;
       outline: 0;
 
       .ng-dropdown-panel {

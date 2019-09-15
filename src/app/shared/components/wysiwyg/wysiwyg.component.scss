@@ -1,24 +1,39 @@
 @import '../../../../styles/variables/variables';
 
+.wysiwyg {
+  position: relative;
+}
+
 .wysiwyg__content {
   min-height: 240px;
-  padding: 0.6875rem 1.125rem;
+  padding: .6875rem 1.125rem calc(.6875rem * 2.3);
   line-height: 1.5rem;
-  font-size: 0.9375rem;
-  border-radius: 0.25rem;
+  font-size: .9375rem;
+  border-radius: .25rem;
 }
 
 .wysiwyg__header {
   display: flex;
-  align-self: center;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: .5rem;
 }
 
 .wysiwyg__controls {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-areas: 'formats formats' 'lists actions';
   margin-bottom: 10px;
+  grid-gap: 8px;
+
+  @media (min-width: 375px) {
+    grid-template-areas: 'formats lists' 'actions actions';
+  }
+
+  @media (min-width: $md-phone-landscape) {
+    grid-template-columns: auto 2fr 1fr;
+    grid-template-areas: 'formats lists actions';
+    grid-gap: 20px;
+  }
 
   .wysiwyg__button {
     & ~ .wysiwyg__button {
@@ -27,18 +42,31 @@
   }
 }
 
-.wysiwyg__control-left,
-.wysiwyg__control-right {
+.wysiwyg__controls-formats,
+.wysiwyg__controls-lists,
+.wysiwyg__control-actions {
   display: flex;
-  align-items: center;
 }
 
 .wysiwyg__controls-formats {
-  display: flex;
+  grid-area: formats;
+}
 
-  & ~ .wysiwyg__controls-formats {
-    margin-left: 30px;
+.wysiwyg__controls-lists {
+  grid-area: lists;
+
+  @media (min-width: 375px) {
+    justify-content: flex-end;
   }
+
+  @media (min-width: $md-phone-landscape) {
+    justify-content: flex-start;
+  }
+}
+
+.wysiwyg__control-actions {
+  grid-area: actions;
+  justify-content: flex-end;
 }
 
 .wysiwyg__control-bold {
@@ -49,6 +77,16 @@
 .wysiwyg__control-underline,
 .wysiwyg__control-bold {
   width: 50px;
+}
+
+.wysiwyg__control-list {
+  @media (max-width: 374px) {
+    width: 50px;
+
+    &.appearance-filled.status-warning {
+      padding: 10px;
+    }
+  }
 }
 
 .wysiwyg__control-icon {
@@ -78,4 +116,24 @@
 
 .fr-svg {
   height: 1rem;
+}
+
+.wysiwyg__length {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: .75rem;
+  color: $c-font-dark;
+  transition-duration: .15s;
+  transition-property: opacity, color;
+  transition-timing-function: ease-in;
+  opacity: 0;
+
+  &--visible {
+    opacity: 1;
+  }
+
+  &--invalid {
+    color: $c-error;
+  }
 }

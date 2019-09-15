@@ -1,5 +1,5 @@
 <div class="my-card my-card--company">
-  <form [formGroup]="myCardForm">
+  <form class="my-card__form" [formGroup]="myCardForm" (ngSubmit)="publishCard()">
     <div class="my-card__info">
       <nb-card class="my-card__card">
         <nb-card-body class="my-card__form-group">
@@ -9,19 +9,53 @@
             type="text"
             [parentForm]="myCardForm"
             placeholder="Company name"></wd-input-group>
+            <wd-form-explain *ngIf="
+            myCardForm.controls['title'].errors &&
+            myCardForm.controls['title'].dirty &&
+            myCardForm.controls['title'].touched"
+            [formName]="myCardForm"
+            controlName="title"></wd-form-explain>
           </wd-form-item>
 
-          <wd-file-dropzone
-          class="my-card__dropzone"
-          name="image"
-          maxSize="250"
-          [parentForm]="myCardForm"
-          ></wd-file-dropzone>
-        </nb-card-body>
-      </nb-card>
+          <wd-form-item isDouble="true">
+            <div>
+              <wd-file-dropzone
+              class="my-card__dropzone"
+              name="image"
+              maxSize="250"
+              [parentForm]="myCardForm"
+              ></wd-file-dropzone>
+            </div>
 
-      <nb-card class="my-card__card">
-        <nb-card-body class="my-card__form-group">
+            <div>
+              <wd-form-item>
+                <wd-input-group
+                name="url"
+                type="text"
+                [parentForm]="myCardForm"
+                placeholder="Your website"></wd-input-group>
+                <wd-form-explain *ngIf="
+                myCardForm.controls['url'].errors &&
+                myCardForm.controls['url'].dirty &&
+                myCardForm.controls['url'].touched"
+                [formName]="myCardForm"
+                controlName="url"></wd-form-explain>
+              </wd-form-item>
+
+              <wd-select
+              name="category"
+              [parentForm]="myCardForm"
+              placeholder="Show in category"
+              [items]="categories"></wd-select>
+              <wd-form-explain *ngIf="
+              myCardForm.controls['category'].errors &&
+              myCardForm.controls['category'].dirty &&
+              myCardForm.controls['category'].touched"
+              [formName]="myCardForm"
+              controlName="category"></wd-form-explain>
+            </div>
+          </wd-form-item>
+
           <wd-form-item isDouble="true">
             <div>
               <wd-input-group
@@ -33,9 +67,8 @@
               myCardForm.controls['phone'].errors &&
               myCardForm.controls['phone'].dirty &&
               myCardForm.controls['phone'].touched"
-              controlName="phone"
-              [errorsCodes]="myCardForm.controls['phone'].errors"
-              ></wd-form-explain>
+              [formName]="myCardForm"
+              controlName="phone"></wd-form-explain>
             </div>
 
             <div>
@@ -44,40 +77,28 @@
               type="email"
               [parentForm]="myCardForm"
               placeholder="Email address"></wd-input-group>
-            </div>
-          </wd-form-item>
-
-          <wd-form-item isDouble="true">
-            <div>
-              <wd-input-group
-              name="website"
-              type="text"
-              [parentForm]="myCardForm"
-              placeholder="Your website"></wd-input-group>
               <wd-form-explain *ngIf="
-              myCardForm.controls['website'].errors &&
-              myCardForm.controls['website'].dirty &&
-              myCardForm.controls['website'].touched"
-              controlName="website"
-              [errorsCodes]="myCardForm.controls['website'].errors"
-              ></wd-form-explain>
-            </div>
-
-            <div>
-              <wd-select
-              name="Category"
-              [parentForm]="myCardForm"
-              placeholder="Show in category"
-              [items]="categories"></wd-select>
+              myCardForm.controls['email'].errors &&
+              myCardForm.controls['email'].dirty &&
+              myCardForm.controls['email'].touched"
+              [formName]="myCardForm"
+              controlName="email"></wd-form-explain>
             </div>
           </wd-form-item>
 
           <wd-input-group
           name="address"
           type="textarea"
-          [rows]="3"
+          [rows]="4"
           [parentForm]="myCardForm"
           placeholder="Company address"></wd-input-group>
+          <wd-form-explain *ngIf="
+          myCardForm.controls['address'].errors &&
+          myCardForm.controls['address'].dirty &&
+          myCardForm.controls['address'].touched"
+          [isRelative]="true"
+          [formName]="myCardForm"
+          controlName="address"></wd-form-explain>
         </nb-card-body>
       </nb-card>
     </div>
@@ -85,24 +106,33 @@
     <div class="my-card__description">
       <nb-card class="my-card__card">
         <nb-card-body class="my-card__form-group">
-          <wd-form-item>
-            <wd-wysiwyg
-            label="Company information"
-            [parentForm]="myCardForm"
-            name="body"></wd-wysiwyg>
-          </wd-form-item>
-
-          <div class="my-card__submit">
-            <div class="my-card__submit-controls">
-              <nb-checkbox formControlName="publish">Publish my card</nb-checkbox>
-              <button
-              nbButton
-              status="warning"
-              type="submit">Save</button>
-            </div>
-          </div>
+          <wd-wysiwyg
+          class="my-card__text-editor"
+          label="Company information"
+          [parentForm]="myCardForm"
+          maxLength="900"
+          name="wysiwyg"></wd-wysiwyg>
+          <wd-form-explain *ngIf="
+          myCardForm.controls['wysiwyg'].errors &&
+          myCardForm.controls['wysiwyg'].dirty &&
+          myCardForm.controls['wysiwyg'].touched"
+          [isRelative]="true"
+          controlName="wysiwyg"
+          [formName]="myCardForm"></wd-form-explain>
         </nb-card-body>
       </nb-card>
+    </div>
+
+    <div class="my-card__submit">
+      <div class="my-card__submit-controls">
+        <nb-checkbox formControlName="isShown">Publish my card</nb-checkbox>
+        <button
+        nbButton
+        status="warning"
+        [disabled]="myCardForm.invalid"
+        [nbSpinner]="loading"
+        type="submit">Save</button>
+      </div>
     </div>
   </form>
 </div>

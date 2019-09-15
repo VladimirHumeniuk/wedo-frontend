@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
-import { Upload } from '../../models/upload';
+import { Upload } from '../../models/upload.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { FORMS_MESSAGES } from 'src/app/shared/constants';
 
