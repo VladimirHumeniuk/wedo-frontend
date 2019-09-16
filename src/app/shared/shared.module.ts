@@ -25,6 +25,7 @@ import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.
 import { WysiwygComponent } from './components/wysiwyg/wysiwyg.component';
 import { ContentEditableDirective } from './directives/content-editable.directive';
 import { SelectComponent } from './components/select/select.component';
+import { TipOffComponent } from './components/tip-off/tip-off.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SelectComponent } from './components/select/select.component';
     FileDropzoneComponent,
     WysiwygComponent,
     ContentEditableDirective,
-    SelectComponent
+    SelectComponent,
+    TipOffComponent
   ],
   imports: [
     NgSelectModule,
@@ -65,7 +67,8 @@ import { SelectComponent } from './components/select/select.component';
     FileDropzoneComponent,
     WysiwygComponent,
     ContentEditableDirective,
-    SelectComponent
+    SelectComponent,
+    TipOffComponent
   ]
 })
 export class SharedModule { }

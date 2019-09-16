@@ -33,6 +33,10 @@
   margin-bottom: 0;
 }
 
+.my-card__tip-off {
+  grid-column: 1 / 3;
+}
+
 .my-card__submit {
   @media (min-width: $md-tablet-landscape) {
     grid-column-start: 2;

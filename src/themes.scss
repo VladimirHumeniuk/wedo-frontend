@@ -4,6 +4,8 @@
 
 $nb-themes: nb-register-theme((
 
+  card-border-radius: $border-radius,
+
   layout-padding: 2rem,
   layout-medium-padding: 1.45em,
   layout-small-padding: 1em,
@@ -34,6 +36,8 @@ $nb-themes: nb-register-theme((
   button-ghost-info-focus-text-color: $c-gray-900,
   button-ghost-info-hover-color: $c-gray-700,
   button-ghost-info-active-text-color: $c-gray-1000,
+
+  card-padding: $card-padding,
 
 ), default, default);
 

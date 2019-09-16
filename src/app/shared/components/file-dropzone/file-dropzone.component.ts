@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Upload } from '../../models/upload.model';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -52,6 +52,8 @@ export class FileDropzoneComponent implements OnInit {
   @Input() maxSize: number
   @Input() parentForm: FormGroup
 
+  @Output() upload: any = new EventEmitter<any>()
+
   public selectedFile: any
   public uploadData: Upload
   public fileUrl: string | ArrayBuffer
@@ -63,7 +65,7 @@ export class FileDropzoneComponent implements OnInit {
 
   constructor() { }
 
-  public detectFiles(event): void {
+  public detectFiles(event: any): void {
     if (event.target.files.length > 0) {
       const file = event.target.files[0]
       const { name, size, type } = file
@@ -81,7 +83,9 @@ export class FileDropzoneComponent implements OnInit {
 
         this.fileReader.onload = () => {
           this.fileUrl = this.fileReader.result
+          this.upload.emit(new Upload(file))
         }
+
       } else {
         const control = this.parentForm.get(this.name)
 

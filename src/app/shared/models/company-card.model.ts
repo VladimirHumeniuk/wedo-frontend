@@ -3,6 +3,7 @@ import { PhoneNumber } from 'libphonenumber-js';
 export interface CompanyCard {
   title: string;
   owner: string;
+  created: Date;
   image?: string;
   url?: string;
   phone?: PhoneNumber;

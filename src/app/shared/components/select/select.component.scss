@@ -13,7 +13,7 @@
   font-weight: 700;
   line-height: 1rem;
   font-size: .75rem;
-  color: #8f9bb3;
+  color: $c-gray-600;
 }
 
 .select {
@@ -46,7 +46,7 @@
 
     .ng-select-container {
       height: 100%;
-      border: 1px solid #edf1f7;
+      border: 1px solid $c-gray-200;
       background-color: #f7f9fc;
       padding: 0;
       transition-duration: .15s;
@@ -74,7 +74,7 @@
     }
 
     .ng-placeholder {
-      color: #8f9bb3 !important;
+      color: $c-gray-600 !important;
     }
 
     .ng-dropdown-panel {

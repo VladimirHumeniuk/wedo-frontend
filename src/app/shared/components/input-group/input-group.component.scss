@@ -1,3 +1,5 @@
+@import '../../../../styles/variables/variables';
+
 .input-group__header {
   display: flex;
   align-self: center;
@@ -11,7 +13,7 @@
   font-weight: 700;
   line-height: 1rem;
   font-size: .75rem;
-  color: #8f9bb3;
+  color: $c-gray-600;
 }
 
 .input-group__helper {
@@ -35,7 +37,7 @@
   font-size: .7rem;
   bottom: .9rem;
   right: 1.12rem;
-  color: #8f9bb3;
+  color: $c-gray-600;
 
   span:first-child::after {
     content: "/";
