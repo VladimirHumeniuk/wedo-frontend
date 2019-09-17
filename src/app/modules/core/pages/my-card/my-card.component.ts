@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, DocumentData, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EMAIL_REGEXP, URL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 import { CompanyCard, User, Upload } from './../../../../shared/models';
-import { UploadService } from 'src/app/shared/services/upload.service';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { mergeMap, finalize } from 'rxjs/operators';
+import { UploadService, UserService } from 'src/app/shared/services';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'wd-my-card',
@@ -21,6 +21,7 @@ export class MyCardComponent implements OnInit {
   public myCardForm: FormGroup
   public loading: boolean
   public upload: Upload
+  public companyCard: CompanyCard
 
   private emailRegexp: RegExp = EMAIL_REGEXP
   private urlRegexp: RegExp = URL_REGEXP
@@ -31,10 +32,32 @@ export class MyCardComponent implements OnInit {
     private fireStore: AngularFirestore,
     private formBuilder: FormBuilder,
     private uploadService: UploadService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private userService: UserService
   ) {
     this.user$.subscribe((user: User) => {
       this.user = user
+
+      if (user) {
+        this.userService.getUserCompany(user.company)
+          .then((company: firebase.firestore.DocumentSnapshot) => {
+            const companyCard = company.data() as CompanyCard
+
+            if (companyCard) {
+              this.companyCard = companyCard
+
+              Object.keys(companyCard).forEach(key => {
+                if (
+                key !== 'cid' &&
+                key !== 'owner' &&
+                key !== 'created' &&
+                key !== 'image') {
+                  this.myCardForm.controls[key].setValue(companyCard[key])
+                }
+              })
+            }
+          })
+      }
     })
   }
 
@@ -45,7 +68,7 @@ export class MyCardComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(34)
       ]],
-      image: [null],
+      image: [],
       phone: [''],
       email: ['', [
         Validators.pattern(this.emailRegexp),
@@ -78,6 +101,7 @@ export class MyCardComponent implements OnInit {
   }
 
   public publishCard(): void {
+    const { uid } = this.user
     this.loading = true
 
     if (this.myCardForm.invalid) {
@@ -86,22 +110,40 @@ export class MyCardComponent implements OnInit {
 
     if (this.myCardForm.valid) {
       const formData: CompanyCard = this.myCardForm.value
-      const companiesLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`companies/${this.user.uid}/`)
+      const companiesLink: AngularFirestoreCollection = this.fireStore.collection('companies')
 
       let companyData: CompanyCard = {
         ...formData,
-        owner: this.user.uid,
+        owner: uid,
         created: new Date()
       }
 
-      if (this.upload) {
-        this.uploadImage().then((url: string) => {
-          companiesLink.set({ image: url }, { merge: true })
-        })
+      if (this.companyCard) {
+        const promises = []
+
+        const updateCompanyData = companiesLink.doc(this.companyCard.cid)
+        .set(companyData, { merge: true })
+
+        promises.push(updateCompanyData)
+
+        if (this.upload) {
+          const updateImage = this.uploadImage().then((url: string) => {
+            companiesLink.doc(this.companyCard.cid)
+              .set({ image: url }, { merge: true })
+          })
+
+          promises.push(updateImage)
+        }
+
+        Promise.all(promises).then(() => this.loading = false)
       }
 
-      companiesLink.set(companyData, { merge: true })
-        .then(() => this.loading = false)
+      if (!this.companyCard) {
+        companiesLink.add(companyData)
+        .then(res => {
+          this.userService.assignCompany(this.user.uid, res.id)
+        })
+      }
     }
   }
 

@@ -1,11 +1,12 @@
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentSnapshot } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, from } from 'rxjs';
 import { map } from "rxjs/operators";
 import { AppState } from 'src/app/app.state';
 import { User } from './../models/user.model';
+import { CompanyCard } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +32,20 @@ export class UserService {
   public getAuth(): Observable<{ uid: string }> {
     const source$ = this.fireAuth.authState as Observable<{uid: string}>;
     return source$;
+  }
+
+  public assignCompany(uid: string, companyId: string): Promise<void> {
+    const userRef = this.fireStore.collection('users').doc(uid)
+    const companyRef = this.fireStore.collection('companies').doc(companyId)
+
+    const updateUser = userRef.set({ company: companyId }, { merge: true })
+    const updateCompany = companyRef.set({ cid: companyId }, { merge: true })
+
+    return updateUser && updateCompany
+  }
+
+  public getUserCompany(companyId: string): Promise<firebase.firestore.DocumentSnapshot> {
+    const companyRef = this.fireStore.collection('companies').doc(companyId)
+    return companyRef.ref.get()
   }
 }
