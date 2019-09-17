@@ -32,7 +32,7 @@
       }
     }
 
-    .ng-valid {
+    .ng-valid.ng-touched {
       &:hover {
         .ng-select-container {
           border-color: #00997a;

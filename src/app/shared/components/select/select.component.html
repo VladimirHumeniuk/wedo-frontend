@@ -9,6 +9,7 @@
 
   <ng-select
   class="select__input"
+  [ngClass]="{'select__input--pristine': parentForm.controls[name].pristine}"
   [formControlName]="name"
   [placeholder]="placeholder"
   [items]="items">
