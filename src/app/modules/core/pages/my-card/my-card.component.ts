@@ -16,13 +16,14 @@ import { map } from 'rxjs/operators';
 })
 export class MyCardComponent implements OnInit {
 
+  public myCardForm: FormGroup
   public user$: Observable<User> = this.store.select('user')
   public user: User
-  public myCardForm: FormGroup
   public loading: boolean
   public upload: Upload
   public companyCard: CompanyCard
 
+  private removeImage: boolean
   private emailRegexp: RegExp = EMAIL_REGEXP
   private urlRegexp: RegExp = URL_REGEXP
 
@@ -90,14 +91,17 @@ export class MyCardComponent implements OnInit {
     })
   }
 
+  public onImageRemove(removeImage: boolean) {
+    if (removeImage) {
+      this.removeImage = removeImage
+      this.myCardForm.markAsDirty()
+    }
+  }
+
   public onUpload(upload: Upload) {
     if (upload) {
       this.upload = upload
     }
-  }
-
-  public uploadImage() {
-    return this.uploadService.publishUploads(this.upload, this.user.uid)
   }
 
   public publishCard(): void {
@@ -127,7 +131,7 @@ export class MyCardComponent implements OnInit {
         promises.push(updateCompanyData)
 
         if (this.upload) {
-          const updateImage = this.uploadImage().then((url: string) => {
+          const updateImage = this.uploadService.publishUploads(this.upload, this.companyCard.cid).then((url: string) => {
             companiesLink.doc(this.companyCard.cid)
               .set({ image: url }, { merge: true })
           })
@@ -135,7 +139,18 @@ export class MyCardComponent implements OnInit {
           promises.push(updateImage)
         }
 
-        Promise.all(promises).then(() => this.loading = false)
+        if (this.removeImage && !this.upload) {
+          const removeImage = this.uploadService.removeImage('companies', this.companyCard.cid)
+          const clearImageData = companiesLink.doc(this.companyCard.cid)
+          .set({ image: "" }, { merge: true })
+
+          promises.push(removeImage, clearImageData)
+        }
+
+        Promise.all(promises).then(() => {
+          this.myCardForm.markAsPristine()
+          this.loading = false
+        })
       }
 
       if (!this.companyCard) {

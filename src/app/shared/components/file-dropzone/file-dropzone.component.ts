@@ -51,8 +51,11 @@ export class FileDropzoneComponent implements OnInit {
   @Input() name: string
   @Input() maxSize: number
   @Input() parentForm: FormGroup
+  @Input() valueSrc: string
+  @Input() valueAlt: string
 
-  @Output() upload: any = new EventEmitter<any>()
+  @Output() upload: EventEmitter<any> = new EventEmitter<any>()
+  @Output() removeImage: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   public selectedFile: any
   public uploadData: Upload
@@ -89,6 +92,11 @@ export class FileDropzoneComponent implements OnInit {
       } else {
         const control = this.parentForm.get(this.name)
 
+        if (!isImage || !isValidSize) {
+          this.valueSrc = null
+          this.valueAlt = null
+        }
+
           if (!isImage) {
             control.setErrors({
               'type': {
@@ -114,6 +122,13 @@ export class FileDropzoneComponent implements OnInit {
     this.fileUrl = null
     this.selectedFile = null
     this.icon = 'image-outline'
+
+    if (this.valueSrc) {
+      this.valueSrc = null
+      this.valueAlt = null
+
+      this.removeImage.emit(true)
+    }
   }
 
   ngOnInit() {

@@ -14,13 +14,20 @@ export class UploadService {
     private fireStorage: AngularFireStorage
   ) { }
 
-  publishUploads(upload: Upload, uid: string) {
-    const name = upload.file.name.toLowerCase().substring(0, upload.file.name.indexOf('.')).replace(/[^a-zA-Z0-9]/g, '')
-    const filePath = `${this.basePath}/${uid}/${name}`
+  public publishUploads(upload: Upload, cid: string): Promise<any> {
+    const filePath = `${this.basePath}/${cid}`
     const fileRef = this.fireStorage.ref(filePath)
     const task = this.fireStorage.upload(filePath, upload.file)
 
     return task.then((uploadSnapshot: firebase.storage.UploadTaskSnapshot) => uploadSnapshot.ref.getDownloadURL())
+  }
+
+  public removeImage(catalog: string, id: string): Observable<any> {
+    const filePath = `${catalog}/${id}`
+    const fileRef = this.fireStorage.ref(filePath)
+    const task = fileRef.delete()
+
+    return task
   }
 
 }

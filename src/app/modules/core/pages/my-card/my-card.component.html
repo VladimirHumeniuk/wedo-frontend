@@ -24,7 +24,10 @@
               name="image"
               maxSize="250"
               (upload)="onUpload($event)"
+              (removeImage)="onImageRemove($event)"
               [parentForm]="myCardForm"
+              [valueSrc]="companyCard ? companyCard.image : null"
+              [valueAlt]="companyCard ? companyCard.title : null"
               ></wd-file-dropzone>
             </div>
 
@@ -132,7 +135,7 @@
         <button
         nbButton
         status="warning"
-        [disabled]="myCardForm.invalid"
+        [disabled]="myCardForm.invalid || !myCardForm.dirty"
         [nbSpinner]="loading"
         type="submit">Save</button>
       </div>

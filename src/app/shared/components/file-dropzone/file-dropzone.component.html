@@ -6,12 +6,12 @@ class="dropzone"
 
     <span
     class="dropzone__icon"
-    [@slideDown]="!selectedFile ? 'initial' : 'final'"
-    (click)="selectedFile ? clear($event) : null">
-      <nb-icon [icon]="icon"></nb-icon>
+    [@slideDown]="!selectedFile && !valueSrc ? 'initial' : 'final'"
+    (click)="selectedFile || valueSrc ? clear($event) : null">
+      <nb-icon [icon]="valueSrc ? 'trash-2-outline' : icon"></nb-icon>
     </span>
 
-    <span [@hide]="!selectedFile ? 'initial' : 'final'">
+    <span [@hide]="!selectedFile && !valueSrc ? 'initial' : 'final'">
       <ng-container *ngIf="validationErrors.length === 0">
         <span class="dropzone__title">Upload card image</span>
         <span class="dropzone__subtitle">max file size: {{maxSize}}kb</span>
@@ -32,8 +32,13 @@ class="dropzone"
 
     <span
     class="dropzone__preview"
-    [@blurImage]="!selectedFile ? 'initial' : 'final'">
+    [@blurImage]="!selectedFile && !valueSrc ? 'initial' : 'final'">
       <img *ngIf="selectedFile" [src]="fileUrl ? fileUrl : ''" [alt]="selectedFile?.name">
+    </span>
+
+    <span
+    class="dropzone__preview">
+      <img *ngIf="valueSrc && !selectedFile" [src]="valueSrc ? valueSrc : ''" [alt]="valueAlt">
     </span>
 
     <span
