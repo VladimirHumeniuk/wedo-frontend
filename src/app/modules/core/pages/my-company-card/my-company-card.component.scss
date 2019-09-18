@@ -1,6 +1,6 @@
 @import '../../../../../styles/variables/variables';
 
-.my-card__form {
+.my-company-card__form {
   display: grid;
   grid-gap: 15px;
 
@@ -13,46 +13,46 @@
   }
 }
 
-.my-card__form-group {
+.my-company-card__form-group {
   display: flex;
   flex-direction: column;
 }
 
-.my-card__dropzone {
+.my-company-card__dropzone {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.my-card__submit-controls {
+.my-company-card__submit-controls {
   display: flex;
   justify-content: flex-end;
 }
 
-.my-card__card {
+.my-company-card__card {
   margin-bottom: 0;
 }
 
-.my-card__tip-off {
+.my-company-card__tip-off {
   @media (min-width: $md-tablet-landscape) {
     grid-column: 1 / 3;
   }
 }
 
-.my-card__submit {
+.my-company-card__submit {
   @media (min-width: $md-tablet-landscape) {
     grid-column-start: 2;
   }
 }
 
-.my-card__description {
+.my-company-card__description {
   display: flex;
   flex-direction: column;
 
   ::ng-deep {
     .wysiwyg,
-    .my-card__text-editor,
-    .my-card__card {
+    .my-company-card__text-editor,
+    .my-company-card__card {
       display: flex;
       flex-direction: column;
       flex: 1;

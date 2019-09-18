@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument, DocumentData, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
+import { NbToastrService } from '@nebular/theme';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EMAIL_REGEXP, URL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
-import { CompanyCard, User, Upload } from './../../../../shared/models';
+import { CompanyCard, User, Upload } from '../../../../shared/models';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UploadService, UserService } from 'src/app/shared/services';
-import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'wd-my-card',
-  templateUrl: './my-card.component.html',
-  styleUrls: ['./my-card.component.scss']
+  selector: 'wd-my-company-card',
+  templateUrl: './my-company-card.component.html',
+  styleUrls: ['./my-company-card.component.scss']
 })
-export class MyCardComponent implements OnInit {
+export class MyCompanyCardComponent implements OnInit {
 
   public myCardForm: FormGroup
   public user$: Observable<User> = this.store.select('user')
@@ -30,6 +30,7 @@ export class MyCardComponent implements OnInit {
   public categories = ['Cats', 'Dogs'] // todo
 
   constructor(
+    private toastrService: NbToastrService,
     private fireStore: AngularFirestore,
     private formBuilder: FormBuilder,
     private uploadService: UploadService,
@@ -122,11 +123,13 @@ export class MyCardComponent implements OnInit {
         created: new Date()
       }
 
+      const { image, ...formValue } = companyData
+
       if (this.companyCard) {
         const promises = []
 
         const updateCompanyData = companiesLink.doc(this.companyCard.cid)
-        .set(companyData, { merge: true })
+        .set(formValue, { merge: true })
 
         promises.push(updateCompanyData)
 
@@ -147,15 +150,21 @@ export class MyCardComponent implements OnInit {
           promises.push(removeImage, clearImageData)
         }
 
-        Promise.all(promises).then(() => {
-          this.myCardForm.markAsPristine()
-          this.loading = false
-        })
+        Promise.all(promises)
+          .then(() => {
+            this.myCardForm.markAsPristine()
+            this.loading = false
+            this.toastrService.success('Company information successfully saved', 'Saved')
+          })
+          .catch(error => {
+            throw new Error(error)
+            this.toastrService.danger('Something went wrong, try again later', 'Error')
+          })
       }
 
       if (!this.companyCard) {
-        companiesLink.add(companyData)
-        .then(res => {
+        companiesLink.add(formValue)
+        .then((res: DocumentReference) => {
           this.userService.assignCompany(this.user.uid, res.id)
         })
       }

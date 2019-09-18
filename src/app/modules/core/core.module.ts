@@ -16,6 +16,7 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
+  NbToastrModule,
   NbIconModule,
   NbSpinnerModule
 } from '@nebular/theme';
@@ -37,11 +38,15 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
-import { MyCardComponent } from './pages/my-card/my-card.component';
+import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
 
 // Components
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
+
+const toastrConfig = {
+  duration: 4000,
+}
 
 @NgModule({
   declarations: [
@@ -56,7 +61,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     SignInComponent,
     SignUpComponent,
     VerifyEmailComponent,
-    MyCardComponent
+    MyCompanyCardComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -73,6 +78,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     NbCardModule,
     NbCheckboxModule,
     NbIconModule,
+    NbToastrModule.forRoot(toastrConfig),
     NbSpinnerModule,
     ReactiveFormsModule,
     SharedModule

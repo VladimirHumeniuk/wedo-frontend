@@ -22,8 +22,8 @@ export class UploadService {
     return task.then((uploadSnapshot: firebase.storage.UploadTaskSnapshot) => uploadSnapshot.ref.getDownloadURL())
   }
 
-  public removeImage(catalog: string, id: string): Observable<any> {
-    const filePath = `${catalog}/${id}`
+  public removeImage(catalog: string, cid: string): Observable<any> {
+    const filePath = `${catalog}/${cid}`
     const fileRef = this.fireStorage.ref(filePath)
     const task = fileRef.delete()
 

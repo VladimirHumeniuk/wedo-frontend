@@ -33,14 +33,37 @@
     }
 
     .ng-valid.ng-touched {
-      &:hover {
-        .ng-select-container {
-          border-color: #00997a;
-        }
-      }
+      &:not(.ng-pristine) {
 
-      .ng-select-container {
-        border-color: $c-success;
+
+      }
+    }
+
+    .ng-touched {
+      &:not(.ng-pristine) {
+        &.ng-valid {
+          &:hover {
+            .ng-select-container {
+              border-color: #00997a;
+            }
+          }
+
+          .ng-select-container {
+            border-color: $c-success;
+          }
+        }
+
+        &.ng-invalid {
+          &:hover {
+            .ng-select-container {
+              border-color: #b81d5b;
+            }
+          }
+
+          .ng-select-container  {
+            border-color: $c-error;
+          }
+        }
       }
     }
 
@@ -83,18 +106,6 @@
       transition-property: border, background-color, color, box-shadow;
       transition-timing-function: ease-in;
       box-shadow: 0 .5rem 1rem 0 rgba(44, 51, 73, .1);
-    }
-
-    .ng-invalid.ng-touched {
-      &:hover {
-        .ng-select-container {
-          border-color: #b81d5b;
-        }
-      }
-
-      .ng-select-container  {
-        border-color: $c-error;
-      }
     }
 
     .ng-value,

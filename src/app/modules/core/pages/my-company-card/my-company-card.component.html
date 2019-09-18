@@ -1,8 +1,8 @@
-<div class="my-card my-card--company">
-  <form class="my-card__form" [formGroup]="myCardForm" (ngSubmit)="publishCard()">
-    <div class="my-card__info">
-      <nb-card class="my-card__card">
-        <nb-card-body class="my-card__form-group">
+<div class="my-company-card my-company-card--company">
+  <form class="my-company-card__form" [formGroup]="myCardForm" (ngSubmit)="publishCard()">
+    <div class="my-company-card__info">
+      <nb-card class="my-company-card__card">
+        <nb-card-body class="my-company-card__form-group">
           <wd-form-item>
             <wd-input-group
             name="title"
@@ -20,7 +20,7 @@
           <wd-form-item isDouble="true">
             <div>
               <wd-file-dropzone
-              class="my-card__dropzone"
+              class="my-company-card__dropzone"
               name="image"
               maxSize="250"
               (upload)="onUpload($event)"
@@ -107,11 +107,11 @@
       </nb-card>
     </div>
 
-    <div class="my-card__description">
-      <nb-card class="my-card__card">
-        <nb-card-body class="my-card__form-group">
+    <div class="my-company-card__description">
+      <nb-card class="my-company-card__card">
+        <nb-card-body class="my-company-card__form-group">
           <wd-wysiwyg
-          class="my-card__text-editor"
+          class="my-company-card__text-editor"
           label="Company information"
           [parentForm]="myCardForm"
           maxLength="900"
@@ -127,10 +127,10 @@
       </nb-card>
     </div>
 
-    <wd-tip-off class="my-card__tip-off">Please note that we do not allow publishing information about stores, shops, any services that are illegal in Gibraltar and companies or services whose publication of information can have a negative impact on our site. By publishing this you agree to our&nbsp;<a routerLink="/rules">rules for posting company information and personal advertising</a>. </wd-tip-off>
+    <wd-tip-off class="my-company-card__tip-off">Please note that we do not allow publishing information about stores, shops, any services that are illegal in Gibraltar and companies or services whose publication of information can have a negative impact on our site. By publishing this you agree to our&nbsp;<a routerLink="/rules">rules for posting company information and personal advertising</a>. </wd-tip-off>
 
-    <div class="my-card__submit">
-      <div class="my-card__submit-controls">
+    <div class="my-company-card__submit">
+      <div class="my-company-card__submit-controls">
         <nb-checkbox formControlName="isShown">Publish my card</nb-checkbox>
         <button
         nbButton

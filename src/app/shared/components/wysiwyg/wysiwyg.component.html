@@ -13,6 +13,7 @@
         <button
         class="wysiwyg__control-bold"
         nbButton
+        type="button"
         (click)="formatText('bold')"
         status="warning">B</button>
       </div>
@@ -21,6 +22,7 @@
         <button
         class="wysiwyg__control-italic"
         nbButton
+        type="button"
         (click)="formatText('italic')"
         status="warning">i</button>
       </div>
@@ -29,6 +31,7 @@
         <button
         class="wysiwyg__control-underline"
         nbButton
+        type="button"
         (click)="formatText('underline')"
         status="warning">U</button>
       </div>
@@ -38,6 +41,7 @@
       <div class="wysiwyg__button" nbTooltip="Unordered List">
         <button
         nbButton
+        type="button"
         class="wysiwyg__control-list"
         (click)="formatText('insertUnorderedList')"
         status="warning">
@@ -50,6 +54,7 @@
       <div class="wysiwyg__button" nbTooltip="Ordered List">
         <button
         nbButton
+        type="button"
         class="wysiwyg__control-list"
         (click)="formatText('insertOrderedList')"
         status="warning">
@@ -62,6 +67,7 @@
       <div nbTooltip="Undo" class="wysiwyg__button">
         <button
         nbButton
+        type="button"
         class="wysiwyg__control-undo"
         (click)="formatText('undo')"
         [disabled]="!dirty"
@@ -75,6 +81,7 @@
       <div nbTooltip="Redo" class="wysiwyg__button">
         <button
         nbButton
+        type="button"
         class="wysiwyg__control-redo"
         (click)="formatText('redo')"
         [disabled]="redo === 0"
