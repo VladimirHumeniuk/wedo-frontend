@@ -4,11 +4,11 @@
   display: grid;
   grid-gap: 15px;
 
-  @media (min-width: $md-tablet) {
+  @media (min-width: $mq-tablet) {
     grid-gap: 20px;
   }
 
-  @media (min-width: $md-tablet-landscape) {
+  @media (min-width: $mq-tablet-landscape) {
     grid-template-columns: 1fr minmax(0, 1fr);
   }
 }
@@ -34,13 +34,13 @@
 }
 
 .my-company-card__tip-off {
-  @media (min-width: $md-tablet-landscape) {
+  @media (min-width: $mq-tablet-landscape) {
     grid-column: 1 / 3;
   }
 }
 
 .my-company-card__submit {
-  @media (min-width: $md-tablet-landscape) {
+  @media (min-width: $mq-tablet-landscape) {
     grid-column-start: 2;
   }
 }

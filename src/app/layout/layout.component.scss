@@ -1,12 +1,20 @@
 @import '../../styles/variables/variables';
 
 ::ng-deep {
-  .layout__header {
+  nb-layout-header.layout__header {
     z-index: 1;
 
     nav {
       display: none;
       border-bottom: 1px solid #e8c20a;
+
+      @media (max-width: $mq-tablet-landscape - 1px) {
+        padding: 1.35rem;
+      }
+
+      @media (max-width: $mq-tablet - 1px) {
+        padding: 1rem;
+      }
     }
   }
 }

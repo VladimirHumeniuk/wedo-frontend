@@ -27,7 +27,7 @@
   height: 100%;
   cursor: pointer;
 
-  @media (max-width: $md-phone-landscape - 1px) {
+  @media (max-width: $mq-phone-landscape - 1px) {
     min-height: 210px;
   }
 

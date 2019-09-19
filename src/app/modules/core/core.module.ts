@@ -43,6 +43,7 @@ import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.
 // Components
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 const toastrConfig = {
   duration: 4000,
@@ -61,7 +62,8 @@ const toastrConfig = {
     SignInComponent,
     SignUpComponent,
     VerifyEmailComponent,
-    MyCompanyCardComponent
+    MyCompanyCardComponent,
+    SearchBarComponent
   ],
   imports: [
     AngularFireAuthModule,
