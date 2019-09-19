@@ -44,8 +44,11 @@ export class UserService {
     return updateUser && updateCompany
   }
 
-  public getUserCompany(companyId: string): Promise<firebase.firestore.DocumentSnapshot> {
-    const companyRef = this.fireStore.collection('companies').doc(companyId)
-    return companyRef.ref.get()
+  public getUserCompany(cid: string): Observable<CompanyCard> {
+    const source$ = from(this.fireStore.collection('companies').doc(cid).ref.get())
+      .pipe(map((data: firebase.firestore.DocumentSnapshot) => {
+        return data.data() as CompanyCard
+      }));
+    return source$
   }
 }

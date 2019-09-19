@@ -8,6 +8,7 @@ import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UploadService, UserService } from 'src/app/shared/services';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 @Component({
   selector: 'wd-my-company-card',
@@ -42,9 +43,7 @@ export class MyCompanyCardComponent implements OnInit {
 
       if (user) {
         this.userService.getUserCompany(user.company)
-          .then((company: firebase.firestore.DocumentSnapshot) => {
-            const companyCard = company.data() as CompanyCard
-
+          .subscribe((companyCard: CompanyCard) => {
             if (companyCard) {
               this.companyCard = companyCard
 
