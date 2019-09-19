@@ -29,7 +29,7 @@
     grid-template-areas: 'formats lists' 'actions actions';
   }
 
-  @media (min-width: $md-phone-landscape) {
+  @media (min-width: $mq-phone-landscape) {
     grid-template-columns: auto 2fr 1fr;
     grid-template-areas: 'formats lists actions';
     grid-gap: 20px;
@@ -59,7 +59,7 @@
     justify-content: flex-end;
   }
 
-  @media (min-width: $md-phone-landscape) {
+  @media (min-width: $mq-phone-landscape) {
     justify-content: flex-start;
   }
 }

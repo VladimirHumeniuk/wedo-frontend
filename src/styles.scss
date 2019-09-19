@@ -12,3 +12,17 @@
 
 // Browsers
 @import './styles//browsers/browsers';
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.nb-theme-default nb-card-body {
+  @media (max-width: $mq-tablet - 1px) {
+    padding: 1.35rem 1.55rem;
+  }
+
+  @media (max-width: $mq-phone-landscape - 1px) {
+    padding: 1rem 1.25rem;
+  }
+}

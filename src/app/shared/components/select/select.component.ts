@@ -13,6 +13,9 @@ export class SelectComponent {
   @Input() placeholder: string
   @Input() name: string
   @Input() label: string
+  @Input() appendTo: string
+  @Input() clearable: boolean
+  @Input() searchable: boolean
 
   constructor() { }
 

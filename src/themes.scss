@@ -16,15 +16,17 @@ $nb-themes: nb-register-theme((
   color-success-800: $c-green-800,
   color-success-900: $c-green-900,
 
-  layout-padding: 2rem,
-  layout-medium-padding: 1.45em,
-  layout-small-padding: 1em,
+  layout-padding: 1.5rem,
+  layout-medium-padding: 1.35rem,
+  layout-small-padding: 1rem,
   layout-background-color: $c-neutral,
 
   header-background-color: $c-primary,
   header-shadow: none,
+  header-padding: 1.5rem,
 
-  button-rectangle-border-radius: 9px,
+  input-rectangle-border-radius: 6px,
+  button-rectangle-border-radius: 6px,
 
   button-filled-info-background-color: #fff,
   button-filled-info-border-color: #fff,
@@ -50,4 +52,3 @@ $nb-themes: nb-register-theme((
   card-padding: $card-padding,
 
 ), default, default);
-

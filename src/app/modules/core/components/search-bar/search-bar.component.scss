@@ -1,0 +1,50 @@
+@import '../../../../../styles/variables/variables';
+
+.search-bar {
+  display: grid;
+  overflow: visible;
+  grid-gap: 15px;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+  'search'
+  'type'
+  'category'
+  'submit';
+
+  @media (min-width: $mq-phone-landscape ) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    'search search'
+    'type category'
+    'submit submit';
+  }
+
+  @media (min-width: $mq-tablet) {
+    grid-template-columns: 2fr 1fr 1fr 0.5fr;
+    grid-template-areas: 'search type category submit';
+  }
+
+  @media (min-width: $mq-desktop) {
+    grid-template-columns: 3fr 1fr 1fr 0.5fr;
+  }
+}
+
+.search-bar__search {
+  grid-area: search;
+}
+
+.search-bar__type {
+  grid-area: type;
+}
+
+.search-bar__category {
+  grid-area: category;
+}
+
+.search-bar__submit {
+  grid-area: submit;
+
+  @media (min-width: $mq-tablet) {
+    margin-top: 1.5rem;
+  }
+}

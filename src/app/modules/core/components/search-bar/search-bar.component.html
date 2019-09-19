@@ -1,0 +1,37 @@
+<form [formGroup]="homeSearch" (ngSubmit)="search()">
+  <nb-card>
+    <nb-card-body class="search-bar">
+      <wd-input-group
+      class="search-bar__search"
+      name="search"
+      type="search"
+      [parentForm]="homeSearch"
+      placeholder="Search..."></wd-input-group>
+
+      <wd-select
+      class="search-bar__type"
+      name="type"
+      [parentForm]="homeSearch"
+      label="From"
+      [clearable]="false"
+      [searchable]="false"
+      [items]="types"></wd-select>
+
+      <wd-select
+      class="search-bar__category"
+      name="category"
+      [parentForm]="homeSearch"
+      label="In category"
+      [clearable]="false"
+      [items]="categories"></wd-select>
+
+      <button
+      nbButton
+      class="search-bar__submit"
+      status="warning"
+      type="submit">
+        Search
+      </button>
+    </nb-card-body>
+  </nb-card>
+</form>
