@@ -1,4 +1,5 @@
 import { FormGroup } from '@angular/forms';
+import { FORMS_MESSAGES } from 'src/app/shared/constants';
 
 export function MustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
@@ -10,7 +11,9 @@ export function MustMatch(controlName: string, matchingControlName: string) {
         }
 
         if (control.value !== matchingControl.value) {
-            matchingControl.setErrors({ mustMatch: true });
+            matchingControl.setErrors({ 'mustMatch': {
+                message: FORMS_MESSAGES.confirmPassword.mustMatch
+            } });
         } else {
             matchingControl.setErrors(null);
         }

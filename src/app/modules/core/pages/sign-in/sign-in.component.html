@@ -12,8 +12,7 @@
       signInForm.controls['email'].dirty &&
       signInForm.controls['email'].touched"
       controlName="email"
-      [errorsCodes]="signInForm.controls['email'].errors"
-      ></wd-form-explain>
+      [formName]="signInForm"></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>
@@ -30,8 +29,7 @@
       signInForm.controls['password'].dirty &&
       signInForm.controls['password'].touched"
       controlName="password"
-      [errorsCodes]="signInForm.controls['password'].errors"
-      ></wd-form-explain>
+      [formName]="signInForm"></wd-form-explain>
     </wd-form-item>
 
     <wd-form-item>

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { parsePhoneNumberFromString, isValidNumber, PhoneNumber } from 'libphonenumber-js';
+import { FORMS_MESSAGES } from './../../constants/forms-messages';
 import { FormControlService } from '../../services';
 
 @Component({
@@ -17,9 +19,12 @@ export class InputGroupComponent implements OnInit {
   @Input() helperLink: string
   @Input() helperTitle: string
   @Input() isPrivate: boolean
+  @Input() rows: number
+  @Input() maxlength: number
 
   public status: string
   public passVisible: boolean = false
+  public phoneNumber: PhoneNumber
 
   public getStatus() {
     this.status = this.formControlService.getControlStatus(this.name, this.parentForm)
@@ -40,7 +45,7 @@ export class InputGroupComponent implements OnInit {
   }
 
   constructor(
-    public formControlService: FormControlService
+    private formControlService: FormControlService,
   ) {}
 
   ngOnInit() {
@@ -49,6 +54,25 @@ export class InputGroupComponent implements OnInit {
     formControl.statusChanges.subscribe((status: string) => {
       this.status = this.formControlService.getControlStatus(this.name, this.parentForm)
     })
+
+    if (this.type === 'tel') {
+      formControl.valueChanges.subscribe((value: string) => {
+        this.phoneNumber = parsePhoneNumberFromString(value)
+
+        if (value) {
+          const isPossible = this.phoneNumber && this.phoneNumber.isPossible()
+          const isValid = this.phoneNumber && this.phoneNumber.isValid()
+
+          if (!isPossible || !isValid) {
+            formControl.setErrors({
+              'invalid': {
+                message: FORMS_MESSAGES.phone.invalid
+              }
+            })
+          }
+        }
+      })
+    }
   }
 
 }

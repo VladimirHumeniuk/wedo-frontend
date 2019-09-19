@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { MustMatch } from 'src/app/shared/helpers';
-import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
+import { FORMS_MESSAGES } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-reset-password',

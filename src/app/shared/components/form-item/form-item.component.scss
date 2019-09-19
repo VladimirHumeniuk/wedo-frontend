@@ -1,3 +1,32 @@
+@import '../../../../styles/variables/variables';
+
 .form-item {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+
+  @media (min-width: $md-phone-landscape) {
+    margin-bottom: 2rem;
+  }
+}
+
+.form-item--double {
+  @media (max-width: $md-phone-landscape - 1px) {
+    ::ng-deep {
+      > *:first-child {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  @media (min-width: $md-phone-landscape) {
+    display: flex;
+    margin-left: -5px;
+    margin-right: -5px;
+
+    ::ng-deep {
+      > * {
+        margin: 0 5px;
+        flex: 1;
+      }
+    }
+  }
 }

@@ -1,0 +1,17 @@
+<div class="select" [formGroup]="parentForm">
+  <div class="select__header">
+    <label
+    class="select__label"
+    for="{{name}}">
+      {{label ? label : (name | titlecase)}}
+    </label>
+  </div>
+
+  <ng-select
+  class="select__input"
+  [ngClass]="{'select__input--pristine': parentForm.controls[name].pristine}"
+  [formControlName]="name"
+  [placeholder]="placeholder"
+  [items]="items">
+  </ng-select>
+</div>

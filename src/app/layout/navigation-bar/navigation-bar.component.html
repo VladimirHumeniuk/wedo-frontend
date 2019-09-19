@@ -11,22 +11,39 @@
     <ul class="navigation-bar__menu-items">
 
       <li *ngIf="!user.uid" class="navigation-bar__menu-item">
-        <a nbButton outline routerLink='/sign-in'>
-          <nb-icon icon="log-in-outline"></nb-icon>
-          Sign In
+        <a
+        nbButton
+        ghost
+        status="info"
+        routerLink='/sign-in'>
+          Login
         </a>
       </li>
 
       <li *ngIf="!user.uid" class="navigation-bar__menu-item">
-        <a nbButton hero routerLink='/sign-up'>
-          <nb-icon icon="person-add-outline"></nb-icon>
+        <a
+        nbButton
+        status="info"
+        routerLink='/sign-up'>
           Sign Up
         </a>
       </li>
 
       <li *ngIf="user.uid" class="navigation-bar__menu-item">
-        <button nbButton hero (click)="signOut()">
-          <nb-icon icon="person-add-outline"></nb-icon>
+        <a
+        nbButton
+        ghost
+        status="info"
+        routerLink='/my-company-card'>
+          My {{user.accountType === 'company' ? 'Company' : 'Personal'}} Card
+        </a>
+      </li>
+
+      <li *ngIf="user.uid" class="navigation-bar__menu-item">
+        <button
+        nbButton
+        status="info"
+        (click)="signOut()">
           Sign Out
         </button>
       </li>

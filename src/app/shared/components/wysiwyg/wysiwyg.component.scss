@@ -1,0 +1,139 @@
+@import '../../../../styles/variables/variables';
+
+.wysiwyg {
+  position: relative;
+}
+
+.wysiwyg__content {
+  min-height: 240px;
+  padding: .6875rem 1.125rem calc(.6875rem * 2.3);
+  line-height: 1.5rem;
+  font-size: .9375rem;
+  border-radius: .25rem;
+}
+
+.wysiwyg__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+
+.wysiwyg__controls {
+  display: grid;
+  grid-template-areas: 'formats formats' 'lists actions';
+  margin-bottom: 10px;
+  grid-gap: 8px;
+
+  @media (min-width: 375px) {
+    grid-template-areas: 'formats lists' 'actions actions';
+  }
+
+  @media (min-width: $md-phone-landscape) {
+    grid-template-columns: auto 2fr 1fr;
+    grid-template-areas: 'formats lists actions';
+    grid-gap: 20px;
+  }
+
+  .wysiwyg__button {
+    & ~ .wysiwyg__button {
+      margin-left: 8px;
+    }
+  }
+}
+
+.wysiwyg__controls-formats,
+.wysiwyg__controls-lists,
+.wysiwyg__control-actions {
+  display: flex;
+}
+
+.wysiwyg__controls-formats {
+  grid-area: formats;
+}
+
+.wysiwyg__controls-lists {
+  grid-area: lists;
+
+  @media (min-width: 375px) {
+    justify-content: flex-end;
+  }
+
+  @media (min-width: $md-phone-landscape) {
+    justify-content: flex-start;
+  }
+}
+
+.wysiwyg__control-actions {
+  grid-area: actions;
+  justify-content: flex-end;
+}
+
+.wysiwyg__control-bold {
+  font-weight: 800;
+}
+
+.wysiwyg__control-italic,
+.wysiwyg__control-underline,
+.wysiwyg__control-bold {
+  width: 50px;
+}
+
+.wysiwyg__control-list {
+  @media (max-width: 374px) {
+    width: 50px;
+
+    &.appearance-filled.status-warning {
+      padding: 10px;
+    }
+  }
+}
+
+.wysiwyg__control-icon {
+  font-size: 1rem;
+}
+
+.wysiwyg__control-italic {
+  font-style: italic;
+}
+
+.wysiwyg__control-underline {
+  text-decoration: underline;
+}
+
+.wysiwyg__control-redo {
+  transform: scale(-1, 1);
+}
+
+.wysiwyg__label {
+  display: block;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1rem;
+  font-size: .75rem;
+  color: $c-gray-600;
+}
+
+.fr-svg {
+  height: 1rem;
+}
+
+.wysiwyg__length {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  font-size: .75rem;
+  color: $c-font-dark;
+  transition-duration: .15s;
+  transition-property: opacity, color;
+  transition-timing-function: ease-in;
+  opacity: 0;
+
+  &--visible {
+    opacity: 1;
+  }
+
+  &--invalid {
+    color: $c-error;
+  }
+}

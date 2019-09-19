@@ -2,7 +2,9 @@ import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -14,6 +16,7 @@ import {
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
+  NbToastrModule,
   NbIconModule,
   NbSpinnerModule
 } from '@nebular/theme';
@@ -35,10 +38,15 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
+import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
 
 // Components
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
+
+const toastrConfig = {
+  duration: 4000,
+}
 
 @NgModule({
   declarations: [
@@ -52,13 +60,16 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     ResetPasswordComponent,
     SignInComponent,
     SignUpComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    MyCompanyCardComponent
   ],
   imports: [
     AngularFireAuthModule,
     AngularFireFunctionsModule,
+    AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
+    BrowserAnimationsModule,
     CoreRoutingModule,
     CountdownModule,
     FormsModule,
@@ -67,6 +78,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
     NbCardModule,
     NbCheckboxModule,
     NbIconModule,
+    NbToastrModule.forRoot(toastrConfig),
     NbSpinnerModule,
     ReactiveFormsModule,
     SharedModule

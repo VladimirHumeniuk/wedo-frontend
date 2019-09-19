@@ -1,0 +1,51 @@
+<div
+class="dropzone"
+[ngClass]="{'dropzone--invalid': validationErrors.length > 0, 'dropzone--valid': selectedFile}"
+[formGroup]="parentForm">
+  <label class="dropzone__label">
+
+    <span
+    class="dropzone__icon"
+    [@slideDown]="!selectedFile && !valueSrc ? 'initial' : 'final'"
+    (click)="selectedFile || valueSrc ? clear($event) : null">
+      <nb-icon [icon]="valueSrc ? 'trash-2-outline' : icon"></nb-icon>
+    </span>
+
+    <span [@hide]="!selectedFile && !valueSrc ? 'initial' : 'final'">
+      <ng-container *ngIf="validationErrors.length === 0">
+        <span class="dropzone__title">Upload card image</span>
+        <span class="dropzone__subtitle">max file size: {{maxSize}}kb</span>
+      </ng-container>
+
+      <ng-container *ngIf="validationErrors.length > 0">
+        <span class="dropzone__title dropzone__title--invalid"><b>Upload failed:</b></span>
+      </ng-container>
+    </span>
+
+    <input
+    id="{{name}}"
+    type="file"
+    name="{{name}}"
+    class="dropzone__input"
+    [formControlName]="name"
+    (change)="detectFiles($event)">
+
+    <span
+    class="dropzone__preview"
+    [@blurImage]="!selectedFile && !valueSrc ? 'initial' : 'final'">
+      <img *ngIf="selectedFile" [src]="fileUrl ? fileUrl : ''" [alt]="selectedFile?.name">
+    </span>
+
+    <span
+    class="dropzone__preview">
+      <img *ngIf="valueSrc && !selectedFile" [src]="valueSrc ? valueSrc : ''" [alt]="valueAlt">
+    </span>
+
+    <span
+    *ngFor="let error of validationErrors"
+    class="dropzone__error">
+      {{ error.message }}
+    </span>
+
+  </label>
+</div>

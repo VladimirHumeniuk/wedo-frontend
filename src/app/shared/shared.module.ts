@@ -2,9 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask'
 
+import { NgSelectModule } from '@ng-select/ng-select';
 import {
   NbAlertModule,
+  NbButtonModule,
+  NbTooltipModule,
   NbInputModule,
   NbIconModule,
   NbSelectModule
@@ -17,6 +21,11 @@ import { KeysPipe } from './pipes/keys.pipe';
 import { FormExplainComponent } from './components/form-explain/form-explain.component';
 import { FromCamelCasePipe } from './pipes/from-camel-case.pipe';
 import { AlertMessageComponent } from './components/alert-message/alert-message.component';
+import { FileDropzoneComponent } from './components/file-dropzone/file-dropzone.component';
+import { WysiwygComponent } from './components/wysiwyg/wysiwyg.component';
+import { ContentEditableDirective } from './directives/content-editable.directive';
+import { SelectComponent } from './components/select/select.component';
+import { TipOffComponent } from './components/tip-off/tip-off.component';
 
 @NgModule({
   declarations: [
@@ -26,17 +35,26 @@ import { AlertMessageComponent } from './components/alert-message/alert-message.
     KeysPipe,
     FormExplainComponent,
     FromCamelCasePipe,
-    AlertMessageComponent
+    AlertMessageComponent,
+    FileDropzoneComponent,
+    WysiwygComponent,
+    ContentEditableDirective,
+    SelectComponent,
+    TipOffComponent
   ],
   imports: [
+    NgSelectModule,
+    NgxMaskModule.forRoot(),
     RouterModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NbAlertModule,
+    NbButtonModule,
     NbInputModule,
     NbSelectModule,
-    NbIconModule
+    NbIconModule,
+    NbTooltipModule
   ],
   exports: [
     InputGroupComponent,
@@ -45,7 +63,12 @@ import { AlertMessageComponent } from './components/alert-message/alert-message.
     FormExplainComponent,
     KeysPipe,
     FromCamelCasePipe,
-    AlertMessageComponent
+    AlertMessageComponent,
+    FileDropzoneComponent,
+    WysiwygComponent,
+    ContentEditableDirective,
+    SelectComponent,
+    TipOffComponent
   ]
 })
 export class SharedModule { }

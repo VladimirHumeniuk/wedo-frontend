@@ -1,0 +1,69 @@
+@import '../../../../../styles/variables/variables';
+
+.my-company-card__form {
+  display: grid;
+  grid-gap: 15px;
+
+  @media (min-width: $md-tablet) {
+    grid-gap: 20px;
+  }
+
+  @media (min-width: $md-tablet-landscape) {
+    grid-template-columns: 1fr minmax(0, 1fr);
+  }
+}
+
+.my-company-card__form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-company-card__dropzone {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.my-company-card__submit-controls {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.my-company-card__card {
+  margin-bottom: 0;
+}
+
+.my-company-card__tip-off {
+  @media (min-width: $md-tablet-landscape) {
+    grid-column: 1 / 3;
+  }
+}
+
+.my-company-card__submit {
+  @media (min-width: $md-tablet-landscape) {
+    grid-column-start: 2;
+  }
+}
+
+.my-company-card__description {
+  display: flex;
+  flex-direction: column;
+
+  ::ng-deep {
+    .wysiwyg,
+    .my-company-card__text-editor,
+    .my-company-card__card {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .wysiwyg__header {
+      align-items: flex-start;
+    }
+
+    .wysiwyg__content {
+      height: 100%;
+    }
+  }
+}

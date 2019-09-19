@@ -1,7 +1,12 @@
-@import '../../../../themes.scss';
+@import '../../../../themes';
 
 .form-explain {
+  position: absolute;
   margin: .25rem 0 0 0;
   font-size: .75rem;
   color: nb-theme(color-danger-500);
+
+  &--relative {
+    position: relative;
+  }
 }
