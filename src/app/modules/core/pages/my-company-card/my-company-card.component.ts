@@ -28,7 +28,7 @@ export class MyCompanyCardComponent implements OnInit {
   private emailRegexp: RegExp = EMAIL_REGEXP
   private urlRegexp: RegExp = URL_REGEXP
 
-  public categories = ['Cats', 'Dogs'] // todo
+  public categories = ['Security', 'Cleaning'] // todo
 
   constructor(
     private toastrService: NbToastrService,

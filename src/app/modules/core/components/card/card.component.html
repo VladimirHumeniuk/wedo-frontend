@@ -1,0 +1,26 @@
+<nb-card>
+  <nb-card-body>
+    <article class="card">
+      <div class="card__main">
+        <div class="card__header">
+          <h2 class="card__title">{{title}}</h2>
+          <div class="card__signs"></div>
+        </div>
+
+        <div class="card__category">{{category}}</div>
+
+        <div class="card__image">
+          <img [attr.src]="image" [attr.alt]="title">
+        </div>
+
+        <div class="card__body">{{description}}</div>
+      </div>
+
+      <div class="card__footer">
+        <a>
+          <nb-icon icon="arrow-forward-outline"></nb-icon>
+        </a>
+      </div>
+    </article>
+  </nb-card-body>
+</nb-card>
