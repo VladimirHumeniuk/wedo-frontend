@@ -73,8 +73,7 @@ export class MyCompanyCardComponent implements OnInit {
       phone: [''],
       email: ['', [
         Validators.pattern(this.emailRegexp),
-        Validators.minLength(3),
-        Validators.maxLength(20)
+        Validators.email,
       ]],
       url: ['', [
         Validators.pattern(this.urlRegexp)
@@ -87,6 +86,10 @@ export class MyCompanyCardComponent implements OnInit {
         Validators.required
       ]],
       wysiwyg: [''],
+      shortDescription: ['', [
+        Validators.required,
+        Validators.maxLength(140)
+      ]],
       isShown: [false]
     })
   }

@@ -32,6 +32,12 @@
   font-weight: initial !important;
 }
 
+::ng-deep {
+  [nbInput].input-group__textarea.size-large {
+    padding-bottom: calc(.6875rem * 2.3);
+  }
+}
+
 .input-group__textarea-length {
   position: absolute;
   font-size: .7rem;
