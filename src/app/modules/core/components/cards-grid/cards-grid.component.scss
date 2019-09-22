@@ -1,0 +1,25 @@
+@import '../../../../../styles/variables/variables';
+
+.cards-grid {
+  display: grid;
+  grid-gap: 15px;
+
+  @media (min-width: $mq-phone-landscape) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (min-width: $mq-tablet-landscape) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (min-width: $mq-desktop) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  ::ng-deep {
+    nb-card {
+      margin-bottom: 0;
+      height: 100%;
+    }
+  }
+}

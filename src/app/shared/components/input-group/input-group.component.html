@@ -54,14 +54,8 @@
     (blur)="getStatus()"
     (focus)="resetStatus()"
     [formControlName]="name"
-    [attr.maxlength]="maxlength"
     placeholder="{{placeholder}}">
     </textarea>
-
-    <span *ngIf="maxlength" class="input-group__textarea-length">
-      <span>{{ parentForm.controls[name].value.length }}</span>
-      <span>{{ maxlength }}</span>
-    </span>
 
     <span
     *ngIf="type === 'tel'"

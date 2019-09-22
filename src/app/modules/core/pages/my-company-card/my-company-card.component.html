@@ -90,7 +90,7 @@
             </div>
           </wd-form-item>
 
-          <wd-input-group
+        <wd-input-group
           name="address"
           type="textarea"
           [rows]="4"
@@ -110,6 +110,22 @@
     <div class="my-company-card__description">
       <nb-card class="my-company-card__card">
         <nb-card-body class="my-company-card__form-group">
+          <wd-form-item>
+            <wd-input-group
+            name="shortDescription"
+            type="textarea"
+            [rows]="2"
+            [parentForm]="myCardForm"
+            label="Short description"
+            placeholder="Short description"></wd-input-group>
+            <wd-form-explain *ngIf="
+            myCardForm.controls['shortDescription'].errors &&
+            myCardForm.controls['shortDescription'].dirty &&
+            myCardForm.controls['shortDescription'].touched"
+            [formName]="myCardForm"
+            controlName="shortDescription"></wd-form-explain>
+          </wd-form-item>
+
           <wd-wysiwyg
           class="my-company-card__text-editor"
           label="Company information"

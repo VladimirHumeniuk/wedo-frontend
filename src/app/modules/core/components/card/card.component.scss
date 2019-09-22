@@ -1,0 +1,76 @@
+@import '../../../../../styles/variables/variables';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-top: .3rem;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card__category {
+  font-weight: 700;
+  color: $c-gray-500;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  font-size: 11px;
+}
+
+.card__image {
+  height: 136px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+  }
+}
+
+.card__body {
+  margin-bottom: 1.25rem;
+}
+
+.card__title {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  font-weight: 700;
+  margin: 0 0 3px;
+}
+
+.card__phone {
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: $c-gray-600;
+}
+
+.card__rating {
+  padding: 0.5rem 0.65rem;
+  background-color: $c-primary;
+  color: $c-font-dark;
+  border-radius: 6px;
+  line-height: 1;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    cursor: pointer;
+  }
+}

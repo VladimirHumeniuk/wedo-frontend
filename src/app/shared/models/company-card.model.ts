@@ -12,5 +12,6 @@ export interface CompanyCard {
   email?: string;
   address?: string;
   wysiwyg?: string;
+  shortDescription: string;
   isShown: boolean;
 }

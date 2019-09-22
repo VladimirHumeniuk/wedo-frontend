@@ -20,7 +20,6 @@ export class InputGroupComponent implements OnInit {
   @Input() helperTitle: string
   @Input() isPrivate: boolean
   @Input() rows: number
-  @Input() maxlength: number
 
   public status: string
   public passVisible: boolean = false

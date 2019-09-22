@@ -17,12 +17,19 @@ export class FormExplainComponent {
 
   constructor() { }
 
+  private decamelize(str: string): string {
+    let string = str.replace(/([a-z])([A-Z])/g, '$1 $2')
+    string = string.charAt(0).toUpperCase() + string.toLowerCase().slice(1)
+
+    return string
+  }
+
   ngOnInit() {
     const control = this.formName.get(this.controlName)
     const errors = control.errors
 
      Object.keys(errors).forEach((el: any) => {
-      const name: string = this.controlName[0].toUpperCase() + this.controlName.substr(1)
+      const name: string = this.decamelize(this.controlName[0].toUpperCase() + this.controlName.substr(1))
       let error = errors[el]
 
       switch (el) {

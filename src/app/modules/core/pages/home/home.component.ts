@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertsMessagesService } from './../../../../shared/services';
-import { Alert } from './../../../../shared/models';
+import { Alert, CompanyCard } from './../../../../shared/models';
+import { ItemsService } from '../../services';
 
 @Component({
   selector: 'wd-home',
@@ -10,16 +11,23 @@ import { Alert } from './../../../../shared/models';
 export class HomeComponent implements OnInit {
 
   alerts: Alert[]
+  itemsToShow: CompanyCard[]
 
   constructor(
-    private alertsService: AlertsMessagesService
+    private readonly alertsService: AlertsMessagesService,
+    private readonly itemsService: ItemsService
   ) {
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts
     })
+
+    this.itemsService.items$.subscribe((items: CompanyCard[]) => {
+      this.itemsToShow = items
+    })
   }
 
   ngOnInit() {
+    this.itemsService.getItems('companies')
   }
 
 }

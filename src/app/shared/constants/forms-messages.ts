@@ -31,5 +31,8 @@ export const FORMS_MESSAGES = {
   },
   category: {
     required: `Please select category`
+  },
+  shortDescription: {
+    maxlength: `You have exceeded the maximum number of characters:`
   }
 }

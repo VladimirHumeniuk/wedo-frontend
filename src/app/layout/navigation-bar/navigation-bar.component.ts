@@ -13,9 +13,11 @@ import { User } from 'src/app/shared/models';
     trigger('toggleNav', [
       state('out', style({
         opacity: 0,
+        pointerEvents: 'none',
       })),
       state('in', style({
         opacity: 1,
+        pointerEvents: 'auto',
       })),
       transition('out => in', [
         animate('0.1s ease-in')

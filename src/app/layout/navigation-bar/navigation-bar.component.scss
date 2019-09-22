@@ -56,6 +56,7 @@
 .navigation-bar__menu-wrapper {
   @media (min-width: $mq-phone-landscape) {
     opacity: 1 !important;
+    pointer-events: auto !important;
   }
 
   @media (max-width: $mq-phone-landscape - 1px) {
