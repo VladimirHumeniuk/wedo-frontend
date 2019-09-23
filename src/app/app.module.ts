@@ -2,6 +2,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
@@ -28,6 +32,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './store/reducers';
 import { UserEffects } from './store/effects/user.effect';
 import { FooterComponent } from './layout/footer/footer.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -47,10 +52,21 @@ import { FooterComponent } from './layout/footer/footer.component';
     NbLayoutModule,
     NbSpinnerModule,
     NbThemeModule.forRoot({ name: 'default' }),
+    // Apollo Setup
+    HttpClientModule,
+    ApolloModule,
+    HttpLinkModule,
     SharedModule,
     StoreModule.forRoot(reducers, { metaReducers })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
+    apollo.create({
+      link: httpLink.create({ uri: environment.apolloServerUrl }),
+      cache: new InMemoryCache()
+    });
+  }
+}
