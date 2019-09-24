@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { BaseApolloService } from 'src/app/modules/core/services-apollo/base/base.apollo.service';
 import { User } from 'firebase';
-import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery } from './user.api';
+import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
 import { Observable } from 'rxjs/Observable';
 import { CompanyCard } from '../models';
 
@@ -30,6 +30,17 @@ export class UserApolloService {
 
   public getCompany(cid: string): Observable<CompanyCard> {
     const source = this.baseApolloService.query<{ cid: string }, CompanyCard>(getCompanyQuery, (data) => data.getCompany, { cid });
+    return source;
+  }
+
+  public assignCompany(userId: string, companyId: string): Observable<boolean> {
+    const source = this.baseApolloService.mutation<{
+      userId: string,
+      companyId: string
+    }, boolean>(assignCompanyMutation, (data) => data.assignCompanyMutation, {
+      userId,
+      companyId
+    });
     return source;
   }
 
