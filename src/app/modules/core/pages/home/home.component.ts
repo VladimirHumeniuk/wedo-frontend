@@ -4,7 +4,8 @@ import { Alert, CompanyCard } from './../../../../shared/models';
 import { ItemsService } from '../../services';
 import { BaseApolloService } from '../../services-apollo/base/base.apollo.service';
 import { UserApolloService } from 'src/app/shared/services-apollo/user.apollo.service';
-import { flatMap, tap } from 'rxjs/operators';
+import { flatMap, tap, zip, mergeMap, take } from 'rxjs/operators';
+import { forkJoin, of, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'wd-home',
@@ -32,17 +33,23 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.itemsService.getItems('companies');
-    this.userApolloService.getAllUsers()
+    const source1 = this.userApolloService.getAllUsers()
       .pipe(
         flatMap(x => this.userApolloService.getUser(x[0].uid)),
         tap(x => console.log('OLOLO', x))
-      ).subscribe();
+      );
 
-    this.userApolloService.getAllCompanies()
+    const source2 = this.userApolloService.getAllCompanies()
       .pipe(
         flatMap(x => this.userApolloService.getCompany(x[0].cid)),
         tap(x => console.log('OLOLO 2', x))
-      ).subscribe();
+      );
+
+    combineLatest(source1, source2)
+      .pipe(take(1), flatMap((result) => {
+        console.log("Vd0", result[0], result[1]);
+        return this.userApolloService.assignCompany(result[0].uid, result[1].cid);
+      })).subscribe();
   }
 
 }

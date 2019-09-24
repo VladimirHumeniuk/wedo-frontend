@@ -67,5 +67,13 @@ export const getCompanyQuery = gql`
     ${companyFieldFragment}
 `;
 
+// Mutation
+
+export const assignCompanyMutation = gql`
+    mutation assignCompany($userId: String!, $companyId: String!) {
+      assignCompany(userId: $userId, companyId: $companyId)
+    }
+`;
+
 
 
