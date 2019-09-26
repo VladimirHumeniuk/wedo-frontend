@@ -33,6 +33,12 @@ import { reducers, metaReducers } from './store/reducers';
 import { UserEffects } from './store/effects/user.effect';
 import { FooterComponent } from './layout/footer/footer.component';
 import { environment } from 'src/environments/environment';
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { fragmetTypes as introspectionQueryResultData } from './fragment-types';
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
 
 @NgModule({
   declarations: [

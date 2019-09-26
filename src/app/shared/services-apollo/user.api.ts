@@ -1,34 +1,5 @@
 import gql from 'graphql-tag';
-
-// Fragments;
-export const userFieldFragment = gql`
-    fragment userFields on User {
-        uid,
-        email,
-        accountType,
-        acceptTermsAndConditions
-    }
-`;
-
-export const companyFieldFragment = gql`
-    fragment companyFields on Company {
-      cid,
-      title,
-      owner,
-      created,
-      image,
-      url,
-      phone {
-        isValid
-      },
-      category,
-      email,
-      address,
-      wysiwyg,
-      shortDescription,
-      isShown,
-    }
-`;
+import { userFieldsFragment, companyFieldsFragment } from './common/api.fragments';
 
 // Api;
 export const getAllUsersQuery = gql`
@@ -37,7 +8,7 @@ export const getAllUsersQuery = gql`
             ...userFields
         }
     }
-    ${userFieldFragment}
+    ${userFieldsFragment}
 `;
 
 export const getUserQuery = gql`
@@ -46,7 +17,7 @@ export const getUserQuery = gql`
             ...userFields
         }
     }
-    ${userFieldFragment}
+    ${userFieldsFragment}
 `;
 
 export const getAllCompaniesQuery = gql`
@@ -55,7 +26,7 @@ export const getAllCompaniesQuery = gql`
             ...companyFields
         }
     }
-    ${companyFieldFragment}
+    ${companyFieldsFragment}
 `;
 
 export const getCompanyQuery = gql`
@@ -64,11 +35,10 @@ export const getCompanyQuery = gql`
             ...companyFields
         }
     }
-    ${companyFieldFragment}
+    ${companyFieldsFragment}
 `;
 
 // Mutation
-
 export const assignCompanyMutation = gql`
     mutation assignCompany($userId: String!, $companyId: String!) {
       assignCompany(userId: $userId, companyId: $companyId)
