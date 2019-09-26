@@ -17,6 +17,11 @@ $nb-themes: nb-register-theme((
   color-success-800: $c-green-800,
   color-success-900: $c-green-900,
 
+  footer-background-color: $c-neutral,
+  footer-shadow: none,
+  footer-divider-color: $c-gray-400,
+  footer-text-highlight-color: $c-font-dark,
+
   layout-padding: 1.5rem,
   layout-medium-padding: 1.35rem,
   layout-small-padding: 1rem,

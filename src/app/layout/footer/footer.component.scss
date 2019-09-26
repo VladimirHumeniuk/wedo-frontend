@@ -1,0 +1,58 @@
+@import '../../../styles/variables/variables';
+
+:host {
+  width: 100%;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  opacity: .85;
+
+  @media (min-width: $mq-phone-landscape) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.footer__links {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: $mq-phone-landscape - 1px) {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: .6rem;
+  }
+
+  li {
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 14px;
+
+    @media (min-width: $mq-phone-landscape) {
+      line-height: 1;
+
+      & ~ li {
+        &::before {
+          content: '●';
+          position: relative;
+          top: -2px;
+          font-size: .5rem;
+          padding-right: .5rem;
+          margin-left: .5rem;
+        }
+      }
+    }
+  }
+}
