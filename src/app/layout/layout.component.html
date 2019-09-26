@@ -29,5 +29,11 @@
         <router-outlet></router-outlet>
       </div>
     </nb-layout-column>
+
+    <!-- Start: Footer -->
+    <nb-layout-footer *ngIf="accountRouters" [fixed]="true">
+      <wd-footer></wd-footer>
+    </nb-layout-footer>
+    <!-- End: Footer -->
   </nb-layout>
 </ng-container>
