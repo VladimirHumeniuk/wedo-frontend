@@ -32,6 +32,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './store/reducers';
 import { UserEffects } from './store/effects/user.effect';
 import { environment } from 'src/environments/environment';
+import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { fragmetTypes as introspectionQueryResultData } from './fragment-types';
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+  introspectionQueryResultData
+});
 
 @NgModule({
   declarations: [
@@ -64,7 +70,7 @@ export class AppModule {
     constructor(apollo: Apollo, httpLink: HttpLink) {
         apollo.create({
             link: httpLink.create({ uri: environment.apolloServerUrl }),
-            cache: new InMemoryCache()
+            cache: new InMemoryCache({fragmentMatcher})
         });
     }
 }

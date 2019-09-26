@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AlertsMessagesService } from './../../../../shared/services';
 import { Alert, CompanyCard } from './../../../../shared/models';
 import { ItemsService } from '../../services';
-import { BaseApolloService } from '../../services-apollo/base/base.apollo.service';
 import { UserApolloService } from 'src/app/shared/services-apollo/user.apollo.service';
-import { flatMap, tap, zip, mergeMap, take } from 'rxjs/operators';
-import { forkJoin, of, combineLatest } from 'rxjs';
+import { flatMap, tap, take } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
+import { ItemsApolloService } from '../../services-apollo/items.apollo.service';
 
 @Component({
   selector: 'wd-home',
@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
     private readonly alertsService: AlertsMessagesService,
     private readonly itemsService: ItemsService,
     private readonly userApolloService: UserApolloService,
+    private readonly itemsApolloService: ItemsApolloService,
   ) {
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts
@@ -50,6 +51,10 @@ export class HomeComponent implements OnInit {
         console.log("Vd0", result[0], result[1]);
         return this.userApolloService.assignCompany(result[0].uid, result[1].cid);
       })).subscribe();
+
+    this.itemsApolloService
+      .getItems('users')
+      .subscribe(x => console.log('Items', x));
   }
 
 }
