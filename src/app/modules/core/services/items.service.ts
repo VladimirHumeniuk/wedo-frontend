@@ -27,7 +27,7 @@ export class ItemsService {
       if (search) {
         query = query.orderBy('title')
           .startAt(search)
-          .endAt(search+'\uf8ff')
+          .endAt(search + '\uf8ff')
       }
 
       return query

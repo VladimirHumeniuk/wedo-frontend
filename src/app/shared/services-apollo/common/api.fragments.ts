@@ -29,3 +29,13 @@ export const companyFieldsFragment = gql`
       isShown,
     }
 `;
+
+export const alertFieldsFragment = gql`
+    fragment alertFields on Alert {
+      code,
+      status,
+      message,
+      adviseUrl,
+      closable
+    }
+`;
