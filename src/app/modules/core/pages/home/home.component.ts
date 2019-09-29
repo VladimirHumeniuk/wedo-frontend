@@ -6,6 +6,7 @@ import { UserApolloService } from 'src/app/shared/services-apollo/user.apollo.se
 import { flatMap, tap, take } from 'rxjs/operators';
 import { combineLatest } from 'rxjs';
 import { ItemsApolloService } from '../../services-apollo/items.apollo.service';
+import { AlertsMessagesApolloService } from 'src/app/shared/services-apollo/alerts-messages.apollos.service';
 
 @Component({
   selector: 'wd-home',
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
     private readonly itemsService: ItemsService,
     private readonly userApolloService: UserApolloService,
     private readonly itemsApolloService: ItemsApolloService,
+    private readonly alertsApolloSerivce: AlertsMessagesApolloService
   ) {
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts
@@ -55,6 +57,10 @@ export class HomeComponent implements OnInit {
     this.itemsApolloService
       .getItems('users')
       .subscribe(x => console.log('Items', x));
+
+    this.alertsApolloSerivce
+      .getAllAlerts()
+      .subscribe(x => console.log('Alerts', x));
   }
 
 }

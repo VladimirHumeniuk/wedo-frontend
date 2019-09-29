@@ -5,12 +5,20 @@ import { User } from 'firebase';
 import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
 import { Observable } from 'rxjs/Observable';
 import { CompanyCard } from '../models';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserApolloService {
-  constructor(private readonly baseApolloService: BaseApolloService) {
+
+  public user$ = this.store.select('user');
+
+  constructor(
+    private readonly baseApolloService: BaseApolloService,
+    private store: Store<AppState>
+    ) {
   }
 
   public getAllUsers(): Observable<User[]> {
