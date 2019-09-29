@@ -1,43 +1,33 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { CompanyCard } from 'src/app/shared/models';
+import { BaseApolloService } from './base/base.apollo.service';
+import { getItemsQuery } from './items.api';
+import { User, CompanyCard } from 'src/app/shared/models';
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+export type Item = User | CompanyCard;
 
 @Injectable({
   providedIn: 'root'
 })
 export class ItemsService {
 
-  public items$: Subject<CompanyCard[]> = new Subject()
+  public items$: Subject<Item[]> = new Subject();
+  constructor(private readonly baseApolloService: BaseApolloService) {
+  }
 
-  constructor(
-    private readonly angularFirestore: AngularFirestore
-  ) { }
+  public getItems(type: string, search?: string, category?: string): Observable<Item[]> {
+    const source = this.baseApolloService.query<{
+      type: string,
+      search?: string,
+      category?: string
+    }, Item[]>(
+        getItemsQuery,
+        (data) => data.getItems,
+        { type, search, category }
+      )
+      .pipe(tap(x => this.items$.next(x)));
 
-  public getItems(type: string, search?: string, category?: string) {
-
-    const response = this.angularFirestore.collection(type.toLocaleLowerCase(), (ref: firebase.firestore.CollectionReference) => {
-      let query: firebase.firestore.CollectionReference | firebase.firestore.Query = ref
-
-      if (category && category !== 'All') {
-        query = query.where('category', '==', category)
-      }
-
-      if (search) {
-        query = query.orderBy('title')
-          .startAt(search)
-          .endAt(search + '\uf8ff')
-      }
-
-      return query
-    }).valueChanges().pipe(
-      map((data: CompanyCard[]) => data)
-    )
-
-    response.subscribe((res: CompanyCard[]) => {
-      console.log(res)
-      this.items$.next(res)
-    })
+    return source;
   }
 }
