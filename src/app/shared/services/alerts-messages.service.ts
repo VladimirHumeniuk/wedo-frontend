@@ -1,80 +1,100 @@
-import { map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Injectable } from '@angular/core';
+import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { Observable } from 'rxjs/Observable';
+import { Alert, User } from '../models';
+import { getAllAlertsQuery, addAlertMutation, removeAlertMutation } from './alerts-messages.api';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState } from './../../app.state';
-import * as AlertActions from './../../store/actions/alert.action';
-import * as firebase from 'firebase/app';
-import { User, Alert } from '../models';
-import { ALERTS } from './../constants/alerts';
+import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
+import { ALERTS } from './../constants/alerts';
+import * as AlertActions from './../../store/actions/alert.action';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertsMessagesService {
-
-  public alerts$: Observable<Alert[]> = this.store.select('alert')
-  private alerts: Alert[]
-  private uid: string
+  public alerts$: Observable<Alert[]> = this.store.select('alert');
+  private alerts: Alert[];
+  private uid: string;
 
   constructor(
-    private userService: UserService,
-    private fireStore: AngularFirestore,
-    private store: Store<AppState>
-  ) {
-    this.alerts$.subscribe((alerts: Alert[]) => {
-      this.alerts = alerts
-    })
+    private readonly baseApolloService: BaseApolloService,
+    private readonly userService: UserService,
+    private readonly store: Store<AppState>,
 
-    this.userService.user$.subscribe((user: User) => {
-      if (user && user.uid) {
-        const { uid, emailVerified } = user
+    ) {
+      this.alerts$.subscribe((alerts: Alert[]) => {
+        this.alerts = alerts;
+      });
 
-        this.uid = uid
+      this.userService.user$.subscribe((user: User) => {
+        if (user && user.uid) {
+          const { uid, emailVerified } = user;
 
-        this.fireStore.collection('alerts').doc(uid).ref.get()
-          .then((data: firebase.firestore.DocumentSnapshot) => {
-            const alerts = data.data() as Alert[]
+          this.uid = uid;
 
+          this.getAllAlerts().subscribe((alerts) => {
             if ((!alerts || alerts && !alerts['email-not-verified']) && !emailVerified) {
-              this.addAlert(uid, ALERTS['email-not-verified'])
+              this.addAlert(uid, ALERTS['email-not-verified']);
             }
 
             if (alerts) {
               for (let i in alerts) {
                 if (this.alerts.length > 0) {
                   this.alerts.forEach((j: Alert) => {
-                    if (i === j.code) return
+                    if (i === j.code) return;
                   })
                 } else {
-                  this.store.dispatch(new AlertActions.AddAlert(alerts[i]))
+                  this.store.dispatch(new AlertActions.AddAlert(alerts[i]));
                 }
               }
             }
-         })
+          })
+         }
+      });
+  }
+
+  public getAllAlerts(): Observable<Alert[]> {
+    const source = this.baseApolloService.query<{}, Alert[]>(getAllAlertsQuery, (data) => data.getAllAlerts);
+    return source;
+  }
+
+  public addAlert(uid: string, alert: Alert): Observable<Alert> {
+    const source = this.baseApolloService.mutation<{
+      uid: string,
+      alert: Alert
+    }, Alert>(
+      addAlertMutation,
+      (data) => data.addAlert,
+      {
+        uid,
+        alert
       }
-    })
+    );
+    return source;
   }
 
-  public addAlert(uid: string, alert: Alert): Promise<void> {
-    return this.fireStore.collection('alerts').doc(uid)
-      .set({
-        [alert.code]: alert
-      }, { merge: true })
-  }
-
-  public removeAlert(code: string, uid: string = this.uid): void {
-    this.fireStore.collection('alerts').doc(uid)
-      .update({[code.toString()]: firebase.firestore.FieldValue.delete()})
-      .then(() => {
-        this.alerts.forEach((alert: Alert, index: number) => {
-          if (alert.code === code) {
-            this.store.dispatch(new AlertActions.RemoveAlert(index))
-          }
+  public removeAlert(code: string, uid: string = this.uid): Observable<Alert> {
+    const source = this.baseApolloService.mutation<{
+      code: string,
+      uid: string
+    }, Alert>(
+      removeAlertMutation,
+      (data) => data.removeAlert,
+      {
+        uid,
+        code
+      }
+      ).pipe(
+        tap(x => {
+          this.alerts.forEach((alert: Alert, index: number) => {
+            if (alert.code === code) {
+              this.store.dispatch(new AlertActions.RemoveAlert(index));
+            }
+          });
         })
-      })
+      );
+    return source;
   }
-
 }

@@ -1,21 +1,18 @@
-import { companyFieldsFragment, userFieldsFragment } from 'src/app/shared/services-apollo/common/api.fragments';
+
 import gql from 'graphql-tag';
+import { companyFieldsFragment, userFieldsFragment } from 'src/app/shared/services/common/api.fragments';
 
 export const getItemsQuery = gql`
     query getItems($type: String!, $search: String, $category: String) {
         getItems(type: $type, search: $search, category: $category) {
             ... on Company {
-                cid,
-                title,
-                owner,
-                created,
-                image,
-                url
+                ...companyFields
               },
               ... on User {
-                uid,
-                email
+                ...userFields
               },
         }
     }
+    ${companyFieldsFragment}
+    ${userFieldsFragment}
 `;
