@@ -6,7 +6,8 @@ export const userFieldsFragment = gql`
         uid,
         email,
         accountType,
-        acceptTermsAndConditions
+        acceptTermsAndConditions,
+        emailVerified
     }
 `;
 
@@ -38,4 +39,14 @@ export const alertFieldsFragment = gql`
       adviseUrl,
       closable
     }
+`;
+
+export const alertDataFieldsFragment = gql`
+    fragment alertDataFields on AlertData {
+      id,
+      alerts {
+        ...alertFields
+      }
+    }
+    ${alertFieldsFragment}
 `;

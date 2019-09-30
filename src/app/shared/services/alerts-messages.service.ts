@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
 import { Observable } from 'rxjs/Observable';
-import { Alert, User } from '../models';
-import { getAllAlertsQuery, addAlertMutation, removeAlertMutation } from './alerts-messages.api';
+import { Alert, User, AlertData } from '../models';
+import { getAllAlertsQuery, addAlertMutation, removeAlertMutation, getAlertsQuery } from './alerts-messages.api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
@@ -34,9 +34,12 @@ export class AlertsMessagesService {
 
           this.uid = uid;
 
-          this.getAllAlerts().subscribe((alerts) => {
+          this.getAlerts(uid).subscribe((alertsArray) => {
+
+            const alerts = alertsArray.reduce((obj, item) => Object.assign(obj, { [item.code]: item }), {});
+
             if ((!alerts || alerts && !alerts['email-not-verified']) && !emailVerified) {
-              this.addAlert(uid, ALERTS['email-not-verified']);
+              this.addAlert(uid, ALERTS['email-not-verified']).subscribe();
             }
 
             if (alerts) {
@@ -55,8 +58,19 @@ export class AlertsMessagesService {
       });
   }
 
-  public getAllAlerts(): Observable<Alert[]> {
-    const source = this.baseApolloService.query<{}, Alert[]>(getAllAlertsQuery, (data) => data.getAllAlerts);
+  public getAllAlerts(): Observable<AlertData[]> {
+    const source = this.baseApolloService.query<{}, AlertData[]>(getAllAlertsQuery, (data) => data.getAllAlerts);
+    return source;
+  }
+
+  public getAlerts(uid: string): Observable<Alert[]> {
+    const source = this.baseApolloService.query<{
+      uid: string
+    }, Alert[]>(
+      getAlertsQuery,
+      (data) => data.getAlerts, {
+      uid
+    });
     return source;
   }
 
