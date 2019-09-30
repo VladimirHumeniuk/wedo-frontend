@@ -1,10 +1,19 @@
 import gql from 'graphql-tag';
-import { alertFieldsFragment } from './common/api.fragments';
+import { alertFieldsFragment, alertDataFieldsFragment } from './common/api.fragments';
 
 // Api;
 export const getAllAlertsQuery = gql`
     query {
         getAllAlerts {
+            ...alertDataFields
+        }
+    }
+    ${alertDataFieldsFragment}
+`;
+
+export const getAlertsQuery = gql`
+    query getAlerts($uid: String!){
+        getAlerts(uid: $uid) {
             ...alertFields
         }
     }
