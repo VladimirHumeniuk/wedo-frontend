@@ -89,9 +89,6 @@ const toastrConfig = {
     ReactiveFormsModule,
     SharedModule
   ],
-  exports: [
-    RouterModule
-  ],
   providers: [
     AngularFirestore
   ]

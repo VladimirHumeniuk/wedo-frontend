@@ -20,7 +20,6 @@ export class AuthService {
     private fireStore: AngularFirestore,
     private fireAuth: AngularFireAuth,
     private router: Router,
-    private ngZone: NgZone,
     private store: Store<AppState>
   ) { }
 
@@ -34,7 +33,7 @@ export class AuthService {
       accountType,
       acceptTermsAndConditions,
       password
-    } = formData
+    } = formData;
 
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((response: firebase.auth.UserCredential) => {
@@ -47,13 +46,10 @@ export class AuthService {
           acceptTermsAndConditions: acceptTermsAndConditions
         }
 
-        this.sendEmailVerification()
-        this.setUserData(user)
-
-        this.ngZone.run(() => {
-          this.router.navigate(['/verify-email'])
-        })
-      }).catch(error => { throw error })
+        return this.setUserData(user);
+      })
+      .then(() => this.sendEmailVerification())
+      .catch(error => { throw error })
   }
 
   private setUserData(user: User): Promise<void> {
@@ -104,15 +100,15 @@ export class AuthService {
       .then(() => {
         this.userService.user$.subscribe((user: User) => {
           if (user) {
-            this.ngZone.run(() => {
               this.router.navigate(['/'])
-            })
           }
         })
-      }).catch(error => { throw error })
+      })
+      .catch(error => { throw error })
   }
 
   public signOut(): Promise<void> {
+    console.log("blobl");
     this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.auth.signOut();
   }

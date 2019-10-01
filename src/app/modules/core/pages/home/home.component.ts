@@ -32,31 +32,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.itemsService.getItems('companies').subscribe();
-    // const source1 = this.userApolloService.getAllUsers()
-    //   .pipe(
-    //     flatMap(x => this.userApolloService.getUser(x[0].uid)),
-    //     tap(x => console.log('OLOLO', x))
-    //   );
-
-    // const source2 = this.userApolloService.getAllCompanies()
-    //   .pipe(
-    //     flatMap(x => this.userApolloService.getCompany(x[0].cid)),
-    //     tap(x => console.log('OLOLO 2', x))
-    //   );
-
-    // combineLatest(source1, source2)
-    //   .pipe(take(1), flatMap((result) => {
-    //     console.log("Vd0", result[0], result[1]);
-    //     return this.userApolloService.assignCompany(result[0].uid, result[1].cid);
-    //   })).subscribe();
-
-    // this.itemsService
-    //   .getItems('users')
-    //   .subscribe(x => console.log('Items', x));
-
-    // this.alertsApolloSerivce
-    //   .getAllAlerts()
-    //   .subscribe(x => console.log('Alerts', x));
   }
 
 }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { GetUser } from 'src/app/store/actions/user.action';
 
 @Component({
   selector: 'wd-sign-in',
@@ -17,7 +20,8 @@ export class SignInComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private readonly store: Store<AppState>
   ) { }
 
   private formInit(): void {
@@ -47,7 +51,8 @@ export class SignInComponent implements OnInit {
       this.authService.signInWithEmailAndPassword(formData)
         .then(() => {
           this.loading = false
-          this.signInForm.reset()
+          this.signInForm.reset();
+          this.store.dispatch(new GetUser());
         })
         .catch(error => {
           this.loading = false

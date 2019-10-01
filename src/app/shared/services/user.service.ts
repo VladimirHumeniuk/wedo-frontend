@@ -8,6 +8,7 @@ import { CompanyCard } from '../models';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +60,7 @@ export class UserService {
   }
 
   public getAuth(): Observable<{ uid: string }> {
-    const source$ = this.fireAuth.authState as Observable<{uid: string}>;
+    const source$ = this.fireAuth.authState.pipe(take(1)) as Observable<{uid: string}>;
     return source$;
   }
 }

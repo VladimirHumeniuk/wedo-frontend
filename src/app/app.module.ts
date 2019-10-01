@@ -34,6 +34,7 @@ import { UserEffects } from './store/effects/user.effect';
 import { environment } from 'src/environments/environment';
 import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { fragmetTypes as introspectionQueryResultData } from './fragment-types';
+import { RouterModule } from '@angular/router';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
@@ -48,6 +49,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    RouterModule,
     CoreModule,
     EffectsModule.forRoot([UserEffects]),
     NbButtonModule,
