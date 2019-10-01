@@ -30,7 +30,7 @@ export const getAllCompaniesQuery = gql`
 `;
 
 export const getCompanyQuery = gql`
-    query getCompany($cid: String!) {
+    query getCompany($cid: String) {
         getCompany(cid: $cid) {
             ...companyFields
         }

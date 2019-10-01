@@ -38,28 +38,7 @@ export class MyCompanyCardComponent implements OnInit {
     private store: Store<AppState>,
     private userService: UserService
   ) {
-    this.user$.subscribe((user: User) => {
-      this.user = user
 
-      if (user) {
-        this.userService.getUserCompany(user.company)
-          .subscribe((companyCard: CompanyCard) => {
-            if (companyCard) {
-              this.companyCard = companyCard
-
-              Object.keys(companyCard).forEach(key => {
-                if (
-                key !== 'cid' &&
-                key !== 'owner' &&
-                key !== 'created' &&
-                key !== 'image') {
-                  this.myCardForm.controls[key].setValue(companyCard[key])
-                }
-              })
-            }
-          })
-      }
-    })
   }
 
   private formInit(): void {
@@ -131,7 +110,7 @@ export class MyCompanyCardComponent implements OnInit {
         const promises = []
 
         const updateCompanyData = companiesLink.doc(this.companyCard.cid)
-        .set(formValue, { merge: true })
+          .set(formValue, { merge: true })
 
         promises.push(updateCompanyData)
 
@@ -147,7 +126,7 @@ export class MyCompanyCardComponent implements OnInit {
         if (this.removeImage && !this.upload) {
           const removeImage = this.uploadService.removeImage('companies', this.companyCard.cid)
           const clearImageData = companiesLink.doc(this.companyCard.cid)
-          .set({ image: "" }, { merge: true })
+            .set({ image: "" }, { merge: true })
 
           promises.push(removeImage, clearImageData)
         }
@@ -166,15 +145,38 @@ export class MyCompanyCardComponent implements OnInit {
 
       if (!this.companyCard) {
         companiesLink.add(formValue)
-        .then((res: DocumentReference) => {
-          this.userService.assignCompany(this.user.uid, res.id)
-        })
+          .then((res: DocumentReference) => {
+            this.userService.assignCompany(this.user.uid, res.id)
+          })
       }
     }
   }
 
   ngOnInit() {
     this.formInit()
+    this.user$.subscribe((user: User) => {
+      this.user = user
+
+      if (user) {
+        this.userService.getUserCompany(user.company)
+          .subscribe((companyCard: CompanyCard) => {
+            if (companyCard) {
+              this.companyCard = companyCard
+
+              Object.keys(companyCard).forEach(key => {
+                if (
+                  key !== 'cid' &&
+                  key !== 'owner' &&
+                  key !== 'created' &&
+                  key !== 'image' &&
+                  key !== '__typename') {
+                  this.myCardForm.controls[key].setValue(companyCard[key])
+                }
+              })
+            }
+          })
+      }
+    });
   }
 
 }

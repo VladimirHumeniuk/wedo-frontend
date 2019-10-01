@@ -7,7 +7,8 @@ export const userFieldsFragment = gql`
         email,
         accountType,
         acceptTermsAndConditions,
-        emailVerified
+        emailVerified,
+        company
     }
 `;
 
@@ -19,9 +20,7 @@ export const companyFieldsFragment = gql`
       created,
       image,
       url,
-      phone {
-        isValid
-      },
+      phone,
       category,
       email,
       address,
