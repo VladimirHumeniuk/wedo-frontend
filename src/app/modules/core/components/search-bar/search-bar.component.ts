@@ -30,7 +30,7 @@ export class SearchBarComponent implements OnInit {
 
   public search() {
     let { type, search, category } = this.homeSearch.value
-    this.itemsService.getItems(type, search, category)
+    this.itemsService.getItems(type, search, category).subscribe();
   }
 
   ngOnInit() {
