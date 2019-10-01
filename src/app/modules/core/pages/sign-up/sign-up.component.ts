@@ -3,6 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { MustMatch } from 'src/app/shared/helpers';
 import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
+import { Router } from '@angular/router';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { GetUser } from 'src/app/store/actions/user.action';
 
 @Component({
   selector: 'wd-sign-up',
@@ -30,8 +34,10 @@ export class SignUpComponent implements OnInit {
   private passwordLength = { min: 6, max: 32 }
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
+    private readonly router: Router,
+    private readonly store: Store<AppState>
   ) { }
 
   private formInit(): void {
@@ -68,7 +74,7 @@ export class SignUpComponent implements OnInit {
         if (value.length >= 6) {
           confirmPassword.enable()
         } else if (value.length === 0) {
-          confirmPassword.reset({value: '', disabled: true})
+          confirmPassword.reset({ value: '', disabled: true })
         } else {
           confirmPassword.disable()
         }
@@ -89,8 +95,10 @@ export class SignUpComponent implements OnInit {
       this.authService.createUserWithEmailAndPassword(formData)
         .then(() => {
           this.loading = false
-          this.signUpForm.reset()
+          this.signUpForm.reset();
+          this.store.dispatch(new GetUser());
         })
+        .then(() => this.router.navigate(['/verify-email']))
         .catch(error => {
           this.loading = false
 
@@ -100,11 +108,12 @@ export class SignUpComponent implements OnInit {
             control.setErrors({
               'inUse': {
                 message: FORMS_MESSAGES.email.inUse
-              }})
+              }
+            });
           }
 
           throw Error(error)
-        })
+        });
     }
 
     return
