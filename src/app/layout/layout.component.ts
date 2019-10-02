@@ -72,7 +72,6 @@ export class LayoutComponent extends SafeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("INVOKE");
     this.store.dispatch(new GetUser());
   }
 

@@ -16,11 +16,11 @@ import * as UserActions from './../../store/actions/user.action';
 export class AuthService {
 
   constructor(
-    private userService: UserService,
-    private fireStore: AngularFirestore,
-    private fireAuth: AngularFireAuth,
-    private router: Router,
-    private store: Store<AppState>
+    private readonly userService: UserService,
+    private readonly fireStore: AngularFirestore,
+    private readonly fireAuth: AngularFireAuth,
+    private readonly router: Router,
+    private readonly store: Store<AppState>
   ) { }
 
   public getCurrent(): Observable<firebase.User> {
@@ -108,7 +108,6 @@ export class AuthService {
   }
 
   public signOut(): Promise<void> {
-    console.log("blobl");
     this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.auth.signOut();
   }
