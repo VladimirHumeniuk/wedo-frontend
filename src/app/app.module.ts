@@ -1,11 +1,15 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { fragmetTypes as introspectionQueryResultData } from './fragment-types';
+
+import { environment } from 'src/environments/environment';
 
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
@@ -23,6 +27,7 @@ import { SharedModule } from './shared/shared.module';
 // Layout components
 import { LayoutComponent } from './layout/layout.component';
 import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 // Components
 import { AppComponent } from './app.component';
@@ -31,11 +36,6 @@ import { AppComponent } from './app.component';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './store/reducers';
 import { UserEffects } from './store/effects/user.effect';
-import { FooterComponent } from './layout/footer/footer.component';
-import { environment } from 'src/environments/environment';
-import { IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { fragmetTypes as introspectionQueryResultData } from './fragment-types';
-import { RouterModule } from '@angular/router';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
