@@ -5,3 +5,8 @@ export interface Alert {
   adviseUrl?: string;
   closable?: boolean;
 }
+
+export interface AlertData {
+  id: string;
+  alerts: Alert[];
+}

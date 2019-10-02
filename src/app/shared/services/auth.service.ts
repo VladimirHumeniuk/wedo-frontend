@@ -16,12 +16,11 @@ import * as UserActions from './../../store/actions/user.action';
 export class AuthService {
 
   constructor(
-    private userService: UserService,
-    private fireStore: AngularFirestore,
-    private fireAuth: AngularFireAuth,
-    private router: Router,
-    private ngZone: NgZone,
-    private store: Store<AppState>
+    private readonly userService: UserService,
+    private readonly fireStore: AngularFirestore,
+    private readonly fireAuth: AngularFireAuth,
+    private readonly router: Router,
+    private readonly store: Store<AppState>
   ) { }
 
   public getCurrent(): Observable<firebase.User> {
@@ -34,7 +33,7 @@ export class AuthService {
       accountType,
       acceptTermsAndConditions,
       password
-    } = formData
+    } = formData;
 
     return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((response: firebase.auth.UserCredential) => {
@@ -47,13 +46,10 @@ export class AuthService {
           acceptTermsAndConditions: acceptTermsAndConditions
         }
 
-        this.sendEmailVerification()
-        this.setUserData(user)
-
-        this.ngZone.run(() => {
-          this.router.navigate(['/verify-email'])
-        })
-      }).catch(error => { throw error })
+        return this.setUserData(user);
+      })
+      .then(() => this.sendEmailVerification())
+      .catch(error => { throw error })
   }
 
   private setUserData(user: User): Promise<void> {
@@ -104,12 +100,11 @@ export class AuthService {
       .then(() => {
         this.userService.user$.subscribe((user: User) => {
           if (user) {
-            this.ngZone.run(() => {
               this.router.navigate(['/'])
-            })
           }
         })
-      }).catch(error => { throw error })
+      })
+      .catch(error => { throw error })
   }
 
   public signOut(): Promise<void> {

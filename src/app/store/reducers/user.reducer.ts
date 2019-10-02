@@ -10,19 +10,18 @@ export function userReducer(state: User, action: UserActions.Actions) {
       return { ...action.payload, loading: false }
 
     case UserActions.REMOVE_USER:
-      state = null;
-      return state;
+      return {loading: false};
 
     case UserActions.GET_USER:
-      return { ...state, loading: true }
+      return { ...state, loading: true };
 
     case UserActions.AUTHENTICATED:
-      return { ...state, ...action.payload, loading: false }
+      return { ...state, ...action.payload, loading: false };
 
     case UserActions.NOT_AUTHENTICATED:
-      return { ...defaultUser, loading: false }
+      return { ...defaultUser, loading: false };
 
     default:
-      return state
+      return {...state, loading: false}
   }
 }

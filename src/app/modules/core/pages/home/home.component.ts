@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertsMessagesService } from './../../../../shared/services';
+import { AlertsMessagesService, UserService } from './../../../../shared/services';
 import { Alert, CompanyCard } from './../../../../shared/models';
 import { ItemsService } from '../../services';
+import { flatMap, tap, take } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'wd-home',
@@ -15,7 +17,9 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private readonly alertsService: AlertsMessagesService,
-    private readonly itemsService: ItemsService
+    private readonly itemsService: ItemsService,
+    private readonly userApolloService: UserService,
+    private readonly alertsApolloSerivce: AlertsMessagesService
   ) {
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts
@@ -27,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemsService.getItems('companies')
+    this.itemsService.getItems('companies').subscribe();
   }
 
 }

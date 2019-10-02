@@ -1,61 +1,59 @@
 <div class="navigation-bar">
-  <a class="navigation-bar__logo" routerLink='/'>
+  <a class="navigation-bar__logo"
+     routerLink='/'>
     gib.do
   </a>
 
   <div class="navigation-bar__menu">
-    <button
-    class="navigation-bar__toggle-menu"
-    (click)="toggleMenu()"
-    role="button">
-      <nb-icon
-      class="navigation-bar__toggle-menu-icon"
-      icon="menu-2-outline"></nb-icon>
+    <button class="navigation-bar__toggle-menu"
+            (click)="toggleMenu()"
+            role="button">
+      <nb-icon class="navigation-bar__toggle-menu-icon"
+               icon="menu-2-outline"></nb-icon>
       Menu
     </button>
 
-    <div
-    class="navigation-bar__menu-wrapper"
-    [@toggleNav]="!isNavToggled ? 'out' : 'in'">
+    <div class="navigation-bar__menu-wrapper"
+         [@toggleNav]="!isNavToggled ? 'out' : 'in'">
       <ul class="navigation-bar__menu-items">
+        <ng-container *ngIf="!user?.uid">
+          <li class="navigation-bar__menu-item">
+            <a nbButton
+               ghost
+               status="info"
+               routerLink='/sign-in'>
+              Login
+            </a>
+          </li>
 
-        <li *ngIf="!user.uid" class="navigation-bar__menu-item">
-          <a
-          nbButton
-          ghost
-          status="info"
-          routerLink='/sign-in'>
-            Login
-          </a>
-        </li>
+          <li class="navigation-bar__menu-item">
+            <a nbButton
+               status="info"
+               routerLink='/sign-up'>
+              Sign Up
+            </a>
+          </li>
+        </ng-container>
 
-        <li *ngIf="!user.uid" class="navigation-bar__menu-item">
-          <a
-          nbButton
-          status="info"
-          routerLink='/sign-up'>
-            Sign Up
-          </a>
-        </li>
+        <ng-container *ngIf="user?.uid">
 
-        <li *ngIf="user.uid" class="navigation-bar__menu-item">
-          <a
-          nbButton
-          ghost
-          status="info"
-          routerLink='/my-company-card'>
-            My {{user.accountType === 'company' ? 'Company' : 'Personal'}} Card
-          </a>
-        </li>
+          <li class="navigation-bar__menu-item">
+            <a nbButton
+               ghost
+               status="info"
+               routerLink='/my-company-card'>
+              My {{user.accountType === 'company' ? 'Company' : 'Personal'}} Card
+            </a>
+          </li>
 
-        <li *ngIf="user.uid" class="navigation-bar__menu-item">
-          <button
-          nbButton
-          status="info"
-          (click)="signOut()">
-            Sign Out
-          </button>
-        </li>
+          <li class="navigation-bar__menu-item">
+            <button nbButton
+                    status="info"
+                    (click)="signOut()">
+              Sign Out
+            </button>
+          </li>
+        </ng-container>
 
         <!-- <li (click)="delete()" class="navigation-bar__menu-item">
           delete

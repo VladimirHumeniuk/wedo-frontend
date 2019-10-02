@@ -40,7 +40,7 @@ export class LayoutComponent extends SafeComponent implements OnInit {
 
     this.userService.user$.pipe(
         takeUntil(this.unsubscriber),
-        tap((x: any) => this.loading = !x || x && x.loading === true)
+        tap((x: any) => this.loading = x.loading === true)
     ).subscribe();
 
     this.router.events
