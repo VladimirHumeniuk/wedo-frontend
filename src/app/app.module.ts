@@ -74,7 +74,7 @@ export class AppModule {
   constructor(apollo: Apollo, httpLink: HttpLink) {
     apollo.create({
       link: httpLink.create({ uri: environment.apolloServerUrl }),
-      cache: new InMemoryCache()
+      cache: new InMemoryCache({fragmentMatcher})
     });
   }
 }
