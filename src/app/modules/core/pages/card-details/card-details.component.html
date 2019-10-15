@@ -1,0 +1,19 @@
+<ng-container *ngIf="cardDetails">
+  <h1>{{cardDetails.title}}</h1>
+
+  <nb-card>
+    <nb-card-body>
+      <article class="card-details">
+        <div class="card-details__image">
+          <img [src]="cardDetails.image" [alt]="cardDetails.title">
+        </div>
+
+        <div class="card-details__contacts">
+
+        </div>
+
+        <div class="card-details__information" [innerHTML]="cardDetails.wysiwyg"></div>
+      </article>
+    </nb-card-body>
+  </nb-card>
+</ng-container>

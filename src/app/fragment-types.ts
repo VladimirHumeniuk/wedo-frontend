@@ -1,4 +1,4 @@
-export const fragmetTypes = {
+export const fragmentTypes = {
     __schema: {
       types: [
         {

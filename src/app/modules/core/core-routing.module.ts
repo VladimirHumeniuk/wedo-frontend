@@ -13,6 +13,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
 import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
+import { CardDetailsComponent } from './pages/card-details/card-details.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
     path: 'request-password',
     component: RequestPasswordComponent,
     canActivate: [isGuest]
+  },
+  {
+    path: 'card/:cid',
+    component: CardDetailsComponent
   },
   {
     path: 'account',

@@ -7,15 +7,19 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 
+  @Input() cid: strind
   @Input() title: string
   @Input() rating: number
   @Input() category: string
   @Input() image: string
   @Input() description: string
 
+  public url: string
+
   constructor() { }
 
   ngOnInit() {
+    this.url = this.title.replace(/\s+/g, '-').toLowerCase()
   }
 
 }

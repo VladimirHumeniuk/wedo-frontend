@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-import { fragmetTypes as introspectionQueryResultData } from './fragment-types';
+import { fragmentTypes as introspectionQueryResultData } from './fragment-types';
 
 import { environment } from 'src/environments/environment';
 

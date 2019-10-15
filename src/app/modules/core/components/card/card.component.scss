@@ -6,6 +6,15 @@
   justify-content: space-between;
   height: 100%;
   padding-top: .3rem;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+
+      color: $c-gray-700;
+    }
+  }
 }
 
 .card__header {
@@ -46,6 +55,10 @@
   line-height: 1.35;
   font-weight: 700;
   margin: 0 0 3px;
+
+  a {
+    color: inherit;
+  }
 }
 
 .card__phone {
@@ -71,6 +84,7 @@
   align-items: center;
 
   a {
+    padding-left: 30px;
     cursor: pointer;
   }
 }
