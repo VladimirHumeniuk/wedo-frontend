@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 
-  @Input() cid: strind
+  @Input() cid: string
   @Input() title: string
   @Input() rating: number
   @Input() category: string

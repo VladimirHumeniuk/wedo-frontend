@@ -1,16 +1,31 @@
 <ng-container *ngIf="cardDetails">
-  <h1>{{cardDetails.title}}</h1>
-
   <nb-card>
     <nb-card-body>
       <article class="card-details">
+        <h1 class="card-details__title">{{cardDetails.title}}</h1>
+
         <div class="card-details__image">
           <img [src]="cardDetails.image" [alt]="cardDetails.title">
         </div>
 
-        <div class="card-details__contacts">
-
-        </div>
+        <ul class="card-details__contacts">
+          <li *ngIf="cardDetails.phone">
+            <nb-icon icon="phone-outline"></nb-icon>
+            {{cardDetails.phone}}
+          </li>
+          <li *ngIf="cardDetails.url">
+            <nb-icon icon="globe-2-outline"></nb-icon>
+            {{cardDetails.url}}
+          </li>
+          <li *ngIf="cardDetails.email">
+            <nb-icon icon="email-outline"></nb-icon>
+            {{cardDetails.email}}
+          </li>
+          <li *ngIf="cardDetails.address">
+            <nb-icon icon="pin-outline"></nb-icon>
+            {{cardDetails.address}}
+          </li>
+        </ul>
 
         <div class="card-details__information" [innerHTML]="cardDetails.wysiwyg"></div>
       </article>

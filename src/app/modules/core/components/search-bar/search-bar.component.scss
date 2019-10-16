@@ -11,7 +11,7 @@
   'category'
   'submit';
 
-  @media (min-width: $mq-phone-landscape ) {
+  @media (min-width: $mq-phone-landscape) {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
     'search search'

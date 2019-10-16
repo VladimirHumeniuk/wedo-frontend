@@ -18,7 +18,7 @@ export class CardDetailsComponent implements OnInit {
     private readonly userService: UserService
   ) { }
 
-  public getCompany(): CompanyCard {
+  public getCompany(): void {
     this.userService.getCompany(this.cid)
     .subscribe((companyCard: CompanyCard) => {
       this.cardDetails = companyCard

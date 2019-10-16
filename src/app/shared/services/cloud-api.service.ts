@@ -12,7 +12,7 @@ export class CloudApiService {
   ) { }
 
   public getUserByEmail(email: string): Promise<any> {
-    return this.cloud.httpsCallable('getUserByEmail')({email: email})
+    return this.cloud.httpsCallable('getUserByEmail')({ email: email })
       .toPromise()
       .catch(error => { throw error })
   }

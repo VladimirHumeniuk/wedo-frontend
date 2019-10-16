@@ -37,9 +37,7 @@ export class MyCompanyCardComponent implements OnInit {
     private uploadService: UploadService,
     private store: Store<AppState>,
     private userService: UserService
-  ) {
-
-  }
+  ) { }
 
   private formInit(): void {
     this.myCardForm = this.formBuilder.group({
