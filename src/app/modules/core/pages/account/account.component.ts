@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { PartialObserver } from 'rxjs';
 import { AuthService } from 'src/app/shared/services';
@@ -12,9 +12,10 @@ export class AccountComponent implements OnInit {
   private queryParams: Params
 
   constructor(
-    private router: Router,
-    private authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly ngZone: NgZone
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParams = params
@@ -24,19 +25,25 @@ export class AccountComponent implements OnInit {
   private resolveMode(mode: string): void {
     switch (mode) {
       case 'resetPassword':
-        this.router.navigate(['/account/reset-password'], {
-          queryParams: {...this.queryParams}
+        this.ngZone.run(() => {
+          this.router.navigate(['/account/reset-password'], {
+            queryParams: {...this.queryParams}
+          })
         })
         break
 
       case 'verifyEmail':
-        this.router.navigate(['/account/email-verified'], {
-          queryParams: {...this.queryParams}
+        this.ngZone.run(() => {
+          this.router.navigate(['/account/email-verified'], {
+            queryParams: {...this.queryParams}
+          })
         })
         break
 
       default:
-        this.router.navigate(['/'])
+        this.ngZone.run(() => {
+          this.router.navigate(['/'])
+        })
         break
     }
   }
@@ -53,11 +60,13 @@ export class AccountComponent implements OnInit {
             this.resolveMode(this.queryParams.mode)
           })
           .catch(error => {
-            this.router.navigate(['/account/invalid-action-code'], {
-              queryParams: {
-                mode: mode,
-                oobCode: oobCode
-              }
+            this.ngZone.run(() => {
+              this.router.navigate(['/account/invalid-action-code'], {
+                queryParams: {
+                  mode: mode,
+                  oobCode: oobCode
+                }
+              })
             })
           })
       } else {
