@@ -32,6 +32,10 @@ export class AlertsMessagesService {
         if (user && user.uid) {
           const { uid, emailVerified } = user;
 
+          if (emailVerified) {
+            return;
+          }
+
           this.uid = uid;
 
           this.getAlerts(uid).subscribe((alertsArray) => {
