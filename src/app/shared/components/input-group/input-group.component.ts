@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { parsePhoneNumberFromString, isValidNumber, PhoneNumber } from 'libphonenumber-js';
-import { FORMS_MESSAGES } from './../../constants/forms-messages';
+import { FORMS_MESSAGES } from './../../constants';
 import { FormControlService } from '../../services';
 
 @Component({
@@ -44,8 +44,8 @@ export class InputGroupComponent implements OnInit {
   }
 
   constructor(
-    private formControlService: FormControlService,
-  ) {}
+    private readonly formControlService: FormControlService,
+  ) { }
 
   ngOnInit() {
     const formControl = this.parentForm.get(this.name)

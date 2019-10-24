@@ -34,9 +34,9 @@ export class NavigationBarComponent implements OnInit {
   public isNavToggled: boolean
 
   constructor(
-    private authService: AuthService,
-    private userService: UserService,
-    private fireAuth: AngularFireAuth
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly fireAuth: AngularFireAuth
   ) {
     this.userService.user$.subscribe((user: User) => {
       this.user = user

@@ -2,7 +2,6 @@ import { MetaReducer, ActionReducer, Action } from '@ngrx/store';
 import { AppState } from './../../app.state';
 import { _localStorageSync } from './localStorageSync.reducer';
 import { REMOVE_USER } from '../actions/user.action';
-
 import { storeLogger } from 'ngrx-store-logger';
 
 export function logger(reducer: ActionReducer<AppState>): any {

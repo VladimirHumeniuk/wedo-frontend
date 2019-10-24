@@ -20,9 +20,8 @@ export class UserService {
   constructor(
     private readonly baseApolloService: BaseApolloService,
     private readonly fireAuth: AngularFireAuth,
-    private store: Store<AppState>
-    ) {
-  }
+    private readonly store: Store<AppState>
+  ) { }
 
   public getAllUsers(): Observable<User[]> {
     const source = this.baseApolloService.query<{}, User[]>(getAllUsersQuery, (data) => data.getAllUsers);

@@ -6,7 +6,7 @@ import { getAllAlertsQuery, addAlertMutation, removeAlertMutation, getAlertsQuer
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
-import { ALERTS } from './../constants/alerts';
+import { ALERTS } from './../constants';
 import * as AlertActions from './../../store/actions/alert.action';
 import { tap } from 'rxjs/operators';
 

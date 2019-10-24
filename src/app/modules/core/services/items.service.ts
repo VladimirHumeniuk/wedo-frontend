@@ -13,8 +13,10 @@ export type Item = User | CompanyCard;
 export class ItemsService {
 
   public items$: Subject<Item[]> = new Subject();
-  constructor(private readonly baseApolloService: BaseApolloService) {
-  }
+
+  constructor(
+    private readonly baseApolloService: BaseApolloService
+  ) { }
 
   public getItems(type: string, search?: string, category?: string): Observable<Item[]> {
     const source = this.baseApolloService.query<{

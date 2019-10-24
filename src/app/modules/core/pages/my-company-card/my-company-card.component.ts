@@ -31,12 +31,12 @@ export class MyCompanyCardComponent implements OnInit {
   public categories = ['Security', 'Cleaning'] // todo
 
   constructor(
-    private toastrService: NbToastrService,
-    private fireStore: AngularFirestore,
-    private formBuilder: FormBuilder,
-    private uploadService: UploadService,
-    private store: Store<AppState>,
-    private userService: UserService
+    private readonly toastrService: NbToastrService,
+    private readonly fireStore: AngularFirestore,
+    private readonly formBuilder: FormBuilder,
+    private readonly uploadService: UploadService,
+    private readonly store: Store<AppState>,
+    private readonly userService: UserService
   ) { }
 
   private formInit(): void {

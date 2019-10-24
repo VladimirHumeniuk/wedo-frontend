@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, Input, ElementRef } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { FORMS_MESSAGES } from './../../constants/forms-messages';
+import { FORMS_MESSAGES } from './../../constants';
 import { functions } from 'firebase';
 
 @Component({
@@ -20,7 +20,7 @@ export class WysiwygComponent implements OnInit {
   public length: number = 0
 
   constructor(
-    private elementRef: ElementRef
+    private readonly elementRef: ElementRef
   ) { }
 
   public formatText(style: string): void {

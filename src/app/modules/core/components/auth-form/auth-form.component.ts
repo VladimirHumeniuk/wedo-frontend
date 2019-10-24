@@ -11,7 +11,7 @@ export class AuthFormComponent {
   @Input() heading: string
 
   constructor(
-    private location: Location
+    private readonly location: Location
   ) { }
 
   public goBack(): void {

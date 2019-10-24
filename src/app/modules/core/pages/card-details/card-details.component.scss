@@ -1,31 +1,30 @@
 @import '../../../../../styles/variables/variables';
 
 .card-details {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-areas:
-  'title'
-  'image'
-  'contacts'
-  'info';
+  display: flex;
+  flex-direction: column;
 
   @media (min-width: $mq-tablet) {
-    grid-gap: 30px;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-areas:
-    'title title title'
-    'image contacts contacts'
-    'image info info'
-    'image info info';
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 0 -0.5rem;
   }
 }
 
-.card-details__title {
-  grid-area: title;
+.cards-details__left,
+.cards-details__right {
+  @media (min-width: $mq-tablet) {
+    margin: 0 0.05rem;
+  }
+}
+
+.cards-details__left {
+  @media (min-width: $mq-tablet) {
+    max-width: 30%;
+  }
 }
 
 .card-details__image {
-  grid-area: image;
   margin-bottom: 1.25rem;
 
   img {
@@ -37,7 +36,6 @@
 }
 
 .card-details__contacts {
-  grid-area: contacts;
   list-style-type: none;
   padding-left: 0;
   margin: 0;
@@ -51,8 +49,4 @@
   nb-icon {
     margin-right: 10px;
   }
-}
-
-.card-details__information {
-  grid-area: info;
 }

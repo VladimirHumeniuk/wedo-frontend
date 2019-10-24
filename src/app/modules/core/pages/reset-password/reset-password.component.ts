@@ -21,9 +21,9 @@ export class ResetPasswordComponent implements OnInit {
   private passwordLength = { min: 6, max: 32 }
 
   constructor(
-    private authService: AuthService,
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private readonly authService: AuthService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly formBuilder: FormBuilder
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.oobCode = params.oobCode

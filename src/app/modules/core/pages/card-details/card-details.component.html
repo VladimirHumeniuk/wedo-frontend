@@ -1,34 +1,42 @@
 <ng-container *ngIf="cardDetails">
-  <nb-card>
-    <nb-card-body>
-      <article class="card-details">
-        <h1 class="card-details__title">{{cardDetails.title}}</h1>
+  <h1 class="card-details__title">{{cardDetails.title}}</h1>
+  <article class="card-details">
+    <div class="cards-details__left">
+      <nb-card>
+        <nb-card-body>
+          <div class="card-details__image">
+            <img [src]="cardDetails.image" [alt]="cardDetails.title">
+          </div>
 
-        <div class="card-details__image">
-          <img [src]="cardDetails.image" [alt]="cardDetails.title">
-        </div>
+          <ul class="card-details__contacts">
+            <li *ngIf="cardDetails.phone">
+              <nb-icon icon="phone-outline"></nb-icon>
+              {{cardDetails.phone}}
+            </li>
+            <li *ngIf="cardDetails.url">
+              <nb-icon icon="globe-2-outline"></nb-icon>
+              {{cardDetails.url}}
+            </li>
+            <li *ngIf="cardDetails.email">
+              <nb-icon icon="email-outline"></nb-icon>
+              {{cardDetails.email}}
+            </li>
+            <li *ngIf="cardDetails.address">
+              <nb-icon icon="pin-outline"></nb-icon>
+              {{cardDetails.address}}
+            </li>
+          </ul>
+        </nb-card-body>
+      </nb-card>
+    </div>
 
-        <ul class="card-details__contacts">
-          <li *ngIf="cardDetails.phone">
-            <nb-icon icon="phone-outline"></nb-icon>
-            {{cardDetails.phone}}
-          </li>
-          <li *ngIf="cardDetails.url">
-            <nb-icon icon="globe-2-outline"></nb-icon>
-            {{cardDetails.url}}
-          </li>
-          <li *ngIf="cardDetails.email">
-            <nb-icon icon="email-outline"></nb-icon>
-            {{cardDetails.email}}
-          </li>
-          <li *ngIf="cardDetails.address">
-            <nb-icon icon="pin-outline"></nb-icon>
-            {{cardDetails.address}}
-          </li>
-        </ul>
-
-        <div class="card-details__information" [innerHTML]="cardDetails.wysiwyg"></div>
-      </article>
-    </nb-card-body>
-  </nb-card>
+    <div class="cards-details__right">
+      <nb-card>
+        <nb-card-body>
+          <div class="card-details__information" [innerHTML]="cardDetails.wysiwyg"></div>
+        </nb-card-body>
+      </nb-card>
+      <h2>About</h2>
+    </div>
+  </article>
 </ng-container>

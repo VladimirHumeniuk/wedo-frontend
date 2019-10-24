@@ -12,9 +12,9 @@ export class AccountComponent implements OnInit {
   private queryParams: Params
 
   constructor(
-    private router: Router,
-    private authService: AuthService,
-    private activatedRoute: ActivatedRoute
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly activatedRoute: ActivatedRoute
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParams = params

@@ -39,6 +39,7 @@ import { SignInComponent } from './pages/sign-in/sign-in.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { VerifyEmailComponent } from './pages/verify-email/verify-email.component';
 import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
+import { CardDetailsComponent } from './pages/card-details/card-details.component';
 
 // Components
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
@@ -46,7 +47,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { CardsGridComponent } from './components/cards-grid/cards-grid.component';
 import { CardComponent } from './components/card/card.component';
-import { CardDetailsComponent } from './pages/card-details/card-details.component';
+
 
 const toastrConfig = {
   duration: 4000,

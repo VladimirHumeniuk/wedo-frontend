@@ -8,7 +8,6 @@ import {
   forwardRef,
   Input
 } from '@angular/core';
-
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Directive({
@@ -26,7 +25,10 @@ export class ContentEditableDirective implements ControlValueAccessor {
   private onTouched: () => void;
   private removeDisabledState: () => void;
 
-  constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
+  constructor(
+    private readonly elementRef: ElementRef,
+    private readonly renderer: Renderer2
+  ) { }
 
   @HostListener('input')
   callOnChange() {
@@ -42,41 +44,19 @@ export class ContentEditableDirective implements ControlValueAccessor {
     }
   }
 
-  /**
-   * Writes a new value to the element.
-   * This method will be called by the forms API to write
-   * to the view when programmatic (model -> view) changes are requested.
-   *
-   * See: [ControlValueAccessor](https://angular.io/api/forms/ControlValueAccessor#members)
-   */
   writeValue(value: any): void {
     const normalizedValue = value == null ? '' : value;
     this.renderer.setProperty(this.elementRef.nativeElement, this.propValueAccessor, normalizedValue);
   }
 
-  /**
-   * Registers a callback function that should be called when
-   * the control's value changes in the UI.
-   *
-   * This is called by the forms API on initialization so it can update
-   * the form model when values propagate from the view (view -> model).
-   */
   registerOnChange(fn: () => void): void {
     this.onChange = fn;
   }
 
-  /**
-   * Registers a callback function that should be called when the control receives a blur event.
-   * This is called by the forms API on initialization so it can update the form model on blur.
-   */
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  /**
-   * This function is called by the forms API when the control status changes to or from "DISABLED".
-   * Depending on the value, it should enable or disable the appropriate DOM element.
-   */
   setDisabledState(isDisabled: boolean): void {
     if (isDisabled) {
       this.renderer.setAttribute(this.elementRef.nativeElement, 'disabled', 'true');
