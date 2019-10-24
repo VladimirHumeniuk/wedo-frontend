@@ -51,10 +51,6 @@ export class NavigationBarComponent implements OnInit {
     this.authService.signOut()
   }
 
-  delete() {
-    this.authService.deleteUser()
-  }
-
   ngOnInit() { }
 
 }
