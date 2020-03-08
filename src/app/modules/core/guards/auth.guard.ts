@@ -10,8 +10,8 @@ import { take, map, tap } from 'rxjs/operators';
 })
 export class isUser implements CanActivate {
   constructor(
-    private fireAuth: AngularFireAuth,
-    private router: Router
+    private readonly fireAuth: AngularFireAuth,
+    private readonly router: Router
   ) {}
 
   canActivate(

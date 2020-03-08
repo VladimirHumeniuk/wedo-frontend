@@ -31,7 +31,7 @@ export class SelectGroupComponent {
   }
 
   constructor(
-    public formControlService: FormControlService
+    public readonly formControlService: FormControlService
   ) { }
 
 }

@@ -111,10 +111,4 @@ export class AuthService {
     this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.auth.signOut();
   }
-
-  public deleteUser() {
-    this.fireAuth.auth.currentUser.delete()
-    this.fireStore.collection('users').doc(this.fireAuth.auth.currentUser.uid).delete()
-    this.fireStore.collection('alerts').doc(this.fireAuth.auth.currentUser.uid).delete()
-  }
 }

@@ -3,7 +3,12 @@
     <article class="card">
       <div class="card__main">
         <div class="card__header">
-          <h2 class="card__title">{{title}}</h2>
+          <h2 class="card__title">
+            <a routerLink="card/{{cid}}">
+              {{title}}
+            </a>
+          </h2>
+
           <div class="card__signs"></div>
         </div>
 
@@ -20,7 +25,7 @@
         <div class="card__rating">
           {{ rating ? rating : '–' }}
         </div>
-        <a>
+        <a routerLink="card/{{url}}">
           <nb-icon icon="arrow-forward-outline"></nb-icon>
         </a>
       </div>

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { AlertsMessagesService } from './../../services/alerts-messages.service';
-import { Alert } from './../../models/alert.model';
+import { AlertsMessagesService } from './../../services';
+import { Alert } from './../../models';
 
 @Component({
   selector: 'wd-alert-message',
@@ -13,11 +13,10 @@ export class AlertMessageComponent {
   @Input() index: number
 
   constructor(
-    private alertsMessageService: AlertsMessagesService
+    private readonly alertsMessageService: AlertsMessagesService
   ) {}
 
   public close(): void {
     this.alertsMessageService.removeAlert(this.alert.code).subscribe();
   }
-
 }

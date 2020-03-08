@@ -1,0 +1,112 @@
+@import '../../../../../styles/variables/variables';
+
+.card-details {
+  margin: 0 -1.5rem 0 -1.5rem;
+  color: $c-font-dark;
+
+  @media (max-width: $mq-tablet - 1px) {
+    margin: 0 -1rem 0 - 1rem;
+  }
+
+  @media (max-width: $mq-tablet-landscape - 1px) {
+    margin: 0 -1.35rem 0 - 1.35rem;
+  }
+}
+
+.card-details__image-cover {
+  height: 417px;
+  background-size: cover;
+  margin: -1.5rem -1.5rem 0 -1.5rem;
+
+  margin: -1.5rem -1.5rem 0 -1.5rem;
+
+  @media (max-width: $mq-tablet - 1px) {
+    margin: -1rem -1rem 0 - 1rem;
+  }
+
+  @media (max-width: $mq-tablet-landscape - 1px) {
+    margin: -1.35rem -1.35rem 0 - 1.35rem;
+  }
+}
+
+.card-details__main-info,
+.card-details__subheader {
+  padding: 30px;
+
+  @media (min-width: $mq-tablet) {
+    padding: 30px 60px;
+  }
+
+  @media (min-width: $mq-tablet-landscape) {
+    padding: 30px 80px;
+  }
+
+  @media (min-width: $mq-desktop) {
+    padding: 30px 100px;
+  }
+}
+
+.card-details__subheader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background-color: $c-yellow-700;
+}
+
+.card-details__title,
+.card-details__category {
+  line-height: 1;
+  margin: 0;
+}
+
+.card-details__title {
+  font-size: 24px;
+  margin-bottom: 5px;
+  letter-spacing: .6px;
+}
+
+.card-details__category {
+  font-size: 14px;
+  color: $c-gray-700;
+  letter-spacing: .5px;
+  font-weight: 600;
+}
+
+.share-button {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.card-details__information {
+  margin: 20px 0;
+}
+
+.card-details__contacts {
+  height: fit-content;
+  padding: 20px;
+  border-radius: 14px;
+  background-color: #1C2237;
+  color: $c-yellow-700;
+}
+
+.card-details__address {
+  font-style: normal;
+}
+
+.card-details__main-info {
+  display: grid;
+
+  @media (min-width: $mq-tablet) {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 50px;
+    padding-bottom: 0;
+  }
+
+  @media (min-width: $mq-tablet-landscape) {
+    grid-template-columns: 2fr 1.5fr;
+    column-gap: 100px;
+  }
+}

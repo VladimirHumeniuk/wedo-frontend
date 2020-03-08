@@ -31,8 +31,8 @@ export class LayoutComponent extends SafeComponent implements OnInit {
   public loading: boolean;
 
   constructor(
-    private router: Router,
-    private alertsMessagesService: AlertsMessagesService,
+    private readonly router: Router,
+    private readonly alertsMessagesService: AlertsMessagesService,
     private readonly store: Store<AppState>,
     private readonly userService: UserService
   ) {

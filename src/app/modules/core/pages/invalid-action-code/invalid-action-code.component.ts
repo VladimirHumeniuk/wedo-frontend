@@ -11,8 +11,8 @@ export class InvalidActionCodeComponent {
   public queryParams: Params
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       if (Object.keys(params).length > 0) {

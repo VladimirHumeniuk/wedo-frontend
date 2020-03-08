@@ -19,8 +19,8 @@ export class RequestPasswordComponent implements OnInit {
   private emailRegex: RegExp = EMAIL_REGEXP
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
   ) { }
 
   private formInit(): void {

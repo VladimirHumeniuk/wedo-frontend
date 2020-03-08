@@ -11,7 +11,7 @@ export class UploadService {
   private basePath: string = 'companies'
 
   constructor(
-    private fireStorage: AngularFireStorage
+    private readonly fireStorage: AngularFireStorage
   ) { }
 
   public publishUploads(upload: Upload, cid: string): Promise<any> {

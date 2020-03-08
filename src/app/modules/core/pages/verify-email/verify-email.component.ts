@@ -16,8 +16,8 @@ export class VerifyEmailComponent implements OnInit {
   public resended: boolean
 
   constructor(
-    private store: Store<AppState>,
-    private authService: AuthService
+    private readonly store: Store<AppState>,
+    private readonly authService: AuthService
   ) { }
 
   public resendEmail(): void {

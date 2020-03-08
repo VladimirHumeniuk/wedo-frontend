@@ -16,10 +16,10 @@ export class EmailVerifiedComponent implements OnInit {
   private oobCode: string
 
   constructor(
-    private authService: AuthService,
-    private alertsService: AlertsMessagesService,
-    private activatedRoute: ActivatedRoute,
-    private cloudApi: CloudApiService
+    private readonly authService: AuthService,
+    private readonly alertsService: AlertsMessagesService,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly cloudApi: CloudApiService
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.oobCode = params.oobCode

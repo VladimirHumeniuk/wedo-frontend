@@ -18,8 +18,6 @@ export class HomeComponent implements OnInit {
   constructor(
     private readonly alertsService: AlertsMessagesService,
     private readonly itemsService: ItemsService,
-    private readonly userApolloService: UserService,
-    private readonly alertsApolloSerivce: AlertsMessagesService
   ) {
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts

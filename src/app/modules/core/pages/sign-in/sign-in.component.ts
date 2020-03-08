@@ -19,8 +19,8 @@ export class SignInComponent implements OnInit {
   public loading: boolean = false
 
   constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
+    private readonly formBuilder: FormBuilder,
+    private readonly authService: AuthService,
     private readonly store: Store<AppState>
   ) { }
 

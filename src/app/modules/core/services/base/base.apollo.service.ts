@@ -8,8 +8,9 @@ import { DocumentNode } from 'graphql';
   providedIn: 'root'
 })
 export class BaseApolloService {
-  constructor(private readonly apollo: Apollo) {
-  }
+  constructor(
+    private readonly apollo: Apollo
+  ) { }
 
   public query<TVariable, TOutput>(
     query: DocumentNode,
