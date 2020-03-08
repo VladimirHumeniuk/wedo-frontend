@@ -1,6 +1,39 @@
 <ng-container *ngIf="cardDetails">
-  <h1 class="card-details__title">{{cardDetails.title}}</h1>
+  <header
+  class="card-details__image-cover"
+  [ngStyle]="{'background-image': 'url(' + cardDetails.image + ')'}">
+  </header>
+
   <article class="card-details">
+    <div class="card-details__subheader">
+      <div class="card-details__subheader-title">
+        <h1 class="card-details__title">{{cardDetails.title}}</h1>
+        <span class="card-details__category">{{cardDetails.category}}</span>
+      </div>
+
+      <div class="card-details__subheader-controls">
+        <button class="share-button">
+          <nb-icon icon="share-outline"></nb-icon> Share
+        </button>
+      </div>
+    </div>
+
+    <main class="card-details__main-info">
+      <div>
+        <div class="card-details__information" [innerHTML]="cardDetails.wysiwyg"></div>
+      </div>
+
+      <div class="card-details__contacts">
+        <address
+        class="card-details__address"
+        *ngIf="cardDetails.address">
+          {{cardDetails.address}}
+        </address>
+      </div>
+    </main>
+  </article>
+
+  <!-- <article>
     <div class="cards-details__left">
       <nb-card>
         <nb-card-body>
@@ -38,5 +71,5 @@
       </nb-card>
       <h2>About</h2>
     </div>
-  </article>
+  </article> -->
 </ng-container>

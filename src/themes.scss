@@ -39,6 +39,7 @@ $nb-themes: nb-register-theme((
   button-filled-info-text-color: $c-font-dark,
   button-filled-info-hover-border-color: $c-gray-50,button-filled-info-hover-background-color: $c-gray-50,
   button-filled-info-focus-border-color: $c-gray-100,
+  button-filled-info-focus-background-color: $c-gray-100,
   button-filled-info-active-background-color: $c-gray-100,
   button-filled-info-active-border-color: $c-gray-100,
 
@@ -46,6 +47,7 @@ $nb-themes: nb-register-theme((
   button-filled-warning-border-color: $c-primary,
   button-filled-warning-text-color: $c-font-dark,
   button-filled-warning-focus-border-color: $c-yellow-800,
+  button-filled-warning-focus-background-color: $c-yellow-800,
   button-filled-warning-hover-background-color: $c-yellow-600,button-filled-warning-hover-border-color: $c-yellow-600,
   button-filled-warning-active-background-color: $c-yellow-900,
   button-filled-warning-active-border-color: $c-yellow-900,
