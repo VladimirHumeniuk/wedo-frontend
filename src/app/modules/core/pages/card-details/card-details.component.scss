@@ -98,11 +98,11 @@
 
 .card-details__main-info {
   display: grid;
-  padding-bottom: 0;
 
   @media (min-width: $mq-tablet) {
     grid-template-columns: 1fr 1fr;
     column-gap: 50px;
+    padding-bottom: 0;
   }
 
   @media (min-width: $mq-tablet-landscape) {

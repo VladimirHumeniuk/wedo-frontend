@@ -18,8 +18,8 @@ export class CardDetailsComponent implements OnInit {
     private readonly userService: UserService
   ) { }
 
-  public getCompany(): void {
-    this.userService.getCompany(this.cid)
+  public getCompany(cid: string): void {
+    this.userService.getCompany(cid)
     .subscribe((companyCard: CompanyCard) => {
       this.cardDetails = companyCard
     })
@@ -27,9 +27,8 @@ export class CardDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.cid = params.get('cid')
+      const cid = params.get('cid')
+      this.getCompany(cid)
     })
-
-    this.getCompany();
   }
 }
