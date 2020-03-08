@@ -8,8 +8,8 @@ export function alertReducer(state: Alert[] = [], action: AlertActions.Actions) 
       return [...state, action.payload]
 
     case AlertActions.REMOVE_ALERT:
-      state.splice(action.payload, 1)
-      return state
+      state.splice(action.payload, 1);
+      return [...state];
 
     default:
         return state

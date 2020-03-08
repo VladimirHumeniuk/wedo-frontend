@@ -31,23 +31,23 @@ export class EmailVerifiedComponent implements OnInit {
       .then((codeInfo: firebase.auth.ActionCodeInfo) => {
         const { email } = codeInfo.data
 
-        this.email = email
-
+        this.email = email;
+        let uid = null;
         this.cloudApi.getUserByEmail(email)
           .then((data: firebase.User) => {
-            const { uid } = data
+            uid = data.uid;
 
-            this.authService.verifyEmail(this.oobCode, uid)
-              .then(() => {
-                this.emailVerified = true
-                this.alertsService.removeAlert('email-not-verified', uid)
-              })
-              .catch(error => {
-                this.tokenExpired = true
-                throw new Error(error)
-              })
+            return this.authService.verifyEmail(this.oobCode, uid);
           })
-      })
+          .then(() => {
+            this.emailVerified = true;
+            return this.alertsService.removeAlert('email-not-verified', uid).toPromise();
+          })
+          .catch(error => {
+            this.tokenExpired = true;
+            throw new Error(error);
+          });
+      });
   }
 
 }
