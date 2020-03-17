@@ -1,0 +1,13 @@
+@import '../../../../../styles/variables/variables';
+
+.location-map {
+  border-radius: 14px;
+  height: 248px;
+  background-color: $c-neutral;
+  overflow: hidden;
+}
+
+.location-map__map {
+  height: 100%;
+  width: 100%;
+}

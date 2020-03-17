@@ -14,7 +14,8 @@ export class AccountComponent implements OnInit {
   constructor(
     private readonly router: Router,
     private readonly authService: AuthService,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly ngZone: NgZone
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParams = params

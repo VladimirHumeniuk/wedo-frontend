@@ -53,6 +53,18 @@
   background-color: $c-yellow-700;
 }
 
+.card-details__heading {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 10px;
+  line-height: 1;
+  color: #666E7C;
+
+  &--light {
+    color: $c-gray-400;
+  }
+}
+
 .card-details__title,
 .card-details__category {
   line-height: 1;
@@ -81,7 +93,11 @@
 }
 
 .card-details__information {
-  margin: 20px 0;
+  margin-bottom: 20px;
+
+  @media (min-width: $mq-tablet-landscape) {
+    margin-top: 20px;
+  }
 }
 
 .card-details__contacts {
@@ -93,7 +109,26 @@
 }
 
 .card-details__address {
-  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+
+  address {
+    font-style: normal;
+    margin-bottom: 4px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 14px;
+
+    &[href^="tel:"] {
+      letter-spacing: .44px;
+    }
+  }
 }
 
 .card-details__main-info {
@@ -102,11 +137,11 @@
   @media (min-width: $mq-tablet) {
     grid-template-columns: 1fr 1fr;
     column-gap: 50px;
-    padding-bottom: 0;
   }
 
   @media (min-width: $mq-tablet-landscape) {
-    grid-template-columns: 2fr 1.5fr;
+    grid-template-columns: 2fr 1.8645fr;
     column-gap: 100px;
+    padding-bottom: 0;
   }
 }

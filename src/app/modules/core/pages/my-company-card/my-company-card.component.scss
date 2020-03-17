@@ -27,6 +27,13 @@
 .my-company-card__submit-controls {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+
+  ::ng-deep {
+    nb-checkbox {
+      margin-right: 10px;
+    }
+  }
 }
 
 .my-company-card__card {
