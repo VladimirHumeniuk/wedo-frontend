@@ -19,12 +19,13 @@
     </div>
 
     <main class="card-details__main-info">
-      <div>
-        <div class="card-details__information" [innerHTML]="cardDetails.wysiwyg"></div>
+      <div class="card-details__information">
+        <h2 class="card-details__heading">Company information</h2>
+        <div [innerHTML]="cardDetails.wysiwyg"></div>
       </div>
 
       <div class="card-details__contacts">
-        <h2 class="card-details__heading">Contact information</h2>
+        <h2 class="card-details__heading card-details__heading--light">Contact information</h2>
         <div class="card-details__address">
           <address
           *ngIf="cardDetails.address">
