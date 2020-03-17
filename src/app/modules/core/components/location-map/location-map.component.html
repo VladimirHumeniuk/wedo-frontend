@@ -1,0 +1,10 @@
+<div class="location-map">
+  <ng-container *ngIf="latLon">
+    <div
+    class="location-map__map"
+    leaflet
+    [leafletOptions]="options"
+    [leafletLayers]="layers">
+    </div>
+  </ng-container>
+</div>

@@ -53,6 +53,14 @@
   background-color: $c-yellow-700;
 }
 
+.card-details__heading {
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0 0 10px;
+  line-height: 1;
+  color: $c-gray-400;
+}
+
 .card-details__title,
 .card-details__category {
   line-height: 1;
@@ -93,7 +101,26 @@
 }
 
 .card-details__address {
-  font-style: normal;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  font-size: 16px;
+  line-height: 1.5;
+
+  address {
+    font-style: normal;
+    margin-bottom: 4px;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+    font-size: 14px;
+
+    &[href^="tel:"] {
+      letter-spacing: .44px;
+    }
+  }
 }
 
 .card-details__main-info {

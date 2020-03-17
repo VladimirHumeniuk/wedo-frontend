@@ -24,11 +24,18 @@
       </div>
 
       <div class="card-details__contacts">
-        <address
-        class="card-details__address"
-        *ngIf="cardDetails.address">
-          {{cardDetails.address}}
-        </address>
+        <h2 class="card-details__heading">Contact information</h2>
+        <div class="card-details__address">
+          <address
+          *ngIf="cardDetails.address">
+            {{cardDetails.address}}
+          </address>
+
+          <a [attr.href]="'tel:' + cardDetails.phone">{{cardDetails.phone}}</a>
+          <a [attr.href]="'mailto:' + cardDetails.email">{{cardDetails.email}}</a>
+        </div>
+
+        <wd-location-map [address]="cardDetails.address"></wd-location-map>
       </div>
     </main>
   </article>

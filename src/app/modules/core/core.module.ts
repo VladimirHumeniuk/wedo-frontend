@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { CountdownModule } from 'ngx-countdown';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 import {
   NbAlertModule,
@@ -47,6 +48,7 @@ import { LoginMethodsComponent } from './components/login-methods/login-methods.
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { CardsGridComponent } from './components/cards-grid/cards-grid.component';
 import { CardComponent } from './components/card/card.component';
+import { LocationMapComponent } from './components/location-map/location-map.component';
 
 
 const toastrConfig = {
@@ -70,7 +72,8 @@ const toastrConfig = {
     SearchBarComponent,
     CardsGridComponent,
     CardComponent,
-    CardDetailsComponent
+    CardDetailsComponent,
+    LocationMapComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -81,6 +84,7 @@ const toastrConfig = {
     BrowserAnimationsModule,
     CoreRoutingModule,
     CountdownModule,
+    LeafletModule,
     FormsModule,
     NbAlertModule,
     NbButtonModule,
