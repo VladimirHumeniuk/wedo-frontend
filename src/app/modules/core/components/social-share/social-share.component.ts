@@ -23,7 +23,7 @@ export class SocialShareComponent implements OnInit {
 
   public isPopoverOpened: boolean = false;
 
-  @ViewChild('popoverWrapper') popoverWrapper: any;
+  @ViewChild('popoverWrapper', { static: false }) popoverWrapper: any;
 
   constructor() {
   }
