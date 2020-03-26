@@ -11,12 +11,14 @@ import { RouterModule } from '@angular/router';
 
 import { CountdownModule } from 'ngx-countdown';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import {
   NbAlertModule,
   NbButtonModule,
   NbCardModule,
   NbCheckboxModule,
+  NbPopoverModule,
   NbToastrModule,
   NbIconModule,
   NbSpinnerModule
@@ -49,6 +51,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { CardsGridComponent } from './components/cards-grid/cards-grid.component';
 import { CardComponent } from './components/card/card.component';
 import { LocationMapComponent } from './components/location-map/location-map.component';
+import { SocialShareComponent } from './components/social-share/social-share.component';
 
 
 const toastrConfig = {
@@ -73,7 +76,8 @@ const toastrConfig = {
     CardsGridComponent,
     CardComponent,
     CardDetailsComponent,
-    LocationMapComponent
+    LocationMapComponent,
+    SocialShareComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -84,6 +88,7 @@ const toastrConfig = {
     BrowserAnimationsModule,
     CoreRoutingModule,
     CountdownModule,
+    FontAwesomeModule,
     LeafletModule,
     FormsModule,
     NbAlertModule,
@@ -91,6 +96,7 @@ const toastrConfig = {
     NbCardModule,
     NbCheckboxModule,
     NbIconModule,
+    NbPopoverModule,
     NbToastrModule.forRoot(toastrConfig),
     NbSpinnerModule,
     ReactiveFormsModule,

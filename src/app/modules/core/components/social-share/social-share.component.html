@@ -1,0 +1,38 @@
+<button
+class="social-share-toggler"
+(click)="focusPopoverWrapper()"
+nbPopoverPlacement="bottom"
+nbPopoverAdjustment="counterclockwise"
+[nbPopover]="socialShare"
+tabIndex="0">
+  <nb-icon icon="share-outline"></nb-icon> Share
+</button>
+
+<ng-template #socialShare>
+  <div #popoverWrapper class="social-share-popover"tabIndex="0">
+    <button class="social-share-button social-share-button--facebook">
+      <fa-icon [icon]="faFacebookF"></fa-icon>
+    </button>
+
+    <button class="social-share-button social-share-button--whatsapp">
+      <fa-icon [icon]="faWhatsapp"></fa-icon>
+    </button>
+
+    <button class="social-share-button social-share-button--telegram">
+      <fa-icon [icon]="faTelegramPlane"></fa-icon>
+    </button>
+
+    <button class="social-share-button social-share-button--twitter">
+      <fa-icon [icon]="faTwitter"></fa-icon>
+    </button>
+
+    <button class="social-share-button social-share-button--facebook-messenger">
+      <fa-icon [icon]="faFacebookMessenger"></fa-icon>
+    </button>
+
+    <button class="social-share-button social-share-button--link">
+      <nb-icon icon="copy-outline"></nb-icon>
+    </button>
+
+  </div>
+</ng-template>
