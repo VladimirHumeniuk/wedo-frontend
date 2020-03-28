@@ -52,6 +52,7 @@ import { CardsGridComponent } from './components/cards-grid/cards-grid.component
 import { CardComponent } from './components/card/card.component';
 import { LocationMapComponent } from './components/location-map/location-map.component';
 import { SocialShareComponent } from './components/social-share/social-share.component';
+import { SocialButtonComponent } from './components/social-share/social-button/social-button.component';
 
 
 const toastrConfig = {
@@ -77,7 +78,8 @@ const toastrConfig = {
     CardComponent,
     CardDetailsComponent,
     LocationMapComponent,
-    SocialShareComponent
+    SocialShareComponent,
+    SocialButtonComponent
   ],
   imports: [
     AngularFireAuthModule,

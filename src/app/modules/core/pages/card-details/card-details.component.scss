@@ -49,8 +49,21 @@
 .card-details__subheader {
   display: flex;
   align-items: flex-start;
+  flex-direction: column;
   justify-content: space-between;
   background-color: $c-yellow-700;
+
+  @media (min-width: $mq-phone-landscape ) {
+    flex-direction: row;
+  }
+}
+
+.card-details__subheader-title {
+  margin-bottom: 30px;
+
+  @media (min-width: $mq-phone-landscape ) {
+    margin-bottom: 0;
+  }
 }
 
 .card-details__heading {

@@ -1,12 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  faFacebookF,
-  faWhatsapp,
-  faTelegramPlane,
-  faTwitter,
-  faFacebookMessenger,
-  IconDefinition
-} from '@fortawesome/free-brands-svg-icons';
+import { NbPopoverDirective } from '@nebular/theme';
 
 @Component({
   selector: 'wd-social-share',
@@ -15,18 +8,12 @@ import {
 })
 export class SocialShareComponent implements OnInit {
 
-  public faFacebookF: IconDefinition = faFacebookF;
-  public faWhatsapp: IconDefinition = faWhatsapp;
-  public faTelegramPlane: IconDefinition = faTelegramPlane;
-  public faTwitter: IconDefinition = faTwitter;
-  public faFacebookMessenger: IconDefinition = faFacebookMessenger;
-
   public isPopoverOpened: boolean = false;
 
   @ViewChild('popoverWrapper', { static: false }) popoverWrapper: any;
+  @ViewChild(NbPopoverDirective,  { static: false }) popover: NbPopoverDirective;
 
-  constructor() {
-  }
+  constructor() { }
 
   public focusPopoverWrapper(): void {
     this.isPopoverOpened = !this.isPopoverOpened
