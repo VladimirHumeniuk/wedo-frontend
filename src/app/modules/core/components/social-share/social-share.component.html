@@ -1,0 +1,20 @@
+<button
+class="social-share-toggler"
+(click)="focusPopoverWrapper()"
+nbPopoverPlacement="bottom-start"
+nbPopoverAdjustment="noop"
+[nbPopover]="socialShare"
+tabIndex="0">
+  <nb-icon icon="share-outline"></nb-icon> Share
+</button>
+
+<ng-template #socialShare>
+  <div #popoverWrapper class="social-share-popover"tabIndex="0">
+    <wd-social-button [popoverRef]="popover" social="facebook"></wd-social-button>
+    <wd-social-button [popoverRef]="popover" social="whatsapp"></wd-social-button>
+    <wd-social-button [popoverRef]="popover" social="telegram"></wd-social-button>
+    <wd-social-button [popoverRef]="popover" social="twitter"></wd-social-button>
+    <wd-social-button [popoverRef]="popover" social="facebookMessenger"></wd-social-button>
+    <wd-social-button [popoverRef]="popover" social="copy"></wd-social-button>
+  </div>
+</ng-template>

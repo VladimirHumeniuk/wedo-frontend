@@ -1,0 +1,11 @@
+<button
+[ngClass]="['social-button', 'social-button--' + social]"
+(click)="social === 'copy' ? copyToClipboard() : socialShare()">
+  <fa-icon
+  *ngIf="social !== 'copy'"
+  [icon]="icons[social]"></fa-icon>
+
+  <nb-icon
+  *ngIf="social === 'copy'"
+  [icon]="icons[social]"></nb-icon>
+</button>

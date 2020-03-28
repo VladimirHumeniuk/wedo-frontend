@@ -1,0 +1,30 @@
+@import '../../../../../styles/variables/variables';
+
+.social-share-toggler {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &:active {
+    outline: 0;
+  }
+
+  &:active,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.social-share-popover {
+  display: grid;
+  min-width: 200px;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 10px;
+  padding: 20px;
+
+  &:focus {
+    outline: 0;
+  }
+}
