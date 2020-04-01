@@ -14,6 +14,7 @@ import { VerifyEmailComponent } from './pages/verify-email/verify-email.componen
 import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-action-code.component';
 import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
 import { CardDetailsComponent } from './pages/card-details/card-details.component';
+import { PromptPasswordComponent } from './pages/prompt-password/prompt-password.component';
 
 const routes: Routes = [
   {
@@ -28,6 +29,11 @@ const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent,
+    canActivate: [isGuest]
+  },
+  {
+    path: 'prompt-password',
+    component: PromptPasswordComponent,
     canActivate: [isGuest]
   },
   {

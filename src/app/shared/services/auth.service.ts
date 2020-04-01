@@ -2,6 +2,7 @@ import { UserService } from './user.service';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -9,6 +10,7 @@ import { take } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
 import * as UserActions from './../../store/actions/user.action';
+import * as LoginActions from './../../store/actions/login.action';
 
 @Injectable({
   providedIn: 'root'
@@ -93,18 +95,59 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
-  public signInWithEmailAndPassword(formData: any): Promise<void> {
+  public signInWithEmailAndPassword(formData: any, pendingCredentials?: any): Promise<void> {
     const { email, password, rememberUser } = formData
 
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((credentials: firebase.auth.UserCredential) => {
+        if (pendingCredentials) {
+          credentials.user.linkWithCredential(pendingCredentials)
+        }
+
         this.userService.user$.subscribe((user: User) => {
           if (user) {
-              this.router.navigate(['/'])
+            this.router.navigate(['/'])
           }
         })
       })
       .catch(error => { throw error })
+  }
+
+  public signInWithFacebook(): Promise<void> {
+    return new Promise<any>(() => {
+      let provider = new firebase.auth.FacebookAuthProvider();
+
+      this.fireAuth.auth.signInWithPopup(provider)
+        .then((data) => {
+          this.userService.user$.subscribe((user: User) => {
+            if (user.accountType && user.accountType !== "GUEST") {
+              this.router.navigate(['/'])
+            } else {
+
+            }
+          })
+         })
+        .catch(error => {
+          if (error.code === 'auth/account-exists-with-different-credential') {
+            const pendingCredentials = error.credential
+            const { credential, email } = error
+
+            this.fireAuth.auth.fetchSignInMethodsForEmail(email).then((methods) => {
+              if (methods[0] === 'password') {
+                const payload = {
+                  email: email,
+                  credential: credential
+                }
+
+                this.store.dispatch(new LoginActions.StartLogin(payload))
+                this.router.navigate(['/prompt-password'])
+              }
+            })
+          }
+
+          throw error
+        })
+    })
   }
 
   public signOut(): Promise<void> {

@@ -7,9 +7,12 @@
 .login-methods__icons {
   margin: 1.5rem 0;
 
-  a {
+  button {
     font-size: 2rem;
     margin: 0 1rem;
     color: $c-gray-600;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
   }
 }

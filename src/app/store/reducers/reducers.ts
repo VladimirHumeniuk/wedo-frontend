@@ -1,6 +1,7 @@
-import { userReducer, alertReducer } from '.';
+import { userReducer, alertReducer, loginReducer } from '.';
 
 export const reducers = {
   user: userReducer,
-  alert: alertReducer
+  alert: alertReducer,
+  login: loginReducer
 }
