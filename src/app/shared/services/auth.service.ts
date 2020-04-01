@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
-import * as UserActions from './../../store/actions/user.action';
-import * as LoginActions from './../../store/actions/login.action';
+import * as UserActions from 'src/app/store/actions/user.action';
+import * as LoginActions from 'src/app/store/actions/login.action';
 
 @Injectable({
   providedIn: 'root'
@@ -119,11 +119,11 @@ export class AuthService {
 
       this.fireAuth.auth.signInWithPopup(provider)
         .then((data) => {
-          this.userService.user$.subscribe((user: User) => {
-            if (user.accountType && user.accountType !== "GUEST") {
-              this.router.navigate(['/'])
-            } else {
+          this.store.dispatch(new UserActions.GetUser());
 
+          this.userService.user$.subscribe((user: User) => {
+            if (user) {
+              this.router.navigate(['/'])
             }
           })
          })
