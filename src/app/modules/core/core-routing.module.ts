@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { isUser, isGuest } from './guards/auth.guard';
+import { IsUser, IsGuest, LoginGuard } from './guards';
 
 import { HomeComponent } from './pages/home/home.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
@@ -24,17 +24,17 @@ const routes: Routes = [
   {
     path: 'sign-up',
     component: SignUpComponent,
-    canActivate: [isGuest]
+    canActivate: [IsGuest]
   },
   {
     path: 'sign-in',
     component: SignInComponent,
-    canActivate: [isGuest]
+    canActivate: [IsGuest]
   },
   {
     path: 'prompt-password',
     component: PromptPasswordComponent,
-    canActivate: [isGuest]
+    canActivate: [LoginGuard]
   },
   {
     path: 'verify-email',
@@ -43,7 +43,7 @@ const routes: Routes = [
   {
     path: 'request-password',
     component: RequestPasswordComponent,
-    canActivate: [isGuest]
+    canActivate: [IsGuest]
   },
   {
     path: 'card/:cid',
@@ -70,13 +70,13 @@ const routes: Routes = [
   {
     path: 'my-company-card',
     component: MyCompanyCardComponent,
-    canActivate: [isUser]
+    canActivate: [IsUser]
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [isGuest, isUser]
+  providers: [IsGuest, IsUser, LoginGuard]
 })
 export class CoreRoutingModule { }

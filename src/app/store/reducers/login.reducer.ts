@@ -8,9 +8,9 @@ export function loginReducer(state: Login, action: LoginActions.Actions) {
       return { ...action.payload };
 
     case LoginActions.ABORT_LOGIN:
-      return {};
+      return null;
 
     default:
-      return {};
+      return null;
   }
 }

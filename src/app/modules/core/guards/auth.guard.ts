@@ -8,7 +8,7 @@ import { take, map, tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class isUser implements CanActivate {
+export class IsUser implements CanActivate {
   constructor(
     private readonly fireAuth: AngularFireAuth,
     private readonly router: Router
@@ -34,7 +34,7 @@ export class isUser implements CanActivate {
 @Injectable({
   providedIn: 'root'
 })
-export class isGuest implements CanActivate {
+export class IsGuest implements CanActivate {
   constructor(
     private fireAuth: AngularFireAuth,
     private router: Router

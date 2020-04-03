@@ -1,5 +1,4 @@
-import { Login } from './../../../../shared/models/login.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CanDeactivate } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -15,7 +14,7 @@ import { take } from 'rxjs/operators'
   templateUrl: './prompt-password.component.html',
   styleUrls: ['./prompt-password.component.scss']
 })
-export class PromptPasswordComponent implements OnInit {
+export class PromptPasswordComponent implements OnInit, OnDestroy {
 
   public promptPasswordForm: FormGroup
   public loading: boolean
@@ -63,9 +62,9 @@ export class PromptPasswordComponent implements OnInit {
 
   }
 
-  // canDeactivate() {
-  //   this.store.dispatch(new LoginActions.AbortLogin())
-  // }
+  ngOnDestroy() {
+    this.store.dispatch(new LoginActions.AbortLogin())
+  }
 
   ngOnInit() {
     this.formInit()
@@ -74,8 +73,6 @@ export class PromptPasswordComponent implements OnInit {
       take(1)
     ).subscribe((credentials: Login) => {
       this.credentials = credentials
-
-      console.log('credentials', credentials);
     })
   }
 

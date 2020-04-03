@@ -1,4 +1,4 @@
 export interface Login {
   email: string;
-  credential: object;
+  credential: firebase.auth.UserCredential;
 }
