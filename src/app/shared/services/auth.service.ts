@@ -1,3 +1,4 @@
+import { NbToastrService } from '@nebular/theme';
 import { UserService } from './user.service';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
@@ -5,8 +6,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+import { take, catchError } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
 import * as UserActions from 'src/app/store/actions/user.action';
@@ -18,6 +19,7 @@ import * as LoginActions from 'src/app/store/actions/login.action';
 export class AuthService {
 
   constructor(
+    private readonly toastrService: NbToastrService,
     private readonly userService: UserService,
     private readonly fireStore: AngularFirestore,
     private readonly fireAuth: AngularFireAuth,
@@ -118,14 +120,22 @@ export class AuthService {
       let provider = new firebase.auth.FacebookAuthProvider();
 
       this.fireAuth.auth.signInWithPopup(provider)
-        .then((data) => {
-          this.store.dispatch(new UserActions.GetUser());
-
-          this.userService.user$.subscribe((user: User) => {
-            if (user) {
-              this.router.navigate(['/'])
-            }
-          })
+        .then((data: firebase.auth.UserCredential) => {
+          this.userService.getUser(data.user.uid)
+            .pipe(
+              catchError(() => {
+                data.user.delete();
+                this.toastrService.danger('This profile is not linked to any account or this profile does not have an email address associated with any Gib.do account. Please, register or try a different sign-in method.', 'Error', { duration: 15000 })
+                this.router.navigate(['/sign-up']);
+                return of(null);
+              })
+            )
+            .subscribe((user: any) => {
+              if (user) {
+                this.store.dispatch(new UserActions.GetUser());
+                this.router.navigate(['/']);
+              }
+            })
          })
         .catch(error => {
           if (error.code === 'auth/account-exists-with-different-credential') {
@@ -151,6 +161,7 @@ export class AuthService {
   }
 
   public signOut(): Promise<void> {
+    this.router.navigate(['/'])
     this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.auth.signOut();
   }
