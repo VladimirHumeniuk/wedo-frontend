@@ -20,6 +20,7 @@ export class LayoutComponent extends SafeComponent implements OnInit {
     'sign-in',
     'sign-up',
     'verify-email',
+    'prompt-password',
     'request-password',
     'resend-verification-email',
     'account/email-verified',

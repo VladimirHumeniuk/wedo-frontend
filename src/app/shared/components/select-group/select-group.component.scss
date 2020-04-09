@@ -1,5 +1,26 @@
 @import '../../../../styles/variables/variables';
 
+.select-group {
+  ::ng-deep {
+    nb-select button {
+      border-color: rgb(228, 233, 242);
+      transition-property: border, background-color, color, box-shadow;
+      transition-timing-function: ease-in;
+      transition-duration: 0.15s;
+
+      &:hover {
+        border-color: #598bff;
+      }
+
+      &:focus {
+        border-color: #598bff;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+        outline: 0;
+      }
+    }
+  }
+}
+
 .select-group__label {
   display: block;
   margin-bottom: .5rem;

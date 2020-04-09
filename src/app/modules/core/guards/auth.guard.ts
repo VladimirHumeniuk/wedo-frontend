@@ -1,58 +1,50 @@
+import { UserService } from 'src/app/shared/services';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from './../../../shared/models/user.model';
-import { take, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class isUser implements CanActivate {
+export class IsUser implements CanActivate {
   constructor(
-    private readonly fireAuth: AngularFireAuth,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly userService: UserService
   ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.fireAuth.authState.pipe(
-        take(1),
-        map(authState => {
-          if (authState) {
-            return true;
-          } else {
-            this.router.navigate(['/']);
-            return false;
-          }
-        })
-      )
+      let user
+
+      this.userService.user$.subscribe((data: User) => {
+        user = data.accountType && data.accountType !== "GUEST"
+      })
+
+      if (!user) this.router.navigate(['/'])
+
+      return !!user
   }
 }
 
-@Injectable({
-  providedIn: 'root'
-})
-export class isGuest implements CanActivate {
+export class IsGuest implements CanActivate {
   constructor(
-    private fireAuth: AngularFireAuth,
-    private router: Router
+    private readonly router: Router,
+    private readonly userService: UserService
   ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.fireAuth.authState.pipe(
-        take(1),
-        map(authState => {
-          if (authState) {
-            this.router.navigate(['/']);
-            return false;
-          } else {
-            return true;
-          }
-        })
-      )
+      let guest
+
+      this.userService.user$.subscribe((data: User) => {
+        guest = data.accountType === "GUEST" || !data.accountType
+      })
+
+      if (!guest) this.router.navigate(['/'])
+
+      return !!guest
   }
 }

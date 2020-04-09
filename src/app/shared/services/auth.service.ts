@@ -1,14 +1,17 @@
+import { NbToastrService } from '@nebular/theme';
 import { UserService } from './user.service';
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators'
+import { Observable, of } from 'rxjs';
+import { take, catchError } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
-import * as UserActions from './../../store/actions/user.action';
+import * as UserActions from 'src/app/store/actions/user.action';
+import * as LoginActions from 'src/app/store/actions/login.action';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +19,7 @@ import * as UserActions from './../../store/actions/user.action';
 export class AuthService {
 
   constructor(
+    private readonly toastrService: NbToastrService,
     private readonly userService: UserService,
     private readonly fireStore: AngularFirestore,
     private readonly fireAuth: AngularFireAuth,
@@ -93,21 +97,71 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
-  public signInWithEmailAndPassword(formData: any): Promise<void> {
+  public signInWithEmailAndPassword(formData: any, pendingCredentials?: any): Promise<void> {
     const { email, password, rememberUser } = formData
 
     return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(() => {
+      .then((credentials: firebase.auth.UserCredential) => {
+        if (pendingCredentials) {
+          credentials.user.linkWithCredential(pendingCredentials)
+        }
+
         this.userService.user$.subscribe((user: User) => {
           if (user) {
-              this.router.navigate(['/'])
+            this.router.navigate(['/'])
           }
         })
       })
       .catch(error => { throw error })
   }
 
+  public signInWithFacebook(): Promise<void> {
+    return new Promise<any>(() => {
+      let provider = new firebase.auth.FacebookAuthProvider();
+
+      this.fireAuth.auth.signInWithPopup(provider)
+        .then((data: firebase.auth.UserCredential) => {
+          this.userService.getUser(data.user.uid)
+            .pipe(
+              catchError(() => {
+                data.user.delete();
+                this.toastrService.danger('This profile is not linked to any account or this profile does not have an email address associated with any Gib.do account. Please, register or try a different sign-in method.', 'Error', { duration: 15000 })
+                this.router.navigate(['/sign-up']);
+                return of(null);
+              })
+            )
+            .subscribe((user: any) => {
+              if (user) {
+                this.store.dispatch(new UserActions.GetUser());
+                this.router.navigate(['/']);
+              }
+            })
+         })
+        .catch(error => {
+          if (error.code === 'auth/account-exists-with-different-credential') {
+            const pendingCredentials = error.credential
+            const { credential, email } = error
+
+            this.fireAuth.auth.fetchSignInMethodsForEmail(email).then((methods) => {
+              if (methods[0] === 'password') {
+                const payload = {
+                  email: email,
+                  credential: credential
+                }
+
+                this.store.dispatch(new LoginActions.StartLogin(payload))
+                this.router.navigate(['/prompt-password'])
+              }
+            })
+          }
+
+          throw error
+        })
+    })
+  }
+
   public signOut(): Promise<void> {
+    this.router.navigate(['/'])
     this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.auth.signOut();
   }

@@ -1,8 +1,10 @@
+<wd-alert-message *ngIf="error" [alert]="error"></wd-alert-message>
+
 <div class="login-methods">
   <p>or enter with:</p>
   <p class="login-methods__icons">
-    <a href="#"><nb-icon icon="google"></nb-icon></a>
-    <a href="#"><nb-icon icon="facebook"></nb-icon></a>
-    <a href="#"><nb-icon icon="twitter"></nb-icon></a>
+    <button><nb-icon icon="google"></nb-icon></button>
+    <button (click)="signInWithFacebook()"><nb-icon icon="facebook"></nb-icon></button>
+    <button><nb-icon icon="twitter"></nb-icon></button>
   </p>
 </div>
