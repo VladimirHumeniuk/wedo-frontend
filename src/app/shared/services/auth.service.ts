@@ -115,48 +115,52 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
-  public signInWithFacebook(): Promise<void> {
+  public signInWithProvider(provider: string): Promise<void> {
     return new Promise<any>(() => {
-      let provider = new firebase.auth.FacebookAuthProvider();
+      const providers = {
+        google: new firebase.auth.GoogleAuthProvider(),
+        facebook: new firebase.auth.FacebookAuthProvider(),
+        twitter: new firebase.auth.TwitterAuthProvider()
+      }
 
-      this.fireAuth.auth.signInWithPopup(provider)
-        .then((data: firebase.auth.UserCredential) => {
-          this.userService.getUser(data.user.uid)
-            .pipe(
-              catchError(() => {
-                data.user.delete();
-                this.toastrService.danger('This profile is not linked to any account or this profile does not have an email address associated with any Gib.do account. Please, register or try a different sign-in method.', 'Error', { duration: 15000 })
-                this.router.navigate(['/sign-up']);
-                return of(null);
-              })
-            )
-            .subscribe((user: any) => {
-              if (user) {
-                this.store.dispatch(new UserActions.GetUser());
-                this.router.navigate(['/']);
-              }
+      this.fireAuth.auth.signInWithPopup(providers[provider])
+      .then((data: firebase.auth.UserCredential) => {
+        this.userService.getUser(data.user.uid)
+          .pipe(
+            catchError(() => {
+              data.user.delete();
+              this.toastrService.danger('This profile is not linked to any account or this profile does not have an email address associated with any Gib.do account. Please, register or try a different sign-in method.', 'Error', { duration: 15000 })
+              this.router.navigate(['/sign-up']);
+              return of(null);
             })
-         })
-        .catch(error => {
-          if (error.code === 'auth/account-exists-with-different-credential') {
-            const pendingCredentials = error.credential
-            const { credential, email } = error
+          )
+          .subscribe((user: any) => {
+            if (user) {
+              this.store.dispatch(new UserActions.GetUser());
+              this.router.navigate(['/']);
+            }
+          })
+       })
+      .catch(error => {
+        if (error.code === 'auth/account-exists-with-different-credential') {
+          const pendingCredentials = error.credential
+          const { credential, email } = error
 
-            this.fireAuth.auth.fetchSignInMethodsForEmail(email).then((methods) => {
-              if (methods[0] === 'password') {
-                const payload = {
-                  email: email,
-                  credential: credential
-                }
-
-                this.store.dispatch(new LoginActions.StartLogin(payload))
-                this.router.navigate(['/prompt-password'])
+          this.fireAuth.auth.fetchSignInMethodsForEmail(email).then((methods) => {
+            if (methods[0] === 'password') {
+              const payload = {
+                email: email,
+                credential: credential
               }
-            })
-          }
 
-          throw error
-        })
+              this.store.dispatch(new LoginActions.StartLogin(payload))
+              this.router.navigate(['/prompt-password'])
+            }
+          })
+        }
+
+        throw error
+      })
     })
   }
 
