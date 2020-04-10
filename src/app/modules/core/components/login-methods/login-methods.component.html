@@ -3,8 +3,8 @@
 <div class="login-methods">
   <p>or enter with:</p>
   <p class="login-methods__icons">
-    <button><nb-icon icon="google"></nb-icon></button>
-    <button (click)="signInWithFacebook()"><nb-icon icon="facebook"></nb-icon></button>
-    <button><nb-icon icon="twitter"></nb-icon></button>
+    <button (click)="signInWithPopup('google')"><nb-icon icon="google"></nb-icon></button>
+    <button (click)="signInWithPopup('facebook')"><nb-icon icon="facebook"></nb-icon></button>
+    <button (click)="signInWithPopup('twitter')"><nb-icon icon="twitter"></nb-icon></button>
   </p>
 </div>

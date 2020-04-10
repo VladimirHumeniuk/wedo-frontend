@@ -1,4 +1,4 @@
-export const FACEBOOK_AUTH = {
+export const AUTH_WITH_POPUP = {
   'auth/internal-error': {
     status: 'danger',
     message: 'Internal error occurred. Please try again later or try different Sign In method.'
@@ -10,6 +10,6 @@ export const FACEBOOK_AUTH = {
   },
   'auth/popup-closed-by-user': {
     status: 'warning',
-    message: 'Facebook login popup has been closed before finalizing the Sign In operation.'
+    message: 'Login popup has been closed before finalizing the Sign In operation.'
   }
 }
