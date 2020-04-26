@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  edit(uid) {
+  edit(uid: string) {
     console.log(uid);
   }
 
