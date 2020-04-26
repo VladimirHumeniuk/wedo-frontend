@@ -8,8 +8,6 @@ import {
   NbIconModule,
   NbMenuModule
 } from '@nebular/theme';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { Ng2CompleterModule } from 'ng2-completer';
 
 // Modules
 import { AdminRoutingModule } from './admin-routing.module';
@@ -45,8 +43,6 @@ import { DataTableComponent } from './components/data-table/data-table.component
     NbLayoutModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
-    Ng2SmartTableModule,
-    Ng2CompleterModule,
     NbIconModule,
     SharedModule
   ]
