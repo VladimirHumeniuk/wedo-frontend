@@ -1,8 +1,5 @@
 <div class="navigation-bar">
-  <a class="navigation-bar__logo"
-     routerLink='/'>
-    gib.do
-  </a>
+  <wd-logo></wd-logo>
 
   <div class="navigation-bar__menu">
     <button class="navigation-bar__toggle-menu"
@@ -36,6 +33,16 @@
         </ng-container>
 
         <ng-container *ngIf="user?.uid">
+          <li
+          class="navigation-bar__menu-item"
+          *ngIf="user.roles.admin">
+            <a nbButton
+               ghost
+               status="info"
+               routerLink='/admin-panel'>
+               Admin Panel
+            </a>
+          </li>
 
           <li class="navigation-bar__menu-item">
             <a nbButton

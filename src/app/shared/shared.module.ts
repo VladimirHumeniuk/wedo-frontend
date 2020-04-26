@@ -26,6 +26,7 @@ import { WysiwygComponent } from './components/wysiwyg/wysiwyg.component';
 import { ContentEditableDirective } from './directives/content-editable.directive';
 import { SelectComponent } from './components/select/select.component';
 import { TipOffComponent } from './components/tip-off/tip-off.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { TipOffComponent } from './components/tip-off/tip-off.component';
     WysiwygComponent,
     ContentEditableDirective,
     SelectComponent,
-    TipOffComponent
+    TipOffComponent,
+    LogoComponent
   ],
   imports: [
     NgSelectModule,
@@ -57,6 +59,7 @@ import { TipOffComponent } from './components/tip-off/tip-off.component';
     NbTooltipModule
   ],
   exports: [
+    LogoComponent,
     InputGroupComponent,
     SelectGroupComponent,
     FormItemComponent,

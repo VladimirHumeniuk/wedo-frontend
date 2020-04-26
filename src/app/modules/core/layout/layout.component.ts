@@ -1,12 +1,12 @@
-import { Alert } from './../shared/models/alert.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd } from '@angular/router';
-import { AlertsMessagesService, UserService } from './../shared/services';
-import { AppState } from '../app.state';
 import { Store } from '@ngrx/store';
-import { GetUser } from '../store/actions/user.action';
+import { AlertsMessagesService, UserService } from '../../../shared/services';
+import { Alert } from '../../../shared/models';
+import { AppState } from '../../../app.state';
+import { GetUser } from '../../../store/actions/user.action';
 import { tap, takeUntil } from 'rxjs/operators';
-import { SafeComponent } from '../modules/core/helpers/safe-component.abstract';
+import { SafeComponent } from '../../../shared/helpers';
 
 @Component({
   selector: 'wd-layout',

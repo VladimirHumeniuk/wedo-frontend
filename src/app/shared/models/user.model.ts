@@ -1,3 +1,4 @@
+import { Roles } from '.';
 export interface User {
   uid: string;
   email: string;
@@ -6,4 +7,5 @@ export interface User {
   createdAt: Date;
   acceptTermsAndConditions: boolean;
   company?: string;
+  roles: Roles;
 }

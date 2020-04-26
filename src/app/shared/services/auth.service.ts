@@ -47,7 +47,10 @@ export class AuthService {
           emailVerified: response.user.emailVerified,
           accountType: accountType,
           createdAt: new Date(),
-          acceptTermsAndConditions: acceptTermsAndConditions
+          acceptTermsAndConditions: acceptTermsAndConditions,
+          roles: {
+            readonly: true
+          }
         }
 
         return this.setUserData(user);
@@ -72,7 +75,11 @@ export class AuthService {
         const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.collection('users').doc(uid)
 
         userLink.set({
-          emailVerified: true
+          emailVerified: true,
+          roles: {
+            readonly: false,
+            author: true,
+          }
         }, { merge: true })
 
         userLink.valueChanges().subscribe((user: User) => {

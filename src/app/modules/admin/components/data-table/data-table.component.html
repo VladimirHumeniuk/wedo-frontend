@@ -1,0 +1,24 @@
+<div class="data-table">
+  <table class="data-table__table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns"> {{ column.title }} </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngIf="!data" class="data-table__no-data">
+        <td [attr.colspan]="columns.length">No data</td>
+      </tr>
+
+      <tr *ngFor="let row of data">
+        <td
+        *ngFor="let col of columns"
+        [attr.width]="col.options?.width">
+          <span [className]="col.options?.code ? 'data-table--code' : ''">{{ row[col.key] }}</span>
+        </td>
+        <td *ngIf="actions?.edit?.active"><nb-icon (click)="editEvent()" icon="edit-2-outline"></nb-icon></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

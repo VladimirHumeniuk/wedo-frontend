@@ -1,5 +1,4 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
@@ -16,22 +15,18 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
   NbButtonModule,
   NbIconModule,
-  NbLayoutModule,
   NbSpinnerModule,
   NbThemeModule
 } from '@nebular/theme';
 
 // Modules
+import { AdminModule } from './modules/admin/admin.module';
 import { CoreModule } from './modules/core/core.module';
 import { SharedModule } from './shared/shared.module';
 
-// Layout components
-import { LayoutComponent } from './layout/layout.component';
-import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.component';
-import { FooterComponent } from './layout/footer/footer.component';
-
 // Components
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 // Ngrx
 import { EffectsModule } from '@ngrx/effects';
@@ -44,21 +39,18 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LayoutComponent,
-    NavigationBarComponent,
-    FooterComponent
+    AppComponent
   ],
   imports: [
+    AppRoutingModule,
+    AdminModule,
     BrowserAnimationsModule,
-    BrowserModule,
     RouterModule,
     CoreModule,
     EffectsModule.forRoot([UserEffects]),
     NbButtonModule,
     NbEvaIconsModule,
     NbIconModule,
-    NbLayoutModule,
     NbSpinnerModule,
     NbThemeModule.forRoot({ name: 'default' }),
     LeafletModule.forRoot(),

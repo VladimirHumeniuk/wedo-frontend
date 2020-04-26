@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IsUser, IsGuest, LoginGuard } from './guards';
 
+import { CoreComponent } from './core.component';
 import { HomeComponent } from './pages/home/home.component';
 import { SignUpComponent } from './pages/sign-up/sign-up.component';
 import { SignInComponent } from './pages/sign-in/sign-in.component';
@@ -19,63 +20,70 @@ import { PromptPasswordComponent } from './pages/prompt-password/prompt-password
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
-  },
-  {
-    path: 'sign-up',
-    component: SignUpComponent,
-    canActivate: [IsGuest]
-  },
-  {
-    path: 'sign-in',
-    component: SignInComponent,
-    canActivate: [IsGuest]
-  },
-  {
-    path: 'prompt-password',
-    component: PromptPasswordComponent,
-    canActivate: [LoginGuard]
-  },
-  {
-    path: 'verify-email',
-    component: VerifyEmailComponent
-  },
-  {
-    path: 'request-password',
-    component: RequestPasswordComponent,
-    canActivate: [IsGuest]
-  },
-  {
-    path: 'card/:cid',
-    component: CardDetailsComponent
-  },
-  {
-    path: 'account',
-    component: AccountComponent,
+    component: CoreComponent,
     children: [
       {
-        path: 'reset-password',
-        component: ResetPasswordComponent
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full'
       },
       {
-        path: 'email-verified',
-        component: EmailVerifiedComponent,
+        path: 'sign-up',
+        component: SignUpComponent,
+        canActivate: [IsGuest]
       },
       {
-        path: 'invalid-action-code',
-        component: InvalidActionCodeComponent
+        path: 'sign-in',
+        component: SignInComponent,
+        canActivate: [IsGuest]
+      },
+      {
+        path: 'prompt-password',
+        component: PromptPasswordComponent,
+        canActivate: [LoginGuard]
+      },
+      {
+        path: 'verify-email',
+        component: VerifyEmailComponent
+      },
+      {
+        path: 'request-password',
+        component: RequestPasswordComponent,
+        canActivate: [IsGuest]
+      },
+      {
+        path: 'card/:cid',
+        component: CardDetailsComponent
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+        children: [
+          {
+            path: 'reset-password',
+            component: ResetPasswordComponent
+          },
+          {
+            path: 'email-verified',
+            component: EmailVerifiedComponent,
+          },
+          {
+            path: 'invalid-action-code',
+            component: InvalidActionCodeComponent
+          }
+        ]
+      },
+      {
+        path: 'my-company-card',
+        component: MyCompanyCardComponent,
+        canActivate: [IsUser]
       }
     ]
   },
-  {
-    path: 'my-company-card',
-    component: MyCompanyCardComponent,
-    canActivate: [IsUser]
-  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
   providers: [IsGuest, IsUser, LoginGuard]
 })

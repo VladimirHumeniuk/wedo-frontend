@@ -1,4 +1,4 @@
-@import '../../../styles/variables/variables';
+@import '../../../../../styles/variables/variables';
 
 :host {
   width: 100%;
@@ -98,13 +98,4 @@
       margin-left: 20px;
     }
   }
-}
-
-.navigation-bar__logo {
-  text-decoration: none;
-  font-size: 24px;
-  font-weight: 700;
-  font-family: $ff-comfortaa;
-  font-weight: $fw-bold;
-  z-index: 4;
 }
