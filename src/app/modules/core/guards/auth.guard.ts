@@ -28,6 +28,7 @@ export class IsUser implements CanActivate {
   }
 }
 
+@Injectable()
 export class IsGuest implements CanActivate {
   constructor(
     private readonly router: Router,

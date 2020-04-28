@@ -1,4 +1,3 @@
-import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { AuthService, UserService } from 'src/app/shared/services';
@@ -35,8 +34,7 @@ export class NavigationBarComponent implements OnInit {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UserService,
-    private readonly fireAuth: AngularFireAuth
+    private readonly userService: UserService
   ) {
     this.userService.user$.subscribe((user: User) => {
       this.user = user

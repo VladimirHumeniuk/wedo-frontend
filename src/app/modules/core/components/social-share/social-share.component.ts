@@ -10,8 +10,8 @@ export class SocialShareComponent implements OnInit {
 
   public isPopoverOpened: boolean = false;
 
-  @ViewChild('popoverWrapper', { static: false }) popoverWrapper: any;
-  @ViewChild(NbPopoverDirective,  { static: false }) popover: NbPopoverDirective;
+  @ViewChild('popoverWrapper') popoverWrapper: any;
+  @ViewChild(NbPopoverDirective) popover: NbPopoverDirective;
 
   constructor() { }
 

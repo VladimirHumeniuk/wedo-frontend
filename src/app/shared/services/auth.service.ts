@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { take, catchError } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
@@ -27,10 +27,6 @@ export class AuthService {
     private readonly store: Store<AppState>
   ) { }
 
-  public getCurrent(): Observable<firebase.User> {
-    return this.fireAuth.user.pipe(take(1))
-  }
-
   public createUserWithEmailAndPassword(formData: any): Promise<void> {
     const {
       email,
@@ -39,7 +35,7 @@ export class AuthService {
       password
     } = formData;
 
-    return this.fireAuth.auth.createUserWithEmailAndPassword(email, password)
+    return this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then((response: firebase.auth.UserCredential) => {
         const user: User = {
           uid: response.user.uid,
@@ -66,11 +62,19 @@ export class AuthService {
   }
 
   public sendEmailVerification(): Promise<void> {
-    return this.fireAuth.auth.currentUser.sendEmailVerification()
+    let sendEmailVerification: Promise<void>
+
+    this.fireAuth.user.pipe(
+      take(1)
+    ).subscribe((user: firebase.User) => {
+      sendEmailVerification = user.sendEmailVerification()
+    })
+
+    return sendEmailVerification
   }
 
   public verifyEmail(actionCode: string, uid: string): Promise<void> {
-    return this.fireAuth.auth.applyActionCode(actionCode)
+    return this.fireAuth.applyActionCode(actionCode)
       .then(() => {
         const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.collection('users').doc(uid)
 
@@ -90,24 +94,24 @@ export class AuthService {
   }
 
   public checkActionCode(code: string): Promise<firebase.auth.ActionCodeInfo> {
-    return this.fireAuth.auth.checkActionCode(code)
+    return this.fireAuth.checkActionCode(code)
       .catch(error => { throw error })
   }
 
   public sendPasswordResetEmail(email: string): Promise<void> {
-    return this.fireAuth.auth.sendPasswordResetEmail(email)
+    return this.fireAuth.sendPasswordResetEmail(email)
       .catch(error => { throw error })
   }
 
   public updatePassword(actionCode: string, newPassword: string): Promise<void> {
-    return this.fireAuth.auth.confirmPasswordReset(actionCode, newPassword)
+    return this.fireAuth.confirmPasswordReset(actionCode, newPassword)
       .catch(error => { throw error })
   }
 
   public signInWithEmailAndPassword(formData: any, pendingCredentials?: any): Promise<void> {
     const { email, password, rememberUser } = formData
 
-    return this.fireAuth.auth.signInWithEmailAndPassword(email, password)
+    return this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((credentials: firebase.auth.UserCredential) => {
         if (pendingCredentials) {
           credentials.user.linkWithCredential(pendingCredentials)
@@ -130,7 +134,7 @@ export class AuthService {
         twitter: new firebase.auth.TwitterAuthProvider()
       }
 
-      this.fireAuth.auth.signInWithPopup(providers[provider])
+      this.fireAuth.signInWithPopup(providers[provider])
       .then((data: firebase.auth.UserCredential) => {
         this.userService.getUser(data.user.uid)
           .pipe(
@@ -153,7 +157,7 @@ export class AuthService {
           const pendingCredentials = error.credential
           const { credential, email } = error
 
-          this.fireAuth.auth.fetchSignInMethodsForEmail(email).then((methods) => {
+          this.fireAuth.fetchSignInMethodsForEmail(email).then((methods) => {
             if (methods[0] === 'password') {
               const payload = {
                 email: email,
@@ -174,6 +178,6 @@ export class AuthService {
   public signOut(): Promise<void> {
     this.router.navigate(['/'])
     this.store.dispatch(new UserActions.RemoveUser())
-    return this.fireAuth.auth.signOut();
+    return this.fireAuth.signOut();
   }
 }

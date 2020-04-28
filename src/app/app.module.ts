@@ -53,7 +53,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     NbIconModule,
     NbSpinnerModule,
     NbThemeModule.forRoot({ name: 'default' }),
-    LeafletModule.forRoot(),
+    LeafletModule,
     // Apollo Setup
     HttpClientModule,
     ApolloModule,

@@ -58,7 +58,7 @@ import { LogoComponent } from './components/logo/logo.component';
     NbSelectModule,
     NbIconModule,
     NbTooltipModule,
-    NbDatepickerModule.forRoot({ format: 'dd.MM.yyyy' })
+    NbDatepickerModule.forRoot()
   ],
   exports: [
     LogoComponent,
