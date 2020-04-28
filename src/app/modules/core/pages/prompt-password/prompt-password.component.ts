@@ -52,10 +52,9 @@ export class PromptPasswordComponent implements OnInit, OnDestroy {
 
       this.authService.signInWithEmailAndPassword(formData, credential)
         .then(() => {
-          this.loading = false
           this.promptPasswordForm.reset()
         })
-        .catch(error => {
+        .finally(() => {
           this.loading = false
         })
     }

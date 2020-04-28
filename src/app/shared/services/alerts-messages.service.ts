@@ -43,7 +43,6 @@ export class AlertsMessagesService {
             const alerts = alertsArray.reduce((obj, item) => Object.assign(obj, { [item.code]: item }), {});
 
             if ((!alerts || alerts && !alerts['email-not-verified']) && !emailVerified) {
-              console.log('emailVerified', emailVerified);
               this.addAlert(uid, ALERTS['email-not-verified']).subscribe();
             }
 

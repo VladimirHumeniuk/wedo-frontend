@@ -9,6 +9,7 @@ export const userFieldsFragment = gql`
         acceptTermsAndConditions,
         emailVerified,
         company,
+        createdAt,
         roles {
           admin,
           readonly,

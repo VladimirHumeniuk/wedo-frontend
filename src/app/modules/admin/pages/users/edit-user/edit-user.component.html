@@ -1,6 +1,6 @@
 <wd-title title="Edit user"></wd-title>
 
-<form [formGroup]="editUserForm">
+<form [formGroup]="editUserForm" (ngSubmit)="saveUser()">
   <nb-card class="edit-user-form">
     <nb-card-body class="edit-user-form__body">
       <div class="edit-user-form__form">
@@ -23,21 +23,21 @@
         </wd-form-item>
 
         <wd-form-item>
-          <wd-select
-          name="accountType"
-          [parentForm]="editUserForm"
-          label="Account type"
-          [clearable]="false"
-          [items]="accountTypes"></wd-select>
-        </wd-form-item>
-
-        <wd-form-item>
           <wd-input-group
           name="createdAt"
           type="date"
           label="Created at"
           [parentForm]="editUserForm"
           placeholder="Account created date"></wd-input-group>
+        </wd-form-item>
+
+        <wd-form-item>
+          <wd-select
+          name="accountType"
+          [parentForm]="editUserForm"
+          label="Account type"
+          [clearable]="false"
+          [items]="accountTypes"></wd-select>
         </wd-form-item>
 
         <wd-form-item>
@@ -61,6 +61,7 @@
 
   <div class="edit-user-form__controls">
     <button
+    (click)="goBack($event)"
     nbButton
     ghost
     status="info">
@@ -69,8 +70,8 @@
 
     <button
     nbButton
-    hero
-    [disabled]="editUserForm.invalid"
+    status="primary"
+    [disabled]="editUserForm.invalid || !editUserForm.dirty"
     [nbSpinner]="loading"
     type="submit">
       Save

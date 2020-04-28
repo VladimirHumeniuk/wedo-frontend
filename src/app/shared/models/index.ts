@@ -4,3 +4,4 @@ export * from './company-card.model';
 export * from './upload.model';
 export * from './login.model';
 export * from './roles.model';
+export * from './timestamp.model';

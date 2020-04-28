@@ -94,14 +94,11 @@ export class SignUpComponent implements OnInit {
 
       this.authService.createUserWithEmailAndPassword(formData)
         .then(() => {
-          this.loading = false
           this.signUpForm.reset();
           this.store.dispatch(new GetUser());
         })
         .then(() => this.router.navigate(['/verify-email']))
         .catch(error => {
-          this.loading = false
-
           if (error.code === 'auth/email-already-in-use') {
             const control = this.signUpForm.get('email')
 
@@ -113,7 +110,10 @@ export class SignUpComponent implements OnInit {
           }
 
           throw Error(error)
-        });
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
 
     return

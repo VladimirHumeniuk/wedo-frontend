@@ -45,14 +45,12 @@ export class RequestPasswordComponent implements OnInit {
 
       this.authService.sendPasswordResetEmail(formData.email)
         .then(() => {
-          this.loading = false
           this.requestPasswordForm.reset()
           this.emailSent = true
           this.email = formData.email
           this.holdTimer = true
         })
         .catch(error => {
-          this.loading = false
           const control = this.requestPasswordForm.get('email')
 
           switch (error.code) {
@@ -82,6 +80,9 @@ export class RequestPasswordComponent implements OnInit {
           }
 
           throw Error(error)
+        })
+        .finally(() => {
+          this.loading = false
         })
     }
 

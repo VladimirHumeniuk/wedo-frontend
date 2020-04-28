@@ -8,6 +8,7 @@ interface dataTableColumn {
 
 interface dataTableColumnOptions {
   code?: boolean;
+  date?: boolean;
 }
 
 interface dataTableActions {

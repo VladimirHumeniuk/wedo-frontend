@@ -50,13 +50,10 @@ export class SignInComponent implements OnInit {
 
       this.authService.signInWithEmailAndPassword(formData)
         .then(() => {
-          this.loading = false
           this.signInForm.reset();
           this.store.dispatch(new GetUser());
         })
         .catch(error => {
-          this.loading = false
-
           if (error.code === 'auth/wrong-password') {
             const control = this.signInForm.get('password')
 
@@ -67,6 +64,9 @@ export class SignInComponent implements OnInit {
           }
 
           throw Error(error)
+        })
+        .finally(() => {
+          this.loading = false
         })
     }
 

@@ -49,16 +49,10 @@ export class AuthService {
           }
         }
 
-        return this.setUserData(user);
+        return this.userService.setUserData(user);
       })
       .then(() => this.sendEmailVerification())
       .catch(error => { throw error })
-  }
-
-  private setUserData(user: User): Promise<void> {
-    const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${user.uid}`)
-
-    return userLink.set(user, { merge: true })
   }
 
   public sendEmailVerification(): Promise<void> {

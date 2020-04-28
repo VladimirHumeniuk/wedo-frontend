@@ -16,6 +16,7 @@ import {
   NbButtonModule,
   NbIconModule,
   NbSpinnerModule,
+  NbToastrModule,
   NbThemeModule
 } from '@nebular/theme';
 
@@ -52,6 +53,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     NbEvaIconsModule,
     NbIconModule,
     NbSpinnerModule,
+    NbToastrModule.forRoot({ duration: 4000 }),
     NbThemeModule.forRoot({ name: 'default' }),
     LeafletModule,
     // Apollo Setup

@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models';
 import { EMAIL_REGEXP } from 'src/app/shared/constants';
 import { UserService } from 'src/app/shared/services';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'wd-edit-user',
@@ -22,12 +24,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   public loading: boolean
 
-  accountTypes = ['business', 'freelancer']
+  accountTypes = ['Business', 'Freelancer']
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly location: Location,
+    private readonly toastrService: NbToastrService
   ) { }
 
   private formInit(): void {
@@ -49,6 +53,41 @@ export class EditUserComponent implements OnInit, OnDestroy {
     })
   }
 
+  public goBack($event: Event): void {
+    $event.preventDefault()
+    this.location.back();
+  }
+
+  public saveUser(uid: string): boolean {
+    this.loading = true
+
+    if (this.editUserForm.invalid) {
+      this.loading = false
+    }
+
+    if (this.editUserForm.valid) {
+      const formData = this.editUserForm.value
+
+      this.userService.setUserData(formData)
+        .then(() => {
+          if (!this.editUserForm.get('company').pristine && this.editUserForm.get('company').touched) {
+            this.userService.assignCompany(formData.uid, formData.company)
+          }
+
+          this.toastrService.success('Successfully saved', 'Saved');
+        })
+        .catch(error => {
+          throw Error(error)
+        })
+        .finally(() => {
+          this.loading = false
+          this.editUserForm.markAsPristine()
+        })
+    }
+
+    return
+  }
+
   ngOnDestroy() {
     this._queryParams.unsubscribe()
   }
@@ -58,7 +97,16 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
     this._queryParams = this.activatedRoute.queryParams.subscribe((data: Params) => {
       this.userService.getUser(data.uid).pipe(
-        take(1)
+        take(1),
+        map((data: User) => {
+          let user = Object.assign({}, data)
+
+          if ('_seconds' in user.createdAt) {
+            user.createdAt = new Date(user.createdAt._seconds * 1000)
+          }
+
+          return user
+        })
       ).subscribe((user: User) => {
         this.user = user
 

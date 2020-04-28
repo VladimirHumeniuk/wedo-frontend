@@ -17,7 +17,6 @@ import {
   NbCardModule,
   NbCheckboxModule,
   NbPopoverModule,
-  NbToastrModule,
   NbLayoutModule,
   NbIconModule,
   NbSpinnerModule
@@ -59,11 +58,6 @@ import { LocationMapComponent } from './components/location-map/location-map.com
 import { SocialShareComponent } from './components/social-share/social-share.component';
 import { SocialButtonComponent } from './components/social-share/social-button/social-button.component';
 import { PromptPasswordComponent } from './pages/prompt-password/prompt-password.component';
-
-
-const toastrConfig = {
-  duration: 4000,
-}
 
 @NgModule({
   declarations: [
@@ -110,7 +104,6 @@ const toastrConfig = {
     NbIconModule,
     NbLayoutModule,
     NbPopoverModule,
-    NbToastrModule.forRoot(toastrConfig),
     NbSpinnerModule,
     ReactiveFormsModule,
     SharedModule

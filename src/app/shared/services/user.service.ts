@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
 import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
 import { Observable } from 'rxjs/Observable';
 import { User, CompanyCard } from '../models';
@@ -17,6 +18,7 @@ export class UserService {
   public user$ = this.store.select('user');
 
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly baseApolloService: BaseApolloService,
     private readonly fireAuth: AngularFireAuth,
     private readonly store: Store<AppState>
@@ -55,6 +57,12 @@ export class UserService {
       companyId
     });
     return source;
+  }
+
+  public setUserData(user: User): Promise<void> {
+    const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${user.uid}`)
+
+    return userLink.set(user, { merge: true })
   }
 
   public getAuth(): Observable<{ uid: string }> {

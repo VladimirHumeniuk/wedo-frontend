@@ -134,12 +134,14 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
         Promise.all(promises)
           .then(() => {
             this.myCardForm.markAsPristine()
-            this.loading = false
             this.toastrService.success('Company information successfully saved', 'Saved')
           })
           .catch(error => {
             throw new Error(error)
             this.toastrService.danger('Something went wrong, try again later', 'Error')
+          })
+          .finally(() => {
+            this.loading = false
           })
       }
 
