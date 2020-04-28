@@ -17,7 +17,11 @@
         [attr.width]="col.options?.width">
           <span [className]="col.options?.code ? 'data-table--code' : ''">{{ row[col.key] }}</span>
         </td>
-        <td *ngIf="actions?.edit?.active"><nb-icon (click)="editEvent()" icon="edit-2-outline"></nb-icon></td>
+        <td *ngIf="actions?.edit?.active">
+          <div class="data-table__action">
+            <nb-icon (click)="editEvent(row[id])" icon="edit-2-outline"></nb-icon>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
-import { User } from 'firebase';
 import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
 import { Observable } from 'rxjs/Observable';
-import { CompanyCard } from '../models';
+import { User, CompanyCard } from '../models';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { AngularFireAuth } from '@angular/fire/auth';

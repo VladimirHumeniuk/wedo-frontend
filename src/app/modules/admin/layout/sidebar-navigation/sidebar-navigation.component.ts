@@ -24,6 +24,14 @@ export class SidebarNavigationComponent implements OnInit {
       icon: 'bulb-outline',
     },
     {
+      title: 'Categories',
+      icon: 'pricetags-outline'
+    },
+    {
+      title: 'Account types',
+      icon: 'briefcase-outline'
+    },
+    {
       title: 'Bin',
       icon: 'trash-2-outline'
     }

@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   NbButtonModule,
+  NbCardModule,
+  NbCheckboxModule,
   NbLayoutModule,
   NbSidebarModule,
+  NbSpinnerModule,
   NbIconModule,
   NbMenuModule
 } from '@nebular/theme';
@@ -25,6 +29,7 @@ import { AdminComponent } from './admin.component';
 import { UsersComponent } from './pages/users/users.component';
 import { TitleComponent } from './components/title/title.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -34,13 +39,19 @@ import { DataTableComponent } from './components/data-table/data-table.component
     SidebarNavigationComponent,
     UsersComponent,
     TitleComponent,
-    DataTableComponent
+    DataTableComponent,
+    EditUserComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     AdminRoutingModule,
     NbButtonModule,
+    NbCardModule,
+    NbCheckboxModule,
     NbLayoutModule,
+    NbSpinnerModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbIconModule,

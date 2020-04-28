@@ -65,6 +65,7 @@ $nb-themes: nb-register-theme((
   menu-item-divider-color: #e8c20a,
   menu-item-active-text-color: $c-font-dark,
   menu-item-icon-active-color: $c-font-dark,
-  menu-item-active-background-color: $c-yellow-900
+  menu-item-active-background-color: $c-yellow-900,
+  menu-item-hover-background-color: $c-yellow-1000,
 
 ), default, default);

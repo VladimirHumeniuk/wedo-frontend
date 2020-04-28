@@ -11,7 +11,8 @@ import {
   NbTooltipModule,
   NbInputModule,
   NbIconModule,
-  NbSelectModule
+  NbSelectModule,
+  NbDatepickerModule
 } from '@nebular/theme';
 
 import { InputGroupComponent } from './components/input-group/input-group.component';
@@ -56,7 +57,8 @@ import { LogoComponent } from './components/logo/logo.component';
     NbInputModule,
     NbSelectModule,
     NbIconModule,
-    NbTooltipModule
+    NbTooltipModule,
+    NbDatepickerModule.forRoot({ format: 'dd.MM.yyyy' })
   ],
   exports: [
     LogoComponent,

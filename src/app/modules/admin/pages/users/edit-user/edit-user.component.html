@@ -1,0 +1,79 @@
+<wd-title title="Edit user"></wd-title>
+
+<form [formGroup]="editUserForm">
+  <nb-card class="edit-user-form">
+    <nb-card-body class="edit-user-form__body">
+      <div class="edit-user-form__form">
+        <wd-form-item>
+          <wd-input-group
+          name="uid"
+          type="text"
+          [parentForm]="editUserForm"
+          placeholder="User ID"
+          [disabled]="true"></wd-input-group>
+        </wd-form-item>
+
+        <wd-form-item>
+          <wd-input-group
+          name="email"
+          type="text"
+          [parentForm]="editUserForm"
+          placeholder="Email address"
+          [disabled]="true"></wd-input-group>
+        </wd-form-item>
+
+        <wd-form-item>
+          <wd-select
+          name="accountType"
+          [parentForm]="editUserForm"
+          label="Account type"
+          [clearable]="false"
+          [items]="accountTypes"></wd-select>
+        </wd-form-item>
+
+        <wd-form-item>
+          <wd-input-group
+          name="createdAt"
+          type="date"
+          label="Created at"
+          [parentForm]="editUserForm"
+          placeholder="Account created date"></wd-input-group>
+        </wd-form-item>
+
+        <wd-form-item>
+          <wd-input-group
+          name="company"
+          type="text"
+          [parentForm]="editUserForm"
+          placeholder="User company ID"></wd-input-group>
+        </wd-form-item>
+
+        <div class="edit-user-form__checkboxes">
+          <wd-form-item>
+            <nb-checkbox formControlName="emailVerified">Verified email</nb-checkbox>
+          </wd-form-item>
+
+          <nb-checkbox formControlName="acceptTermsAndConditions">Terms and conditions accepted</nb-checkbox>
+        </div>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <div class="edit-user-form__controls">
+    <button
+    nbButton
+    ghost
+    status="info">
+      Cancel
+    </button>
+
+    <button
+    nbButton
+    hero
+    [disabled]="editUserForm.invalid"
+    [nbSpinner]="loading"
+    type="submit">
+      Save
+    </button>
+  </div>
+</form>

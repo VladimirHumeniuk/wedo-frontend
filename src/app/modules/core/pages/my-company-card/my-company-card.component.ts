@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { NbToastrService } from '@nebular/theme';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,16 +6,16 @@ import { EMAIL_REGEXP, URL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constan
 import { CompanyCard, User, Upload } from '../../../../shared/models';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UploadService, UserService } from 'src/app/shared/services';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom, take } from 'rxjs/operators';
 
 @Component({
   selector: 'wd-my-company-card',
   templateUrl: './my-company-card.component.html',
   styleUrls: ['./my-company-card.component.scss']
 })
-export class MyCompanyCardComponent implements OnInit {
+export class MyCompanyCardComponent implements OnInit, OnDestroy {
 
   public myCardForm: FormGroup
   public user$: Observable<User> = this.store.select('user')
@@ -27,6 +27,8 @@ export class MyCompanyCardComponent implements OnInit {
   private removeImage: boolean
   private emailRegexp: RegExp = EMAIL_REGEXP
   private urlRegexp: RegExp = URL_REGEXP
+
+  private _user: Subscription
 
   public categories = ['Security', 'Cleaning'] // todo
 
@@ -150,9 +152,16 @@ export class MyCompanyCardComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this._user.unsubscribe()
+  }
+
   ngOnInit() {
     this.formInit()
-    this.user$.subscribe((user: User) => {
+
+    this._user = this.user$.pipe(
+      take(1)
+    ).subscribe((user: User) => {
       this.user = user
 
       if (user) {
@@ -161,13 +170,11 @@ export class MyCompanyCardComponent implements OnInit {
             if (companyCard) {
               this.companyCard = companyCard
 
-              Object.keys(companyCard).forEach(key => {
+              Object.keys(companyCard).forEach((key: string) => {
                 if (
-                  key !== 'cid' &&
-                  key !== 'owner' &&
-                  key !== 'created' &&
-                  key !== 'image' &&
-                  key !== '__typename') {
+                  this.myCardForm.controls[key] &&
+                  key !== 'image'
+                ) {
                   this.myCardForm.controls[key].setValue(companyCard[key])
                 }
               })

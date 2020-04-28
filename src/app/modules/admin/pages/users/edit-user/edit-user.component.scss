@@ -1,0 +1,27 @@
+.edit-user-form__body {
+  overflow: unset;
+}
+
+.edit-user-form__form {
+  display: grid;
+  grid-template-areas:
+    '1fr 1fr'
+    '1fr 1fr'
+    '1fr 1fr'
+    'checkboxes checkboxes'
+  ;
+  column-gap: 10px;
+}
+
+.edit-user-form__checkboxes {
+  grid-area: checkboxes;
+}
+
+.edit-user-form__controls {
+  display: flex;
+  justify-content: flex-end;
+
+  button ~ button {
+    margin-left: 10px;
+  }
+}

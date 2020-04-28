@@ -27,6 +27,7 @@ interface dataTableAction {
 })
 export class DataTableComponent implements OnInit {
 
+  @Input() id: string;
   @Input() columns: dataTableColumn[];
   @Input() data: Object[];
   @Input() actions: dataTableActions;
