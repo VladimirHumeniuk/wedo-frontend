@@ -1,80 +1,93 @@
 <wd-title title="Edit user"></wd-title>
 
-<form [formGroup]="editUserForm" (ngSubmit)="saveUser()">
-  <nb-card class="edit-user-form">
-    <nb-card-body class="edit-user-form__body">
-      <div class="edit-user-form__form">
-        <wd-form-item>
-          <wd-input-group
-          name="uid"
-          type="text"
-          [parentForm]="editUserForm"
-          placeholder="User ID"
-          [disabled]="true"></wd-input-group>
-        </wd-form-item>
+<div *ngIf="editUserForm">
+  <form [formGroup]="editUserForm" (ngSubmit)="saveUser()">
+    <nb-card class="edit-user-form">
+      <nb-card-body class="edit-user-form__body">
+        <div class="edit-user-form__form">
+          <h2 class="edit-user-form__title">General:</h2>
+          <div class="edit-user-form__general">
+            <wd-form-item>
+              <wd-input-group
+              name="uid"
+              type="text"
+              [parentForm]="editUserForm"
+              placeholder="User ID"
+              [disabled]="true"></wd-input-group>
+            </wd-form-item>
 
-        <wd-form-item>
-          <wd-input-group
-          name="email"
-          type="text"
-          [parentForm]="editUserForm"
-          placeholder="Email address"
-          [disabled]="true"></wd-input-group>
-        </wd-form-item>
+            <wd-form-item>
+              <wd-input-group
+              name="email"
+              type="text"
+              [parentForm]="editUserForm"
+              placeholder="Email address"
+              [disabled]="true"></wd-input-group>
+            </wd-form-item>
 
-        <wd-form-item>
-          <wd-input-group
-          name="createdAt"
-          type="date"
-          label="Created at"
-          [parentForm]="editUserForm"
-          placeholder="Account created date"></wd-input-group>
-        </wd-form-item>
+            <wd-form-item>
+              <wd-input-group
+              name="createdAt"
+              type="date"
+              label="Created at"
+              [parentForm]="editUserForm"
+              placeholder="Account created date"></wd-input-group>
+            </wd-form-item>
 
-        <wd-form-item>
-          <wd-select
-          name="accountType"
-          [parentForm]="editUserForm"
-          label="Account type"
-          [clearable]="false"
-          [items]="accountTypes"></wd-select>
-        </wd-form-item>
+            <wd-form-item>
+              <wd-select
+              name="accountType"
+              [parentForm]="editUserForm"
+              label="Account type"
+              [clearable]="false"
+              [items]="accountTypes"></wd-select>
+            </wd-form-item>
 
-        <wd-form-item>
-          <wd-input-group
-          name="company"
-          type="text"
-          [parentForm]="editUserForm"
-          placeholder="User company ID"></wd-input-group>
-        </wd-form-item>
+            <wd-form-item>
+              <wd-input-group
+              name="company"
+              type="text"
+              [parentForm]="editUserForm"
+              placeholder="User company ID"></wd-input-group>
+            </wd-form-item>
+          </div>
 
-        <div class="edit-user-form__checkboxes">
-          <wd-form-item>
-            <nb-checkbox formControlName="emailVerified">Verified email</nb-checkbox>
-          </wd-form-item>
+          <div class="edit-user-form__checkboxes">
+            <div class="edit-user-form__roles" formGroupName="roles">
+              <h2 class="edit-user-form__title">Roles:</h2>
+              <nb-checkbox formControlName="admin">Admin</nb-checkbox>
+              <nb-checkbox formControlName="author">Author</nb-checkbox>
+              <nb-checkbox formControlName="readonly">Readonly</nb-checkbox>
+            </div>
 
-          <nb-checkbox formControlName="acceptTermsAndConditions">Terms and conditions accepted</nb-checkbox>
+            <div class="edit-user-form__verifications">
+              <h2 class="edit-user-form__title">Verifications:</h2>
+              <nb-checkbox formControlName="emailVerified">Verified email</nb-checkbox>
+
+              <nb-checkbox formControlName="acceptTermsAndConditions">Terms and conditions accepted</nb-checkbox>
+            </div>
+          </div>
         </div>
-      </div>
-    </nb-card-body>
-  </nb-card>
+      </nb-card-body>
+    </nb-card>
 
-  <div class="edit-user-form__controls">
-    <button
-    (click)="goBack($event)"
-    nbButton
-    ghost
-    status="info">
-      Cancel
-    </button>
+    <div class="edit-user-form__controls">
+      <button
+      (click)="goBack($event)"
+      nbButton
+      ghost
+      status="info">
+        Cancel
+      </button>
 
-    <button
-    nbButton
-    status="primary"
-    [disabled]="editUserForm.invalid || !editUserForm.dirty"
-    [nbSpinner]="loading"
-    type="submit">
-      Save
-    </button>
-  </div>
-</form>
+      <button
+      nbButton
+      status="primary"
+      [disabled]="editUserForm.invalid || !editUserForm.dirty"
+      [nbSpinner]="loading"
+      type="submit">
+        Save
+      </button>
+    </div>
+  </form>
+</div>

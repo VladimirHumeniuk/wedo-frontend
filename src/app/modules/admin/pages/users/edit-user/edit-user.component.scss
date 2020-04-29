@@ -2,19 +2,21 @@
   overflow: unset;
 }
 
-.edit-user-form__form {
-  display: grid;
-  grid-template-areas:
-    '1fr 1fr'
-    '1fr 1fr'
-    '1fr 1fr'
-    'checkboxes checkboxes'
-  ;
-  column-gap: 10px;
+.edit-user-form__title {
+  font-size: 1rem;
 }
 
+.edit-user-form__verifications,
+.edit-user-form__roles {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-user-form__general,
 .edit-user-form__checkboxes {
-  grid-area: checkboxes;
+  display: grid;
+  column-gap: 10px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .edit-user-form__controls {

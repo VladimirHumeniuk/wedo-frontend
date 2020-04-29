@@ -49,7 +49,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
       ]],
       createdAt: [''],
       acceptTermsAndConditions: [ false ],
-      company: ['']
+      company: [''],
+      roles: this.formBuilder.group({
+        admin: [ false ],
+        author: [ false ],
+        readonly: [ false ]
+      })
     })
   }
 
@@ -112,8 +117,17 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
         if (user) {
           Object.keys(user).forEach((key: string) => {
-            if (this.editUserForm.controls[key]) {
+            if (this.editUserForm.controls[key] && key !== 'roles') {
               this.editUserForm.controls[key].setValue(user[key])
+            }
+
+            if (key === 'roles') {
+              const rolesForm = this.editUserForm.controls.roles
+              Object.keys(user[key]).forEach((role: string) => {
+                if (rolesForm.controls[role]) {
+                  rolesForm.controls[role].setValue(user[key][role])
+                }
+              })
             }
           })
         }

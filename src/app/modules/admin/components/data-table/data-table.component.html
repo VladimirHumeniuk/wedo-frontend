@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th *ngFor="let column of columns"> {{ column.title }} </th>
+        <th *ngIf="actions?.edit?.active"></th>
       </tr>
     </thead>
 
