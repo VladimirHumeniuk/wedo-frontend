@@ -22,6 +22,6 @@ export function userReducer(state: User, action: UserActions.Actions) {
       return { ...defaultUser, loading: false };
 
     default:
-      return { ...state, loading: false };
+      return { ...state, loading: true };
   }
 }

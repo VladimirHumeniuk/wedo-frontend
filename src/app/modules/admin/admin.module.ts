@@ -23,13 +23,14 @@ import { SidebarNavigationComponent } from './layout/sidebar-navigation/sidebar-
 
 // Pages
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
+import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
 
 // Components
 import { AdminComponent } from './admin.component';
 import { UsersComponent } from './pages/users/users.component';
 import { TitleComponent } from './components/title/title.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
-import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
     UsersComponent,
     TitleComponent,
     DataTableComponent,
-    EditUserComponent
+    EditUserComponent,
+    CategoriesComponent
   ],
   imports: [
     CommonModule,
