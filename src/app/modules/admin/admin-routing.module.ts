@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
 
+import { AdminGuard } from './guards';
+
 // Pages
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { UsersComponent } from './pages/users/users.component';
@@ -12,6 +14,7 @@ const routes: Routes = [
   {
     path: 'admin-panel',
     component: AdminComponent,
+    canActivate: [AdminGuard],
     children: [
       {
         path: '',
@@ -36,6 +39,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AdminGuard]
 })
 export class AdminRoutingModule { }
