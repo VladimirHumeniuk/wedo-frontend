@@ -3,7 +3,12 @@
     <thead>
       <tr>
         <th *ngFor="let column of columns"> {{ column.title }} </th>
-        <th *ngIf="actions?.edit?.active"></th>
+
+        <ng-container *ngIf="actions">
+          <ng-container *ngFor="let action of actions | keys">
+            <th *ngIf="actions[action].active"></th>
+          </ng-container>
+        </ng-container>
       </tr>
     </thead>
 
@@ -23,7 +28,7 @@
           </td>
           <td *ngIf="actions?.edit?.active">
             <div class="data-table__action">
-              <nb-icon (click)="editEvent(row[id])" icon="edit-2-outline"></nb-icon>
+              <nb-icon (click)="emitAction(row[id], 'edit')" icon="edit-2-outline"></nb-icon>
             </div>
           </td>
         </tr>

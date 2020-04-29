@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/app.state';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/shared/models';
 import { take } from 'rxjs/operators';
+import { AppState } from 'src/app/app.state';
+import { User } from 'src/app/shared/models';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +18,12 @@ export class AdminGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let admin: boolean
 
-      this.store.select('user').pipe(
-        take(1)
-      ).subscribe((user: User) => admin = user.roles.admin)
+    let admin: boolean
+
+    this.store.select('user').pipe(
+      take(1)
+    ).subscribe((user: User) => admin = user.roles.admin)
 
     if (!admin) this.router.navigate(['/'])
 

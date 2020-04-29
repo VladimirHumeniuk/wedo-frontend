@@ -5,7 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angul
 import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
 import { Observable } from 'rxjs/Observable';
 import { User, CompanyCard } from '../models';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
@@ -15,7 +15,9 @@ import { take } from 'rxjs/operators';
 })
 export class UserService {
 
-  public user$ = this.store.select('user');
+  public user$ = this.store.pipe(
+    select('user')
+  );
 
   constructor(
     private readonly fireStore: AngularFirestore,
