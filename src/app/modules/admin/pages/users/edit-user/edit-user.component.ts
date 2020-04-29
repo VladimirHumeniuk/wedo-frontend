@@ -124,8 +124,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
             if (key === 'roles') {
               const rolesForm = this.editUserForm.controls.roles
               Object.keys(user[key]).forEach((role: string) => {
-                if (rolesForm.controls[role]) {
-                  rolesForm.controls[role].setValue(user[key][role])
+                if (rolesForm['controls'][role]) {
+                  rolesForm['controls'][role].setValue(user[key][role])
                 }
               })
             }
