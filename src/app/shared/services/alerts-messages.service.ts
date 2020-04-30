@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { Observable } from 'rxjs/Observable';
 import { Alert, User, AlertData } from '../models';
-import { getAllAlertsQuery, addAlertMutation, removeAlertMutation, getAlertsQuery } from './alerts-messages.api';
+import { getAllAlertsQuery, addAlertMutation, removeAlertMutation, getAlertsQuery } from '../api/alerts-messages.api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
