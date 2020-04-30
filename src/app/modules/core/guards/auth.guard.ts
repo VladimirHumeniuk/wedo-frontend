@@ -63,15 +63,13 @@ export class IsGuest implements CanActivate {
 export class IsLogged implements CanActivate {
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService,
-    private readonly userService: UserService,
     private readonly store: Store<AppState>,
   ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      return this.getFromStoreOrAPI()
+      return this.getCurrentUser()
     // if it was successful, we can return Observable.of(true)
     .switchMap(() => of(true))
     // otherwise, something went wrong
@@ -79,7 +77,7 @@ export class IsLogged implements CanActivate {
 
   }
 
-  getFromStoreOrAPI(): Observable<any> {
+  getCurrentUser(): Observable<any> {
 
     // return an Observable stream from the store
     return this.store.select('user')
