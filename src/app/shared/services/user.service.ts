@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
-import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
+import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from '../api/user.api';
 import { Observable } from 'rxjs/Observable';
 import { User, CompanyCard } from '../models';
 import { Store, select } from '@ngrx/store';

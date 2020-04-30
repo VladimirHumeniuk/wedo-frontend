@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { Observable } from 'rxjs/Observable';
 import { Alert, AlertData } from '../models';
 import {

@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     { title: 'company', key: 'company', options: { code: true } },
     { title: 'created', key: 'createdAt', options: { date: true } }
   ]
-  public actions = { edit: { active: true } }
+  public actions = { edit: true }
   public users: any[]
   public _users: Subscription
 
@@ -27,9 +27,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     public readonly userService: UserService
-  ) {
-
-  }
+  ) { }
 
   public editUser(uid: string): void {
     this.router.navigate(['edit'], {
