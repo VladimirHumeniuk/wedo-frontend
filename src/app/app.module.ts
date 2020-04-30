@@ -33,7 +33,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './store/reducers';
 import { UserEffects } from './store/effects/user.effect';
-import {AlertEffects} from 'src/app/store/effects/alert.effect';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
@@ -49,7 +48,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     BrowserAnimationsModule,
     RouterModule,
     CoreModule,
-    EffectsModule.forRoot([UserEffects, AlertEffects]),
+    EffectsModule.forRoot([UserEffects]),
     NbButtonModule,
     NbEvaIconsModule,
     NbIconModule,
