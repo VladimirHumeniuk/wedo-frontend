@@ -7,7 +7,7 @@ import {
   addAlertMutation,
   removeAlertMutation,
   getAlertsQuery
-} from './alerts-messages.api';
+} from '../api/alerts-messages.api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
