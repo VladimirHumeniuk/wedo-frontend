@@ -1,8 +1,17 @@
 import { UserService } from 'src/app/shared/services';
+import { AuthService } from 'src/app/shared/services';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/catch';
+import { of } from 'rxjs/observable/of';
 import { User } from './../../../shared/models/user.model';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +41,7 @@ export class IsUser implements CanActivate {
 export class IsGuest implements CanActivate {
   constructor(
     private readonly router: Router,
-    private readonly userService: UserService
+    private readonly userService: UserService,
   ) {}
 
   canActivate(
@@ -49,3 +58,37 @@ export class IsGuest implements CanActivate {
       return !!guest
   }
 }
+
+@Injectable()
+export class IsLogged implements CanActivate {
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+    private readonly store: Store<AppState>,
+  ) {}
+
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      return this.getFromStoreOrAPI()
+    // if it was successful, we can return Observable.of(true)
+    .switchMap(() => of(true))
+    // otherwise, something went wrong
+    .catch(() => of(false));
+
+  }
+
+  getFromStoreOrAPI(): Observable<any> {
+
+    // return an Observable stream from the store
+    return this.store.select('user')
+      .do((data: User) => {
+        if (data.accountType !== "GUEST") {
+          this.router.navigate(['/'])
+        }
+      })
+      .take(1);
+  }
+}
+

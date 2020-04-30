@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { IsUser, IsGuest, LoginGuard } from './guards';
+import { IsUser, IsGuest, LoginGuard, IsLogged } from './guards';
 
 import { CoreComponent } from './core.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -30,12 +30,12 @@ const routes: Routes = [
       {
         path: 'sign-up',
         component: SignUpComponent,
-        canActivate: [IsGuest]
+        canActivate: [IsLogged]
       },
       {
         path: 'sign-in',
         component: SignInComponent,
-        canActivate: [IsGuest]
+        canActivate: [IsLogged]
       },
       {
         path: 'prompt-password',
@@ -44,7 +44,8 @@ const routes: Routes = [
       },
       {
         path: 'verify-email',
-        component: VerifyEmailComponent
+        component: VerifyEmailComponent,
+        canActivate: [IsUser]
       },
       {
         path: 'request-password',
@@ -53,7 +54,8 @@ const routes: Routes = [
       },
       {
         path: 'card/:cid',
-        component: CardDetailsComponent
+        component: CardDetailsComponent,
+        canActivate: [IsUser]
       },
       {
         path: 'account',
@@ -85,6 +87,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [IsGuest, IsUser, LoginGuard]
+  providers: [IsGuest, IsUser, LoginGuard, IsLogged]
 })
 export class CoreRoutingModule { }

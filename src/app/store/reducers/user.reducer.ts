@@ -10,7 +10,7 @@ export function userReducer(state: User, action: UserActions.Actions) {
       return { ...action.payload, loading: false }
 
     case UserActions.REMOVE_USER:
-      return { loading: false };
+      return { ...defaultUser, loading: false };
 
     case UserActions.GET_USER:
       return { ...state, loading: true };

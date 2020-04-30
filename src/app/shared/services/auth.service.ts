@@ -103,7 +103,7 @@ export class AuthService {
   }
 
   public signInWithEmailAndPassword(formData: any, pendingCredentials?: any): Promise<void> {
-    const { email, password, rememberUser } = formData
+    const { email, password, rememberUser } = formData;
 
     return this.fireAuth.signInWithEmailAndPassword(email, password)
       .then((credentials: firebase.auth.UserCredential) => {
