@@ -63,6 +63,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
+  // public saveUser(uid: string): boolean {
   public saveUser(uid: string): boolean {
     this.loading = true
 
