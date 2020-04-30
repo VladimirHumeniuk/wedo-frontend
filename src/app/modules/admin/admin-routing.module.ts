@@ -9,12 +9,12 @@ import { AdminGuard } from './guards';
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { UsersComponent } from './pages/users/users.component';
 import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
+import { CategoriesComponent } from './pages/categories/categories.component';
 
 const routes: Routes = [
   {
     path: 'admin-panel',
     component: AdminComponent,
-    canActivate: [AdminGuard],
     children: [
       {
         path: '',
@@ -32,6 +32,10 @@ const routes: Routes = [
             component: EditUserComponent
           }
         ]
+      },
+      {
+        path: 'categories',
+        component: CategoriesComponent
       }
     ]
   }

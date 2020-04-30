@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
-import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
+import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from '../api/user.api';
 import { Observable } from 'rxjs/Observable';
 import { User, CompanyCard } from '../models';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
@@ -15,7 +15,9 @@ import { take } from 'rxjs/operators';
 })
 export class UserService {
 
-  public user$ = this.store.select('user');
+  public user$ = this.store.pipe(
+    select('user')
+  );
 
   constructor(
     private readonly fireStore: AngularFirestore,

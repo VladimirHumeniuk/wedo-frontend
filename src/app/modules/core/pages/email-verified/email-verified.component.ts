@@ -1,10 +1,6 @@
-import { AppState } from 'src/app/app.state';
 import { Component, OnInit } from '@angular/core';
 import { AuthService, CloudApiService, AlertsMessagesService } from 'src/app/shared/services';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { RemoveAlert } from 'src/app/store/actions/alert.action';
-import { ALERTS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-email-verified',
@@ -23,8 +19,7 @@ export class EmailVerifiedComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly alertsService: AlertsMessagesService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly cloudApi: CloudApiService,
-    private readonly store: Store<AppState>
+    private readonly cloudApi: CloudApiService
   ) {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.oobCode = params.oobCode
@@ -46,7 +41,7 @@ export class EmailVerifiedComponent implements OnInit {
           })
           .then(() => {
             this.emailVerified = true;
-            this.store.dispatch(new RemoveAlert({uid, code: ALERTS['email-not-verified'].code}));
+            return this.alertsService.removeAlert('email-not-verified', uid).toPromise();
           })
           .catch(error => {
             this.tokenExpired = true;
