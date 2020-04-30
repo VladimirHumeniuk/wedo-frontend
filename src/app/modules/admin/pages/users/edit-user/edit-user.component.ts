@@ -3,18 +3,22 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models';
-import { EMAIL_REGEXP } from 'src/app/shared/constants';
+import { EMAIL_REGEXP, ALERTS } from 'src/app/shared/constants';
 import { UserService } from 'src/app/shared/services';
 import { take, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
+import { SafeComponent } from 'src/app/shared/helpers';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { AddAlert, RemoveAlert } from 'src/app/store/actions/alert.action';
 
 @Component({
   selector: 'wd-edit-user',
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
-export class EditUserComponent implements OnInit, OnDestroy {
+export class EditUserComponent extends SafeComponent implements OnInit, OnDestroy {
 
   private _queryParams: Subscription
   public user: User
@@ -31,8 +35,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
     private readonly activatedRoute: ActivatedRoute,
     private readonly userService: UserService,
     private readonly location: Location,
-    private readonly toastrService: NbToastrService
-  ) { }
+    private readonly toastrService: NbToastrService,
+    private readonly store: Store<AppState>,
+  ) {
+    super();
+   }
 
   private formInit(): void {
     this.editUserForm = this.formBuilder.group({
@@ -63,7 +70,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  public saveUser(uid: string): boolean {
+  public saveUser(): boolean {
     this.loading = true
 
     if (this.editUserForm.invalid) {
@@ -71,7 +78,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
     }
 
     if (this.editUserForm.valid) {
-      const formData = this.editUserForm.value
+      const formData = this.editUserForm.value;
+      const emailVerifiedControl = this.editUserForm.controls.emailVerified
+
+      if (emailVerifiedControl.dirty && emailVerifiedControl.touched) {
+        this.updateAlertForVerificationEmail(this.editUserForm.get('emailVerified').value);
+      }
 
       this.userService.setUserData(formData)
         .then(() => {
@@ -93,12 +105,20 @@ export class EditUserComponent implements OnInit, OnDestroy {
     return
   }
 
+  private updateAlertForVerificationEmail(emailVerified: boolean): void {
+    if (!emailVerified) {
+      this.store.dispatch(new AddAlert({ uid: this.user.uid, alert: ALERTS['email-not-verified']}))
+    } else {
+      this.store.dispatch(new RemoveAlert({ uid: this.user.uid, code: ALERTS['email-not-verified'].code}));
+    }
+  }
+
   ngOnDestroy() {
     this._queryParams.unsubscribe()
   }
 
   ngOnInit() {
-    this.formInit()
+    this.formInit();
 
     this._queryParams = this.activatedRoute.queryParams.subscribe((data: Params) => {
       this.userService.getUser(data.uid).pipe(
