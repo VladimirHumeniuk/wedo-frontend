@@ -113,12 +113,12 @@ export class AuthService {
         if (pendingCredentials) {
           credentials.user.linkWithCredential(pendingCredentials)
         }
-
-        this.userService.user$.subscribe((user: User) => {
-          if (user) {
-            this.router.navigate(['/'])
-          }
-        })
+        return credentials;
+      })
+      .then(credentials => {
+        if(credentials && credentials.user && credentials.user.uid) {
+          this.router.navigate(['/'])
+        }
       })
       .catch(error => { throw error })
   }
