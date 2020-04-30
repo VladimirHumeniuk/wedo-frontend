@@ -37,7 +37,7 @@ export function alertReducer(
         ...state,
         loading: false,
         error: null,
-        alerts: [...state.alerts.filter(x => x.code === action.payload.code)]
+        alerts: [...state.alerts.filter(x => x.code !== action.payload.code)]
       };
     }
 

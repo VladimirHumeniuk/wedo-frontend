@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     this.userService.user$.pipe(
       first(),
       tap(({uid}) => this.store.dispatch(new GetAllAlerts({uid})))
-    );
+    ).subscribe();
   }
 
 }

@@ -11,7 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,7 @@ export class AlertsMessagesService {
       Alert[]
     >(getAlertsQuery, data => data.getAlerts, {
       uid
-    });
+    }, { query: getAlertsQuery , fetchPolicy: 'network-only'})
     return source;
   }
 
