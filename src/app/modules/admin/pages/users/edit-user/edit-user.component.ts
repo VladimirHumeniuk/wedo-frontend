@@ -78,7 +78,9 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
     }
 
     if (this.editUserForm.valid) {
-      const formData = this.editUserForm.value
+      const formData = this.editUserForm.value;
+
+      this.updateAlertForVerificationEmail(this.editUserForm.get('emailVerified').value);
 
       this.userService.setUserData(formData)
         .then(() => {
@@ -100,21 +102,18 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
     return
   }
 
+  updateAlertForVerificationEmail(emailVerified) {
+    emailVerified === false
+        ? this.store.dispatch(new AddAlert({ uid: this.user.uid, alert: ALERTS['email-not-verified']}))
+        : this.store.dispatch(new RemoveAlert({ uid: this.user.uid, code: 'email-not-verified'}));
+  }
+
   ngOnDestroy() {
-    super.ngOnDestroy();
     this._queryParams.unsubscribe()
   }
 
   ngOnInit() {
     this.formInit();
-
-    this.editUserForm.get('emailVerified').valueChanges.pipe(
-      takeUntil(this.unsubscriber),
-      debounceTime(1000),
-      tap(emailVerified => emailVerified === false
-        ? this.store.dispatch(new AddAlert({ uid: this.user.uid, alert: ALERTS['email-not-verified']}))
-        : this.store.dispatch(new RemoveAlert({ uid: this.user.uid, code: 'email-not-verified'})))
-    ).subscribe();
 
     this._queryParams = this.activatedRoute.queryParams.subscribe((data: Params) => {
       this.userService.getUser(data.uid).pipe(
