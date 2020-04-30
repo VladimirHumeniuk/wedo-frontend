@@ -2,8 +2,9 @@ import { AppState } from 'src/app/app.state';
 import { Component, OnInit } from '@angular/core';
 import { AuthService, CloudApiService, AlertsMessagesService } from 'src/app/shared/services';
 import { ActivatedRoute, Params } from '@angular/router';
-import {Store} from '@ngrx/store';
-import {RemoveAlert} from 'src/app/store/actions/alert.action';
+import { Store } from '@ngrx/store';
+import { RemoveAlert } from 'src/app/store/actions/alert.action';
+import { ALERTS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'wd-email-verified',
@@ -45,7 +46,7 @@ export class EmailVerifiedComponent implements OnInit {
           })
           .then(() => {
             this.emailVerified = true;
-            this.store.dispatch(new RemoveAlert({uid, code: 'email-not-verified'}));
+            this.store.dispatch(new RemoveAlert({uid, code: ALERTS['email-not-verified'].code}));
           })
           .catch(error => {
             this.tokenExpired = true;

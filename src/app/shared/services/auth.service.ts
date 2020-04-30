@@ -10,10 +10,10 @@ import { Observable, of, Subscription } from 'rxjs';
 import { take, catchError } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
+import { AddAlert } from 'src/app/store/actions/alert.action';
+import { ALERTS } from 'src/app/shared/constants';
 import * as UserActions from 'src/app/store/actions/user.action';
 import * as LoginActions from 'src/app/store/actions/login.action';
-import {AddAlert} from 'src/app/store/actions/alert.action';
-import {ALERTS} from 'src/app/shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,7 @@ export class AuthService {
         }
 
         this.store.dispatch(new AddAlert({ uid: user.uid, alert: ALERTS['email-not-verified']}));
+
         return this.userService.setUserData(user);
       })
       .then(() => this.sendEmailVerification())

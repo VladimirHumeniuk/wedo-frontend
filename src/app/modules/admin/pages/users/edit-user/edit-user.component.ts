@@ -5,13 +5,13 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models';
 import { EMAIL_REGEXP, ALERTS } from 'src/app/shared/constants';
 import { UserService } from 'src/app/shared/services';
-import { take, map, tap, distinctUntilChanged, debounce, debounceTime, takeUntil } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Location } from '@angular/common';
-import {SafeComponent} from 'src/app/shared/helpers';
-import {AppState} from 'src/app/app.state';
-import {Store} from '@ngrx/store';
-import {AddAlert, RemoveAlert} from 'src/app/store/actions/alert.action';
+import { SafeComponent } from 'src/app/shared/helpers';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { AddAlert, RemoveAlert } from 'src/app/store/actions/alert.action';
 
 @Component({
   selector: 'wd-edit-user',
@@ -79,8 +79,11 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
 
     if (this.editUserForm.valid) {
       const formData = this.editUserForm.value;
+      const emailVerifiedControl = this.editUserForm.controls.emailVerified
 
-      this.updateAlertForVerificationEmail(this.editUserForm.get('emailVerified').value);
+      if (emailVerifiedControl.dirty && emailVerifiedControl.touched) {
+        this.updateAlertForVerificationEmail(this.editUserForm.get('emailVerified').value);
+      }
 
       this.userService.setUserData(formData)
         .then(() => {
@@ -102,10 +105,12 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
     return
   }
 
-  updateAlertForVerificationEmail(emailVerified) {
-    emailVerified === false
-        ? this.store.dispatch(new AddAlert({ uid: this.user.uid, alert: ALERTS['email-not-verified']}))
-        : this.store.dispatch(new RemoveAlert({ uid: this.user.uid, code: 'email-not-verified'}));
+  private updateAlertForVerificationEmail(emailVerified: boolean): void {
+    if (!emailVerified) {
+      this.store.dispatch(new AddAlert({ uid: this.user.uid, alert: ALERTS['email-not-verified']}))
+    } else {
+      this.store.dispatch(new RemoveAlert({ uid: this.user.uid, code: ALERTS['email-not-verified'].code}));
+    }
   }
 
   ngOnDestroy() {

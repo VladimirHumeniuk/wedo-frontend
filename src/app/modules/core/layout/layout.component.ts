@@ -66,7 +66,7 @@ export class LayoutComponent extends SafeComponent implements OnInit {
     this.alertsMessagesService.alerts$
       .pipe(
         takeUntil(this.unsubscriber),
-        tap(alerts => (this.alerts = alerts))
+        tap((alerts: Alert[]) => (this.alerts = alerts))
       )
       .subscribe();
   }

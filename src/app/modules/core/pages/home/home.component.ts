@@ -3,9 +3,9 @@ import { AlertsMessagesService, UserService } from './../../../../shared/service
 import { Alert, CompanyCard } from './../../../../shared/models';
 import { ItemsService } from '../../services';
 import { tap, first } from 'rxjs/operators';
-import {AppState} from 'src/app/app.state';
-import {Store} from '@ngrx/store';
-import {GetAllAlerts} from 'src/app/store/actions/alert.action';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { GetAllAlerts } from 'src/app/store/actions/alert.action';
 
 @Component({
   selector: 'wd-home',
@@ -14,8 +14,8 @@ import {GetAllAlerts} from 'src/app/store/actions/alert.action';
 })
 export class HomeComponent implements OnInit {
 
-  alerts: Alert[]
-  itemsToShow: CompanyCard[]
+  public alerts: Alert[]
+  public itemsToShow: CompanyCard[]
 
   constructor(
     private readonly alertsService: AlertsMessagesService,
@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.itemsService.getItems('companies').subscribe();
     this.userService.user$.pipe(
       first(),
-      tap(({uid}) => this.store.dispatch(new GetAllAlerts({uid})))
+      tap(({ uid }) => this.store.dispatch(new GetAllAlerts({ uid })))
     ).subscribe();
   }
 
