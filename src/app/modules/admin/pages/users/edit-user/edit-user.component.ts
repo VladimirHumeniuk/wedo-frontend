@@ -63,7 +63,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.location.back();
   }
 
-  public saveUser(uid: string): boolean {
+  public saveUser(): boolean {
     this.loading = true
 
     if (this.editUserForm.invalid) {
