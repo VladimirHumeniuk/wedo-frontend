@@ -10,6 +10,8 @@ import { Observable, of, Subscription } from 'rxjs';
 import { take, catchError } from 'rxjs/operators'
 import { AppState } from './../../app.state';
 import { User } from '../models';
+import { AddAlert } from 'src/app/store/actions/alert.action';
+import { ALERTS } from 'src/app/shared/constants';
 import * as UserActions from 'src/app/store/actions/user.action';
 import * as LoginActions from 'src/app/store/actions/login.action';
 
@@ -49,6 +51,8 @@ export class AuthService {
           }
         }
 
+        this.store.dispatch(new AddAlert({ uid: user.uid, alert: ALERTS['email-not-verified']}));
+        localStorage.setItem("userId", response.user.uid);
         return this.userService.setUserData(user);
       })
       .then(() => this.sendEmailVerification())
@@ -110,12 +114,13 @@ export class AuthService {
         if (pendingCredentials) {
           credentials.user.linkWithCredential(pendingCredentials)
         }
-
-        this.userService.user$.subscribe((user: User) => {
-          if (user) {
-            this.router.navigate(['/'])
-          }
-        })
+        return credentials;
+      })
+      .then(credentials => {
+        if(credentials && credentials.user && credentials.user.uid) {
+          localStorage.setItem("userId", credentials.user.uid);
+          this.router.navigate(['/'])
+        }
       })
       .catch(error => { throw error })
   }
@@ -170,8 +175,19 @@ export class AuthService {
   }
 
   public signOut(): Promise<void> {
+    localStorage.removeItem("userId");
     this.router.navigate(['/'])
     this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.signOut();
+  }
+
+  isLoggedIn(): boolean {
+    let user = localStorage.getItem("userId");
+
+    if(user) {
+      return true;
+    }
+
+    return false;
   }
 }
