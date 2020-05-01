@@ -20,7 +20,7 @@ import { AddAlert, RemoveAlert } from 'src/app/store/actions/alert.action';
 export class EditUserComponent extends SafeComponent implements OnInit, OnDestroy {
 
   private _queryParams: Subscription
-  public user: User
+  public uid: string
 
   public editUserForm: FormGroup
   private emailRegexp: RegExp = EMAIL_REGEXP
