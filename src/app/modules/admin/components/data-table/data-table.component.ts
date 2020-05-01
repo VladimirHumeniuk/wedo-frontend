@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface dataTableColumn {
   title: string;
@@ -29,24 +30,27 @@ export class DataTableComponent implements OnInit {
   @Input() data: Object[];
   @Input() actions: dataTableActions;
 
-  @Output() onEdit: EventEmitter<any> = new EventEmitter();
   @Output() onRemove: EventEmitter<any> = new EventEmitter();
 
   public emitAction(id: string, action: string): void {
     const actions: { [key: string]: EventEmitter<any> } = {
-      'edit': this.onEdit,
       'remove': this.onRemove
     }
 
     actions[action].emit([id])
   }
 
-  public toggleEditRow(): void {
-
+  public goToEdit(id: string): void {
+    this.router.navigate(['edit'], {
+      relativeTo: this.activatedRoute,
+      queryParams: { id }
+    })
   }
 
-  constructor() {
-  }
+  constructor(
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() { }
 

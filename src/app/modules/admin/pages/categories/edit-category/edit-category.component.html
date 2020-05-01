@@ -1,0 +1,24 @@
+<wd-title title="Edit category"></wd-title>
+
+<form [formGroup]="editCategoryForm" (ngSubmit)="saveCategory()">
+  <wd-admin-form [parentForm]="editCategoryForm">
+    <ng-container general>
+      <wd-form-item>
+        <wd-input-group
+        name="id"
+        type="text"
+        [parentForm]="editCategoryForm"
+        placeholder="Category ID"
+        [disabled]="true"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="title"
+        type="text"
+        [parentForm]="editCategoryForm"
+        placeholder="Category name"></wd-input-group>
+      </wd-form-item>
+    </ng-container>
+  </wd-admin-form>
+</form>

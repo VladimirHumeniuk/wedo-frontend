@@ -1,0 +1,23 @@
+.admin-form__body {
+  overflow: unset;
+}
+
+.admin-form__title {
+  font-size: 1rem;
+}
+
+.admin-form__general,
+.admin-form__checkboxes {
+  display: grid;
+  column-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.admin-form__controls {
+  display: flex;
+  justify-content: flex-end;
+
+  button ~ button {
+    margin-left: 10px;
+  }
+}

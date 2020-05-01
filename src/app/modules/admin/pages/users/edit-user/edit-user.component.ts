@@ -7,7 +7,6 @@ import { EMAIL_REGEXP, ALERTS } from 'src/app/shared/constants';
 import { UserService } from 'src/app/shared/services';
 import { take, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
@@ -34,7 +33,6 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
     private readonly formBuilder: FormBuilder,
     private readonly activatedRoute: ActivatedRoute,
     private readonly userService: UserService,
-    private readonly location: Location,
     private readonly toastrService: NbToastrService,
     private readonly store: Store<AppState>,
   ) {
@@ -63,11 +61,6 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
         readonly: [ false ]
       })
     })
-  }
-
-  public goBack($event: Event): void {
-    $event.preventDefault()
-    this.location.back();
   }
 
   public saveUser(): boolean {
@@ -107,9 +100,9 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
 
   private updateAlertForVerificationEmail(emailVerified: boolean): void {
     if (!emailVerified) {
-      this.store.dispatch(new AddAlert({ uid: this.user.uid, alert: ALERTS['email-not-verified']}))
+      this.store.dispatch(new AddAlert({ uid: this.uid, alert: ALERTS['email-not-verified']}))
     } else {
-      this.store.dispatch(new RemoveAlert({ uid: this.user.uid, code: ALERTS['email-not-verified'].code}));
+      this.store.dispatch(new RemoveAlert({ uid: this.uid, code: ALERTS['email-not-verified'].code}));
     }
   }
 
@@ -121,7 +114,7 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
     this.formInit();
 
     this._queryParams = this.activatedRoute.queryParams.subscribe((data: Params) => {
-      this.userService.getUser(data.uid).pipe(
+      this.userService.getUser(data.id).pipe(
         take(1),
         map((data: User) => {
           let user = Object.assign({}, data)
@@ -133,7 +126,7 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
           return user
         })
       ).subscribe((user: User) => {
-        this.user = user
+        this.uid = user.uid
 
         if (user) {
           Object.keys(user).forEach((key: string) => {

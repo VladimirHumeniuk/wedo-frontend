@@ -31,6 +31,8 @@ import { AdminComponent } from './admin.component';
 import { UsersComponent } from './pages/users/users.component';
 import { TitleComponent } from './components/title/title.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { AdminFormComponent } from './components/admin-form/admin-form.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { DataTableComponent } from './components/data-table/data-table.component
     TitleComponent,
     DataTableComponent,
     EditUserComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    AdminFormComponent,
+    EditCategoryComponent
   ],
   imports: [
     CommonModule,
