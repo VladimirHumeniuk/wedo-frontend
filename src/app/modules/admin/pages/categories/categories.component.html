@@ -1,8 +1,13 @@
-<wd-title title="Categories"></wd-title>
+<wd-admin-header title="Categories">
+  <a [routerLink]="'edit'" nbButton shape="round" status="warning">
+    <nb-icon icon="plus-outline"></nb-icon>
+    Add
+  </a>
+</wd-admin-header>
 
 <wd-data-table
 [id]="'id'"
 [columns]="tableColumns"
 [data]="categories"
 [actions]="actions"
-(onEdit)="editCategory()"></wd-data-table>
+(removeEvent)="categoryRemove($event[0])"></wd-data-table>

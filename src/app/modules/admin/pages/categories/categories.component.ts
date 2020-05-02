@@ -15,9 +15,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   public _categories: Subscription
 
   public tableColumns = [
-    { title: 'id', key: 'id' },
-    { title: 'title', key: 'title' },
-    {  }
+    { title: '#id', key: 'id', options: { code: true } },
+    { title: 'Category name', key: 'title' }
   ]
   public actions = { edit: true, remove: true }
 
@@ -27,6 +26,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._categories.unsubscribe()
+  }
+
+  public categoryRemove(id: number): void {
+    this.categoriesService.removeCategory(id).toPromise()
   }
 
   ngOnInit() {

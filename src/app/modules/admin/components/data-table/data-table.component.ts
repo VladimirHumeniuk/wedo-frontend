@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
+import { PromptDialogComponent } from './prompt-dialog/prompt-dialog.component';
 
 interface dataTableColumn {
   title: string;
@@ -30,14 +32,22 @@ export class DataTableComponent implements OnInit {
   @Input() data: Object[];
   @Input() actions: dataTableActions;
 
-  @Output() onRemove: EventEmitter<any> = new EventEmitter();
+  @Output() removeEvent: EventEmitter<any> = new EventEmitter();
 
   public emitAction(id: string, action: string): void {
     const actions: { [key: string]: EventEmitter<any> } = {
-      'remove': this.onRemove
+      'remove': this.removeEvent
     }
 
     actions[action].emit([id])
+  }
+
+  public openRemovePrompt(id: any): void {
+    this.dialogService.open(PromptDialogComponent, { closeOnEsc: true }).onClose.subscribe((proceed: boolean) => {
+      if (proceed) {
+        this.emitAction(id, 'remove')
+      }
+    })
   }
 
   public goToEdit(id: string): void {
@@ -49,9 +59,10 @@ export class DataTableComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly dialogService: NbDialogService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
 }
