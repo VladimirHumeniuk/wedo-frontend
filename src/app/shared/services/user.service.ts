@@ -71,6 +71,6 @@ export class UserService {
   }
 
   public getLoggedInUserDetails() {
-	  return JSON.parse(localStorage.getItem('userDetails'));
+	  return JSON.parse(localStorage.getItem('user'));
   }
 }

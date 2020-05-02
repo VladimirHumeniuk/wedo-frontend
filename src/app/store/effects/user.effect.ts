@@ -24,7 +24,6 @@ export class UserEffects {
       if (uid) {
         return this.userService.getUser(uid).pipe(
           map(user => {
-				localStorage.setItem('userDetails', JSON.stringify(user));
 				return new Authenticated(user)
 			 })
         );
