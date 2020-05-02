@@ -175,7 +175,7 @@ export class AuthService {
 
   public signOut(): Promise<void> {
     this.router.navigate(['/'])
-    this.store.dispatch(new UserActions.RemoveUser())
+	 this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.signOut();
   }
 }
