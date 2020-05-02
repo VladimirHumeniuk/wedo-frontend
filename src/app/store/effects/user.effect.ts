@@ -23,7 +23,10 @@ export class UserEffects {
     switchMap(uid => {
       if (uid) {
         return this.userService.getUser(uid).pipe(
-          map(user => new Authenticated(user))
+          map(user => {
+				localStorage.setItem('userDetails', JSON.stringify(user));
+				return new Authenticated(user)
+			 })
         );
       } else {
         return of(new NotAuthenticated());

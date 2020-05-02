@@ -69,4 +69,8 @@ export class UserService {
     const source$ = this.fireAuth.authState.pipe(take(1)) as Observable<{uid: string}>;
     return source$;
   }
+
+  public getLoggedInUserDetails() {
+	  return JSON.parse(localStorage.getItem('userDetails'));
+  }
 }

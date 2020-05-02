@@ -16,15 +16,14 @@ export class IsUser implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let user
+      let loggedInUser = this.userService.getLoggedInUserDetails();
 
-      this.userService.user$.subscribe((data: User) => {
-        user = data.accountType && data.accountType !== "GUEST"
-      })
+      if (loggedInUser && loggedInUser.uid) {
+			return true;
+		}
 
-      if (!user) this.router.navigate(['/'])
-
-      return !!user
+		this.router.navigate(['/']);
+		return false;
   }
 }
 
@@ -38,14 +37,13 @@ export class IsGuest implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let guest
+      let loggedInUser = this.userService.getLoggedInUserDetails();
 
-      this.userService.user$.subscribe((data: User) => {
-        guest = data.accountType === "GUEST" || !data.accountType
-      })
+      if (loggedInUser && loggedInUser.uid) {
+			this.router.navigate(['/']);
+			return false;
+		}
 
-      if (!guest) this.router.navigate(['/'])
-
-      return !!guest
+      return true;
   }
 }
