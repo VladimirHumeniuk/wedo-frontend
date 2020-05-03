@@ -3,12 +3,12 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from 
 import { NbToastrService } from '@nebular/theme';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EMAIL_REGEXP, URL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
-import { CompanyCard, User, Upload } from '../../../../shared/models';
+import { CompanyCard, User, Upload, Category } from '../../../../shared/models';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { UploadService, UserService } from 'src/app/shared/services';
-import { map, withLatestFrom, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
+import { UploadService, UserService, CategoriesService } from 'src/app/shared/services';
 
 @Component({
   selector: 'wd-my-company-card',
@@ -17,20 +17,22 @@ import { map, withLatestFrom, take } from 'rxjs/operators';
 })
 export class MyCompanyCardComponent implements OnInit, OnDestroy {
 
-  public myCardForm: FormGroup
-  public user$: Observable<User> = this.store.select('user')
-  public user: User
-  public loading: boolean
-  public upload: Upload
-  public companyCard: CompanyCard
+  public myCardForm: FormGroup;
 
-  private removeImage: boolean
-  private emailRegexp: RegExp = EMAIL_REGEXP
-  private urlRegexp: RegExp = URL_REGEXP
+  private _user: Subscription;
+  public user$: Observable<User> = this.store.select('user');
+  public user: User;
 
-  private _user: Subscription
+  public loading: boolean;
+  public upload: Upload;
+  public companyCard: CompanyCard;
 
-  public categories = ['Security', 'Cleaning'] // todo
+  private removeImage: boolean;
+  private emailRegexp: RegExp = EMAIL_REGEXP;
+  private urlRegexp: RegExp = URL_REGEXP;
+
+  private _categories: Subscription;
+  public categories: Category[] = [];
 
   constructor(
     private readonly toastrService: NbToastrService,
@@ -38,7 +40,8 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly uploadService: UploadService,
     private readonly store: Store<AppState>,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly categoriesService: CategoriesService
   ) { }
 
   private formInit(): void {
@@ -84,6 +87,14 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
     if (upload) {
       this.upload = upload
     }
+  }
+
+  private getAllCategories(): void {
+    this._categories = this.categoriesService.getAllCategories().pipe(
+      take(1)
+    ).subscribe((categories: Category[]) => {
+      this.categories = categories
+    })
   }
 
   public publishCard(): void {
@@ -156,10 +167,12 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this._user.unsubscribe()
+    this._categories.unsubscribe()
   }
 
   ngOnInit() {
     this.formInit()
+    this.getAllCategories()
 
     this._user = this.user$.pipe(
       take(1)
@@ -171,7 +184,6 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
           .subscribe((companyCard: CompanyCard) => {
             if (companyCard) {
               this.companyCard = companyCard
-
               Object.keys(companyCard).forEach((key: string) => {
                 if (
                   this.myCardForm.controls[key] &&

@@ -27,7 +27,7 @@ export class UserService {
   ) { }
 
   public getAllUsers(): Observable<User[]> {
-    const source = this.baseApolloService.query<{}, User[]>(getAllUsersQuery, (data) => data.getAllUsers);
+    const source = this.baseApolloService.query<{}, User[]>(getAllUsersQuery, (data) => data.getAllUsers, {});
     return source;
   }
 

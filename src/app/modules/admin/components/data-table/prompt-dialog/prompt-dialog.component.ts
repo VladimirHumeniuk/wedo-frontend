@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 
 @Component({
@@ -7,6 +7,9 @@ import { NbDialogRef } from '@nebular/theme';
   styleUrls: ['./prompt-dialog.component.scss']
 })
 export class PromptDialogComponent {
+
+  @Input() name: string
+  @Input() id: string
 
   constructor(
     protected dialogRef: NbDialogRef<PromptDialogComponent>

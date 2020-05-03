@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Category } from 'src/app/shared/models';
 import { CategoriesService } from 'src/app/shared/services';
 import { take } from 'rxjs/operators';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'wd-edit-category',
@@ -22,6 +23,7 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
   public newItemId: number
 
   constructor(
+    private readonly toastrService: NbToastrService,
     private readonly categoriesService: CategoriesService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
@@ -52,13 +54,9 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
       const formData = this.editCategoryForm.value;
 
       this.categoriesService.addCategory(formData).toPromise()
-        .then(() => {
-          if (this.newItemId) {
-            this.router.navigate([], {
-              queryParams: { id: this.newItemId },
-              queryParamsHandling: 'merge'
-            })
-          }
+        .finally(() => {
+          this.router.navigate(['/admin-panel/categories'])
+          this.toastrService.success('Successfully saved', 'Saved')
         })
     }
 

@@ -1,2 +1,20 @@
-<button (click)="dismiss($event)">Cancel</button>
-<button (click)="proceed()">Yes</button>
+<nb-card>
+  <nb-card-header>Confirm action</nb-card-header>
+  <nb-card-body>
+    <div class="prompt-dialog__body">
+      Are you sure you want to delete {{ name }} id:<code>{{ id }}</code>?
+    </div>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <div class="prompt-dialog__controllers">
+      <button
+      nbButton
+      (click)="dismiss()">Cancel</button>
+      <button
+      nbButton
+      status="danger"
+      (click)="proceed()">Yes</button>
+    </div>
+  </nb-card-footer>
+</nb-card>

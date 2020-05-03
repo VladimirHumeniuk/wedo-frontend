@@ -6,7 +6,7 @@ import {
 } from 'src/app/shared/api/common/api.fragments';
 
 export const getItemsQuery = gql`
-    query getItems($type: String!, $search: String, $category: String) {
+    query getItems($type: String!, $search: String, $category: Int) {
         getItems(type: $type, search: $search, category: $category) {
             ... on Company {
                 ...companyFields

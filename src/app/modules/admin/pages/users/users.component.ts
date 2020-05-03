@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   ]
   public actions = { edit: true }
   public users: any[]
-  public _users: Subscription
+  private _users: Subscription
 
   constructor(
     private readonly router: Router,

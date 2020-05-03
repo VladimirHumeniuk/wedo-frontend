@@ -26,14 +26,15 @@ export class HomeComponent implements OnInit {
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts
     })
+  }
 
+  ngOnInit(): void {
     this.itemsService.items$.subscribe((items: CompanyCard[]) => {
       this.itemsToShow = items
     })
-  }
 
-  ngOnInit() {
     this.itemsService.getItems('companies').subscribe();
+
     this.userService.user$.pipe(
       first(),
       tap(({ uid }) => this.store.dispatch(new GetAllAlerts({ uid })))

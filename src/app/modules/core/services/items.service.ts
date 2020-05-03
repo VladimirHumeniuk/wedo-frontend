@@ -18,11 +18,11 @@ export class ItemsService {
     private readonly baseApolloService: BaseApolloService
   ) { }
 
-  public getItems(type: string, search?: string, category?: string): Observable<Item[]> {
+  public getItems(type: string, search?: string, category?: number): Observable<Item[]> {
     const source = this.baseApolloService.query<{
       type: string,
       search?: string,
-      category?: string
+      category?: number
     }, Item[]>(
         getItemsQuery,
         (data) => data.getItems,

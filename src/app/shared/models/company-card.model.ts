@@ -1,4 +1,5 @@
 import { PhoneNumber } from 'libphonenumber-js';
+import { Category } from './category.model';
 
 export interface CompanyCard {
   cid: string;
@@ -8,7 +9,7 @@ export interface CompanyCard {
   image?: string;
   url?: string;
   phone?: PhoneNumber;
-  category: string;
+  category: number;
   email?: string;
   address?: string;
   wysiwyg?: string;

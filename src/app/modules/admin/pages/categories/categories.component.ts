@@ -3,6 +3,7 @@ import { CategoriesService } from 'src/app/shared/services';
 import { Category } from 'src/app/shared/models';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'wd-categories',
@@ -12,7 +13,7 @@ import { Subscription } from 'rxjs';
 export class CategoriesComponent implements OnInit, OnDestroy {
 
   public categories: Category[]
-  public _categories: Subscription
+  private _categories: Subscription
 
   public tableColumns = [
     { title: '#id', key: 'id', options: { code: true } },
@@ -21,7 +22,8 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   public actions = { edit: true, remove: true }
 
   constructor(
-    private readonly categoriesService: CategoriesService
+    private readonly categoriesService: CategoriesService,
+    private readonly toastrService: NbToastrService
   ) { }
 
   ngOnDestroy() {
@@ -30,6 +32,11 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   public categoryRemove(id: number): void {
     this.categoriesService.removeCategory(id).toPromise()
+      .then(() => {
+        this.toastrService.success('Category removed', 'Removed',
+          { icon: 'trash-2-outline' }
+        )
+      })
   }
 
   ngOnInit() {

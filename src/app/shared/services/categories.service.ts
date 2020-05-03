@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Category } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import {
   getAllCategoriesQuery,

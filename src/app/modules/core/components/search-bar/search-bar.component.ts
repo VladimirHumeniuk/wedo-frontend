@@ -1,30 +1,44 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CompanyCard } from 'src/app/shared/models';
+import { CompanyCard, Category } from 'src/app/shared/models';
 import { ItemsService } from '../../services';
+import { CategoriesService } from 'src/app/shared/services';
+import { take, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'wd-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, OnDestroy {
 
-  public homeSearch: FormGroup
+  public homeSearch: FormGroup;
 
-  types = ['Companies', 'Freelancers']
-  categories = ['All', 'Security', 'Cleaning']
+  private _categories: Subscription;
+  public categories: Category[] = [];
+
+  public types = ['Companies', 'Freelancers']
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly itemsService: ItemsService
+    private readonly itemsService: ItemsService,
+    private readonly categoriesService: CategoriesService
   ) {  }
 
   private formInit(): void {
     this.homeSearch = this.formBuilder.group({
       search: [''],
       type: ['Companies'],
-      category: ['All']
+      category: []
+    })
+  }
+
+  private getAllCategories(): void {
+    this._categories = this.categoriesService.getAllCategories().pipe(
+      take(1)
+    ).subscribe((categories: Category[]) => {
+      this.categories = categories
     })
   }
 
@@ -33,8 +47,13 @@ export class SearchBarComponent implements OnInit {
     this.itemsService.getItems(type, search, category).subscribe();
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this._categories.unsubscribe()
+  }
+
+  ngOnInit(): void {
     this.formInit()
+    this.getAllCategories()
   }
 
 }

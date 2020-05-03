@@ -31,6 +31,7 @@ export class DataTableComponent implements OnInit {
   @Input() columns: dataTableColumn[];
   @Input() data: Object[];
   @Input() actions: dataTableActions;
+  @Input() name: string;
 
   @Output() removeEvent: EventEmitter<any> = new EventEmitter();
 
@@ -43,7 +44,14 @@ export class DataTableComponent implements OnInit {
   }
 
   public openRemovePrompt(id: any): void {
-    this.dialogService.open(PromptDialogComponent, { closeOnEsc: true }).onClose.subscribe((proceed: boolean) => {
+    const name = this.name
+
+    this.dialogService.open(PromptDialogComponent, {
+      closeOnEsc: true,
+      autoFocus: false,
+      hasScroll: false,
+      context: { name, id }
+    }).onClose.subscribe((proceed: boolean) => {
       if (proceed) {
         this.emitAction(id, 'remove')
       }

@@ -13,16 +13,17 @@
       name="type"
       [parentForm]="homeSearch"
       label="From"
-      [clearable]="false"
       [searchable]="false"
       [items]="types"></wd-select>
 
       <wd-select
+      placeholder="All"
       class="search-bar__category"
       name="category"
       [parentForm]="homeSearch"
+      bindLabel="title"
+      bindValue="id"
       label="In category"
-      [clearable]="false"
       [items]="categories"></wd-select>
 
       <button
