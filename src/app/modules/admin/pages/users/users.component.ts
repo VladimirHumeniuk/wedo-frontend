@@ -3,14 +3,19 @@ import { UserService } from 'src/app/shared/services';
 import { User } from 'src/app/shared/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { take, map } from 'rxjs/operators';
+import { take, map, tap, takeUntil } from 'rxjs/operators';
+import { AdminService } from 'src/app/shared/services/admin.service';
+import { SafeComponent } from 'src/app/shared/helpers';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { GetAllUsers } from 'src/app/store/actions/user.action';
 
 @Component({
   selector: 'wd-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent extends SafeComponent implements OnInit, OnDestroy {
 
   public tableColumns = [
     { title: 'uid', key: 'uid', options: { code: true } },
@@ -26,8 +31,12 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
-    public readonly userService: UserService
-  ) { }
+    private readonly userService: UserService,
+    private readonly adminService: AdminService,
+    private readonly store: Store<AppState>,
+  ) {
+    super();
+  }
 
   public editUser(uid: string): void {
     this.router.navigate(['edit'], {
@@ -36,16 +45,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     })
   }
 
-  ngOnDestroy() {
-    this._users.unsubscribe()
-  }
-
   ngOnInit() {
-    this._users = this.userService.getAllUsers()
+    this.store.dispatch(new GetAllUsers())
+    this.adminService.users$
       .pipe(
-        take(1),
+        takeUntil(this.unsubscriber),
         map((data: User[]) => {
-          let users = [...data]
+          const users: User[] = [...data.map(user => ({...user}))]
 
           users.forEach((user: User) => {
             if ('_seconds' in user.createdAt) {
@@ -53,12 +59,10 @@ export class UsersComponent implements OnInit, OnDestroy {
             }
           })
 
-          return users
-        })
-      )
-      .subscribe((users: User[]) => {
-        this.users = users
-      })
+          return users;
+        }),
+        tap(users => this.users = users)
+      ).subscribe();
   }
 
 }

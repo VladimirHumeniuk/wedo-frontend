@@ -8,6 +8,11 @@ import { DocumentNode } from 'graphql';
   providedIn: 'root'
 })
 export class BaseApolloService {
+    baseWatchOptions: (query: DocumentNode) => WatchQueryOptions = (query) => ({
+      fetchPolicy: 'network-only',
+      query
+    });
+
   constructor(
     private readonly apollo: Apollo
   ) { }
@@ -21,6 +26,7 @@ export class BaseApolloService {
     const source = this.apollo.watchQuery<Query>({
       query,
       variables,
+      ...this.baseWatchOptions(query),
       ...watchQueryOptions
     }).valueChanges.pipe(
       map(result => mapOutput(result.data))
