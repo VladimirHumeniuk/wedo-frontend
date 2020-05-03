@@ -42,7 +42,7 @@ export class AlertsMessagesService {
       Alert[]
     >(getAlertsQuery, data => data.getAlerts, {
       uid
-    }, { query: getAlertsQuery , fetchPolicy: 'network-only'})
+    })
     return source;
   }
 

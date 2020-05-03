@@ -12,6 +12,7 @@ import {SafeComponent} from 'src/app/shared/helpers';
 import {AppState} from 'src/app/app.state';
 import {Store} from '@ngrx/store';
 import {AddAlert, RemoveAlert} from 'src/app/store/actions/alert.action';
+import {GetAllUsers} from 'src/app/store/actions/user.action';
 
 @Component({
   selector: 'wd-edit-user',
@@ -89,6 +90,9 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
           }
 
           this.toastrService.success('Successfully saved', 'Saved');
+        })
+        .then(() => {
+          this.store.dispatch(new GetAllUsers());
         })
         .catch(error => {
           throw Error(error)
