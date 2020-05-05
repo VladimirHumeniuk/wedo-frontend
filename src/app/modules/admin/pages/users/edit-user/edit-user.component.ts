@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models';
-import { EMAIL_REGEXP } from 'src/app/shared/constants';
+import { EMAIL_REGEXP, ALERTS } from 'src/app/shared/constants';
 import { UserService } from 'src/app/shared/services';
 import { take, map, takeUntil, delay } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -71,7 +71,9 @@ export class EditUserComponent extends SafeComponent implements OnInit {
     }
 
     if (this.editUserForm.valid) {
-      const formData = this.editUserForm.value
+      const formData = this.editUserForm.value;
+
+      this.updateAlertForVerificationEmail(this.editUserForm.get('emailVerified').value);
 
       this.userService.setUserData(formData)
         .then(() => {
