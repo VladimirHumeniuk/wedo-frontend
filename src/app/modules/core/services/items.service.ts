@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BaseApolloService } from './base/base.apollo.service';
-import { getItemsQuery } from './items.api';
+import { BaseApolloService } from '../../../shared/services/base/base.apollo.service';
+import { getItemsQuery } from '../api/items.api';
 import { User, CompanyCard } from 'src/app/shared/models';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -18,11 +18,11 @@ export class ItemsService {
     private readonly baseApolloService: BaseApolloService
   ) { }
 
-  public getItems(type: string, search?: string, category?: string): Observable<Item[]> {
+  public getItems(type: string, search?: string, category?: number): Observable<Item[]> {
     const source = this.baseApolloService.query<{
       type: string,
       search?: string,
-      category?: string
+      category?: number
     }, Item[]>(
         getItemsQuery,
         (data) => data.getItems,

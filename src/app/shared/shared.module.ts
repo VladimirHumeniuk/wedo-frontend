@@ -11,7 +11,8 @@ import {
   NbTooltipModule,
   NbInputModule,
   NbIconModule,
-  NbSelectModule
+  NbSelectModule,
+  NbDatepickerModule
 } from '@nebular/theme';
 
 import { InputGroupComponent } from './components/input-group/input-group.component';
@@ -26,6 +27,7 @@ import { WysiwygComponent } from './components/wysiwyg/wysiwyg.component';
 import { ContentEditableDirective } from './directives/content-editable.directive';
 import { SelectComponent } from './components/select/select.component';
 import { TipOffComponent } from './components/tip-off/tip-off.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { TipOffComponent } from './components/tip-off/tip-off.component';
     WysiwygComponent,
     ContentEditableDirective,
     SelectComponent,
-    TipOffComponent
+    TipOffComponent,
+    LogoComponent
   ],
   imports: [
     NgSelectModule,
@@ -54,9 +57,11 @@ import { TipOffComponent } from './components/tip-off/tip-off.component';
     NbInputModule,
     NbSelectModule,
     NbIconModule,
-    NbTooltipModule
+    NbTooltipModule,
+    NbDatepickerModule.forRoot()
   ],
   exports: [
+    LogoComponent,
     InputGroupComponent,
     SelectGroupComponent,
     FormItemComponent,

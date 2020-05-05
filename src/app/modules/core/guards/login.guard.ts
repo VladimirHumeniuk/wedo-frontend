@@ -12,7 +12,7 @@ import { Login } from 'src/app/shared/models';
 export class LoginGuard implements CanActivate {
   constructor(
     private readonly store: Store<AppState>,
-    private router: Router
+    private readonly router: Router
   ) { }
 
   canActivate(

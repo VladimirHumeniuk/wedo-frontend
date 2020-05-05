@@ -3,32 +3,35 @@ import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from 
 import { NbToastrService } from '@nebular/theme';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EMAIL_REGEXP, URL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
-import { CompanyCard, User, Upload } from '../../../../shared/models';
+import { CompanyCard, User, Upload, Category } from '../../../../shared/models';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { UploadService, UserService } from 'src/app/shared/services';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
+import { UploadService, UserService, CategoriesService } from 'src/app/shared/services';
+import { SafeComponent } from 'src/app/shared/helpers';
 
 @Component({
   selector: 'wd-my-company-card',
   templateUrl: './my-company-card.component.html',
   styleUrls: ['./my-company-card.component.scss']
 })
-export class MyCompanyCardComponent implements OnInit {
+export class MyCompanyCardComponent extends SafeComponent implements OnInit {
 
-  public myCardForm: FormGroup
-  public user$: Observable<User> = this.store.select('user')
-  public user: User
-  public loading: boolean
-  public upload: Upload
-  public companyCard: CompanyCard
+  public myCardForm: FormGroup;
 
-  private removeImage: boolean
-  private emailRegexp: RegExp = EMAIL_REGEXP
-  private urlRegexp: RegExp = URL_REGEXP
+  public user$: Observable<User> = this.store.select('user');
+  public user: User;
 
-  public categories = ['Security', 'Cleaning'] // todo
+  public loading: boolean;
+  public upload: Upload;
+  public companyCard: CompanyCard;
+
+  private removeImage: boolean;
+  private emailRegexp: RegExp = EMAIL_REGEXP;
+  private urlRegexp: RegExp = URL_REGEXP;
+
+  public categories: Category[] = [];
 
   constructor(
     private readonly toastrService: NbToastrService,
@@ -36,8 +39,11 @@ export class MyCompanyCardComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly uploadService: UploadService,
     private readonly store: Store<AppState>,
-    private readonly userService: UserService
-  ) { }
+    private readonly userService: UserService,
+    private readonly categoriesService: CategoriesService
+  ) {
+    super();
+  }
 
   private formInit(): void {
     this.myCardForm = this.formBuilder.group({
@@ -82,6 +88,22 @@ export class MyCompanyCardComponent implements OnInit {
     if (upload) {
       this.upload = upload
     }
+  }
+
+  private getAllCategories(): void {
+    const getFromStore = this.categoriesService.categories$.pipe(
+      takeUntil(this.unsubscriber),
+      tap(categories => this.categories = categories)
+    ).subscribe()
+
+    Promise.all([getFromStore]).then(() => {
+      if (!this.categories.length) {
+        this.categoriesService.getAllCategories().pipe(
+          takeUntil(this.unsubscriber),
+          tap(categories => this.categories = categories)
+        ).subscribe()
+      }
+    })
   }
 
   public publishCard(): void {
@@ -132,12 +154,14 @@ export class MyCompanyCardComponent implements OnInit {
         Promise.all(promises)
           .then(() => {
             this.myCardForm.markAsPristine()
-            this.loading = false
             this.toastrService.success('Company information successfully saved', 'Saved')
           })
           .catch(error => {
             throw new Error(error)
             this.toastrService.danger('Something went wrong, try again later', 'Error')
+          })
+          .finally(() => {
+            this.loading = false
           })
       }
 
@@ -152,7 +176,12 @@ export class MyCompanyCardComponent implements OnInit {
 
   ngOnInit() {
     this.formInit()
-    this.user$.subscribe((user: User) => {
+    this.getAllCategories()
+
+    this.user$.pipe(
+      take(1),
+      takeUntil(this.unsubscriber)
+    ).subscribe((user: User) => {
       this.user = user
 
       if (user) {
@@ -160,14 +189,11 @@ export class MyCompanyCardComponent implements OnInit {
           .subscribe((companyCard: CompanyCard) => {
             if (companyCard) {
               this.companyCard = companyCard
-
-              Object.keys(companyCard).forEach(key => {
+              Object.keys(companyCard).forEach((key: string) => {
                 if (
-                  key !== 'cid' &&
-                  key !== 'owner' &&
-                  key !== 'created' &&
-                  key !== 'image' &&
-                  key !== '__typename') {
+                  this.myCardForm.controls[key] &&
+                  key !== 'image'
+                ) {
                   this.myCardForm.controls[key].setValue(companyCard[key])
                 }
               })

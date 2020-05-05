@@ -1,0 +1,18 @@
+@import '../../../../../styles/variables/variables';
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-header__title {
+  font-family: $ff-comfortaa;
+  font-weight: $fw-regular;
+}
+
+.admin-header__controls {
+  &:empty {
+    display: none;
+  }
+}

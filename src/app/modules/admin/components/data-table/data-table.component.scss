@@ -1,0 +1,64 @@
+@import '../../../../../styles/variables/variables';
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.data-table {
+  display: block;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.05);
+  overflow: auto;
+  table-layout: fixed;
+}
+
+.data-table--code {
+  padding: 4px 6px;
+  font-size: 11px;
+  background-color: $c-gray-400;
+  border-radius: 4px;
+}
+
+.data-table__table {
+  min-width: 100%;
+  border: 1px solid #e4e9f2;
+  border-collapse: collapse;
+
+  thead {
+    border-bottom: 1px solid #e4e9f2;
+  }
+
+  th,
+  td,
+  .data-table__no-data {
+    padding: 16px 18px;
+    overflow: hidden;
+  }
+
+  tr {
+    transition-duration: .15s;
+    transition-property: background-color;
+    transition-timing-function: ease-in;
+
+    &:hover {
+      background-color: $c-gray-100;
+    }
+  }
+}
+
+.data-table__no-data {
+  text-align: center;
+  color: $c-font-light;
+  font-size: 16px;
+}
+
+.data-table__action {
+  cursor: pointer;
+  width: 30px;
+}
+
+.data-table__prompt {
+  padding: 20px;
+}

@@ -73,16 +73,16 @@ export class ResetPasswordComponent implements OnInit {
 
       this.authService.updatePassword(this.oobCode, password)
         .then(() => {
-          this.loading = false
           this.passwordUpdated = true
           this.changePasswordForm.reset()
         })
         .catch(error => {
-          this.loading = false
-
           if (error.code === 'auth/expired-action-code') {
             this.tokenExpired = true
           }
+        })
+        .finally(() => {
+          this.loading = false
         })
     }
   }

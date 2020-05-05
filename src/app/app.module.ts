@@ -1,5 +1,4 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
@@ -16,27 +15,27 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import {
   NbButtonModule,
   NbIconModule,
-  NbLayoutModule,
   NbSpinnerModule,
+  NbToastrModule,
   NbThemeModule
 } from '@nebular/theme';
 
 // Modules
+import { AdminModule } from './modules/admin/admin.module';
 import { CoreModule } from './modules/core/core.module';
 import { SharedModule } from './shared/shared.module';
 
-// Layout components
-import { LayoutComponent } from './layout/layout.component';
-import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.component';
-import { FooterComponent } from './layout/footer/footer.component';
-
 // Components
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 // Ngrx
 import { EffectsModule } from '@ngrx/effects';
 import { reducers, metaReducers } from './store/reducers';
 import { UserEffects } from './store/effects/user.effect';
+import { AlertEffects } from 'src/app/store/effects/alert.effect';
+import { AdminEffects } from 'src/app/store/effects/admin.effect';
+import { CategoriesEffects } from 'src/app/store/effects/categories.effect';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
@@ -44,24 +43,27 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LayoutComponent,
-    NavigationBarComponent,
-    FooterComponent
+    AppComponent
   ],
   imports: [
+    AppRoutingModule,
+    AdminModule,
     BrowserAnimationsModule,
-    BrowserModule,
     RouterModule,
     CoreModule,
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([
+      UserEffects,
+      AlertEffects,
+      AdminEffects,
+      CategoriesEffects
+    ]),
     NbButtonModule,
     NbEvaIconsModule,
     NbIconModule,
-    NbLayoutModule,
     NbSpinnerModule,
+    NbToastrModule.forRoot({ duration: 4000 }),
     NbThemeModule.forRoot({ name: 'default' }),
-    LeafletModule.forRoot(),
+    LeafletModule,
     // Apollo Setup
     HttpClientModule,
     ApolloModule,

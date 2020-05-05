@@ -3,11 +3,9 @@ import { AngularFireFunctionsModule } from '@angular/fire/functions';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 import { CountdownModule } from 'ngx-countdown';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -19,7 +17,7 @@ import {
   NbCardModule,
   NbCheckboxModule,
   NbPopoverModule,
-  NbToastrModule,
+  NbLayoutModule,
   NbIconModule,
   NbSpinnerModule
 } from '@nebular/theme';
@@ -44,8 +42,14 @@ import { VerifyEmailComponent } from './pages/verify-email/verify-email.componen
 import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
 import { CardDetailsComponent } from './pages/card-details/card-details.component';
 
+// Layout components
+import { LayoutComponent } from './layout/layout.component';
+import { NavigationBarComponent } from './layout/navigation-bar/navigation-bar.component';
+import { FooterComponent } from './layout/footer/footer.component';
+
 // Components
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
+import { CoreComponent } from './core.component';
 import { LoginMethodsComponent } from './components/login-methods/login-methods.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { CardsGridComponent } from './components/cards-grid/cards-grid.component';
@@ -55,15 +59,11 @@ import { SocialShareComponent } from './components/social-share/social-share.com
 import { SocialButtonComponent } from './components/social-share/social-button/social-button.component';
 import { PromptPasswordComponent } from './pages/prompt-password/prompt-password.component';
 
-
-const toastrConfig = {
-  duration: 4000,
-}
-
 @NgModule({
   declarations: [
     AccountComponent,
     AuthFormComponent,
+    CoreComponent,
     EmailVerifiedComponent,
     HomeComponent,
     InvalidActionCodeComponent,
@@ -81,17 +81,19 @@ const toastrConfig = {
     LocationMapComponent,
     SocialShareComponent,
     SocialButtonComponent,
-    PromptPasswordComponent
+    PromptPasswordComponent,
+    LayoutComponent,
+    NavigationBarComponent,
+    FooterComponent
   ],
   imports: [
     AngularFireAuthModule,
     AngularFireFunctionsModule,
     AngularFireStorageModule,
     AngularFireModule.initializeApp(environment.firebase),
-    BrowserModule,
-    BrowserAnimationsModule,
     CoreRoutingModule,
     CountdownModule,
+    CommonModule,
     FontAwesomeModule,
     LeafletModule,
     FormsModule,
@@ -100,8 +102,8 @@ const toastrConfig = {
     NbCardModule,
     NbCheckboxModule,
     NbIconModule,
+    NbLayoutModule,
     NbPopoverModule,
-    NbToastrModule.forRoot(toastrConfig),
     NbSpinnerModule,
     ReactiveFormsModule,
     SharedModule

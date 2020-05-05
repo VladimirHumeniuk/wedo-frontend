@@ -1,0 +1,101 @@
+@import '../../../../../styles/variables/variables';
+
+:host {
+  width: 100%;
+}
+
+.navigation-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigation-bar__toggle-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border: 0;
+  z-index: 4;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 800;
+  cursor: pointer;
+  outline: 0;
+  color: $c-font-dark;
+  transition-duration: 0.15s;
+  transition-property: color;
+  transition-timing-function: ease-in;
+
+  &:focus,
+  &:hover {
+    color: $c-gray-700;
+  }
+
+  &:active {
+    color: $c-gray-1000;
+  }
+
+  @media (min-width: $mq-phone-landscape) {
+    display: none;
+  }
+
+  &-icon {
+    margin-right: 5px;
+  }
+}
+
+.navigation-bar__menu {
+  display: flex;
+  align-items: center;
+}
+
+.navigation-bar__menu-wrapper {
+  @media (min-width: $mq-phone-landscape) {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  @media (max-width: $mq-phone-landscape - 1px) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 76px 2rem 2rem;
+    background-color:$c-neutral;
+  }
+}
+
+.navigation-bar__menu-items {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  @media (max-width: $mq-phone-landscape - 1px) {
+    display: flex;
+    flex-direction: column;
+    background-color: $c-primary;
+    align-items: center;
+    justify-content: center;
+    border-radius: $card-border-radius;
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+  }
+}
+
+.navigation-bar__menu-item {
+  padding: 0;
+
+  @media (min-width: $mq-phone-landscape) {
+    float: left;
+
+    & ~ & {
+      margin-left: 20px;
+    }
+  }
+}

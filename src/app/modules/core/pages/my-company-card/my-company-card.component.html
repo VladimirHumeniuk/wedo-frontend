@@ -50,6 +50,8 @@
               name="category"
               [parentForm]="myCardForm"
               placeholder="Show in category"
+              bindLabel="title"
+              bindValue="id"
               [items]="categories"></wd-select>
               <wd-form-explain *ngIf="
               myCardForm.controls['category'].errors &&

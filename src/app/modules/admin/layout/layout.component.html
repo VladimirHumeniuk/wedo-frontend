@@ -1,0 +1,15 @@
+<ng-container *ngIf="!loading">
+  <nb-layout>
+    <nb-sidebar class="sidebar-container" containerFixed="false">
+      <nb-sidebar-header>
+        <wd-logo></wd-logo>
+      </nb-sidebar-header>
+
+      <wd-sidebar-navigation></wd-sidebar-navigation>
+    </nb-sidebar>
+
+    <nb-layout-column class="layout__column">
+      <router-outlet></router-outlet>
+    </nb-layout-column>
+  </nb-layout>
+</ng-container>

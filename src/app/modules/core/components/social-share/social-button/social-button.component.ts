@@ -1,4 +1,3 @@
-import { NbToastrService } from '@nebular/theme';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import {
   faFacebookF,
@@ -8,6 +7,7 @@ import {
   faFacebookMessenger,
   IconDefinition
 } from '@fortawesome/free-brands-svg-icons';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'wd-social-button',

@@ -13,7 +13,7 @@
   class="input-group__input"
   [class.input-group__input--private]='isPrivate'>
     <input
-    *ngIf="type !== 'tel' && type !== 'textarea'"
+    *ngIf="type !== 'tel' && type !== 'textarea' && type !== 'date'"
     id="{{name}}"
     name="{{name}}"
     type="{{type}}"
@@ -24,7 +24,26 @@
     (blur)="getStatus()"
     (focus)="resetStatus()"
     nbInput
-    fullWidth>
+    fullWidth
+    [attr.disabled]="disabled" />
+
+    <ng-container *ngIf="type === 'date'">
+      <input
+      id="{{name}}"
+      name="{{name}}"
+      placeholder="{{placeholder}}"
+      [formControlName]="name"
+      fieldSize="large"
+      [status]="status"
+      (blur)="getStatus()"
+      (focus)="resetStatus()"
+      [nbDatepicker]="datepicker"
+      [attr.disabled]="disabled"
+      readonly
+      nbInput
+      fullWidth />
+      <nb-datepicker #datepicker></nb-datepicker>
+    </ng-container>
 
     <input
     *ngIf="type === 'tel'"
@@ -41,7 +60,8 @@
     [validation]="false"
     nbInput
     mask="+000 000 000000000"
-    fullWidth>
+    [attr.disabled]="disabled"
+    fullWidth />
 
     <textarea
     *ngIf="type === 'textarea'"
@@ -54,6 +74,7 @@
     (blur)="getStatus()"
     (focus)="resetStatus()"
     [formControlName]="name"
+    [attr.disabled]="disabled"
     placeholder="{{placeholder}}">
     </textarea>
 

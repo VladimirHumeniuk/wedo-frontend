@@ -59,4 +59,13 @@ $nb-themes: nb-register-theme((
 
   card-padding: $card-padding,
 
+  menu-item-icon-color: $c-font-dark,
+  menu-item-icon-hover-color: $c-gray-1000,
+  menu-item-hover-text-color:	$c-gray-1000,
+  menu-item-divider-color: #e8c20a,
+  menu-item-active-text-color: $c-font-dark,
+  menu-item-icon-active-color: $c-font-dark,
+  menu-item-active-background-color: $c-yellow-900,
+  menu-item-hover-background-color: $c-yellow-1000,
+
 ), default, default);

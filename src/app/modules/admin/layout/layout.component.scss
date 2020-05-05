@@ -1,0 +1,22 @@
+@import '../../../../styles/variables/variables';
+
+::ng-deep {
+  .nb-theme-default nb-sidebar nb-sidebar-header {
+    display: flex;
+    align-items: center;
+    height: 76px;
+    padding: 1.5rem;
+
+    @media (max-width: $mq-tablet-landscape - 1px) {
+      padding: 1.35rem;
+    }
+
+    @media (max-width: $mq-tablet - 1px) {
+      padding: 1rem;
+    }
+  }
+}
+
+.sidebar-container {
+  background-color: $c-primary;
+}
