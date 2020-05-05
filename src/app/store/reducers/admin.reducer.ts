@@ -1,5 +1,5 @@
 
-import {AdminState} from 'src/app/store/states/admin.state';
+import { AdminState } from 'src/app/store/states/admin.state';
 import * as UserActions from '../actions/user.action';
 
 export function adminReducer(

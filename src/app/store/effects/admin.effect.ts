@@ -5,7 +5,7 @@ import { Action } from '@ngrx/store';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/services';
 
-import {GET_ALL_USERS, GetAllUsersSuccess, GetAllUsersError} from 'src/app/store/actions/user.action';
+import { GET_ALL_USERS, GetAllUsersSuccess, GetAllUsersError } from 'src/app/store/actions/user.action';
 
 @Injectable()
 export class AdminEffects {

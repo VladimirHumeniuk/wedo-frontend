@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CompanyCard, Category } from 'src/app/shared/models';
 import { ItemsService } from '../../services';
@@ -11,11 +11,10 @@ import { Subscription } from 'rxjs';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit, OnDestroy {
+export class SearchBarComponent implements OnInit {
 
   public homeSearch: FormGroup;
 
-  private _categories: Subscription;
   public categories: Category[] = [];
 
   public types = ['Companies', 'Freelancers']
@@ -35,7 +34,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   private getAllCategories(): void {
-    this._categories = this.categoriesService.getAllCategories().pipe(
+    this.categoriesService.getAllCategories().pipe(
       take(1)
     ).subscribe((categories: Category[]) => {
       this.categories = categories
@@ -45,10 +44,6 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   public search() {
     let { type, search, category } = this.homeSearch.value
     this.itemsService.getItems(type, search, category).subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this._categories.unsubscribe()
   }
 
   ngOnInit(): void {

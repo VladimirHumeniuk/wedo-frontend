@@ -1,19 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CategoriesService } from 'src/app/shared/services';
 import { Category } from 'src/app/shared/models';
-import { take } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { map, tap, takeUntil } from 'rxjs/operators';
 import { NbToastrService } from '@nebular/theme';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { SafeComponent } from 'src/app/shared/helpers';
+import { GetAllCategories, RemoveCategory } from 'src/app/store/actions/categories.action';
 
 @Component({
   selector: 'wd-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })
-export class CategoriesComponent implements OnInit, OnDestroy {
+export class CategoriesComponent extends SafeComponent implements OnInit {
 
   public categories: Category[]
-  private _categories: Subscription
 
   public tableColumns = [
     { title: '#id', key: 'id', options: { code: true } },
@@ -23,28 +25,27 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly categoriesService: CategoriesService,
-    private readonly toastrService: NbToastrService
-  ) { }
-
-  ngOnDestroy() {
-    this._categories.unsubscribe()
+    private readonly toastrService: NbToastrService,
+    private readonly store: Store<AppState>
+  ) {
+    super();
   }
 
   public categoryRemove(id: number): void {
-    this.categoriesService.removeCategory(id).toPromise()
-      .then(() => {
-        this.toastrService.success('Category removed', 'Removed',
-          { icon: 'trash-2-outline' }
-        )
-      })
+    this.store.dispatch(new RemoveCategory({ id }))
+    this.toastrService.success('Category removed', 'Removed',
+      { icon: 'trash-2-outline' }
+    )
   }
 
   ngOnInit() {
-    this._categories = this.categoriesService.getAllCategories().pipe(
-      take(1)
-    ).subscribe((categories: Category[]) => {
-      this.categories = categories
-    })
+    this.store.dispatch(new GetAllCategories())
+    this.categoriesService.categories$
+      .pipe(
+        takeUntil(this.unsubscriber),
+        map((data: Category[]) => [...data.map(category => ({...category}))]),
+        tap(categories => this.categories = categories)
+      ).subscribe()
   }
 
 }

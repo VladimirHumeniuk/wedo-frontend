@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models';
 import { EMAIL_REGEXP, ALERTS } from 'src/app/shared/constants';
 import { UserService } from 'src/app/shared/services';
-import { take, map } from 'rxjs/operators';
+import { take, map, takeUntil, delay } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { AppState } from 'src/app/app.state';
@@ -18,9 +18,8 @@ import { GetAllUsers } from 'src/app/store/actions/user.action';
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
-export class EditUserComponent extends SafeComponent implements OnInit, OnDestroy {
+export class EditUserComponent extends SafeComponent implements OnInit {
 
-  private _queryParams: Subscription
   public uid: string
 
   public editUserForm: FormGroup
@@ -53,7 +52,7 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
       accountType: ['', [
         Validators.required
       ]],
-      createdAt: [''],
+      createdAt: [],
       acceptTermsAndConditions: [ false ],
       company: [''],
       roles: this.formBuilder.group({
@@ -110,45 +109,67 @@ export class EditUserComponent extends SafeComponent implements OnInit, OnDestro
     }
   }
 
-  ngOnDestroy() {
-    this._queryParams.unsubscribe()
+  public userDataToForm(user: User): void {
+    this.uid = user.uid
+    let date: Date
+
+    if (user.createdAt && '_seconds' in user.createdAt) {
+      date = new Date(user.createdAt._seconds * 1000)
+    }
+
+    Object.keys(user).forEach((key: string) => {
+      if (this.editUserForm.controls[key]) {
+
+        switch (key) {
+          case 'roles':
+            const rolesForm = this.editUserForm.controls.roles
+            Object.keys(user[key]).forEach((role: string) => {
+              if (rolesForm['controls'][role]) {
+                rolesForm['controls'][role].setValue(user[key][role])
+              }
+            })
+            break;
+
+          case 'createdAt':
+            this.editUserForm.controls['createdAt'].setValue(date);
+            break;
+
+          default:
+            this.editUserForm.controls[key].setValue(user[key]);
+            break;
+        }
+      }
+    })
   }
 
   ngOnInit() {
     this.formInit();
-
-    this._queryParams = this.activatedRoute.queryParams.subscribe((data: Params) => {
-      this.userService.getUser(data.id).pipe(
+    this.activatedRoute.queryParams
+      .pipe(
+        delay(0),
         take(1),
-        map((data: User) => {
-          let user = Object.assign({}, data)
+        takeUntil(this.unsubscriber)
+      )
+      .subscribe((data: Params) => {
 
-          if ('_seconds' in user.createdAt) {
-            user.createdAt = new Date(user.createdAt._seconds * 1000)
-          }
-
-          return user
-        })
-      ).subscribe((user: User) => {
-        this.uid = user.uid
-
-        if (user) {
-          Object.keys(user).forEach((key: string) => {
-            if (this.editUserForm.controls[key] && key !== 'roles') {
-              this.editUserForm.controls[key].setValue(user[key])
-            }
-
-            if (key === 'roles') {
-              const rolesForm = this.editUserForm.controls.roles
-              Object.keys(user[key]).forEach((role: string) => {
-                if (rolesForm['controls'][role]) {
-                  rolesForm['controls'][role].setValue(user[key][role])
-                }
-              })
-            }
+        this.store.select('admin').pipe(
+          map((state) => {
+            const userFromState = state.users.filter(user => user.uid === data.id)
+            let user = Object.assign({}, userFromState[0])
+            return user
           })
-        }
-      })
+        ).subscribe((user: User) => {
+          if (user.uid) {
+            this.userDataToForm(user)
+          } else {
+            this.userService.getUser(data.id).pipe(
+              take(1),
+              takeUntil(this.unsubscriber)
+            ).subscribe((user: User) => {
+              this.userDataToForm(user)
+            })
+          }
+        })
     })
   }
 

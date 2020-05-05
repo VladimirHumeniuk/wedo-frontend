@@ -9,16 +9,25 @@ import {
   addCategoryMutation,
   removeCategoryMutation
 } from '../api/categories.api';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { map, tap, take, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { SafeComponent } from '../helpers';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesService {
+export class CategoriesService extends SafeComponent {
+
+  public categories$ = this.store.select('category').pipe(map(x => x.categories));
 
   constructor(
     private readonly baseApolloService: BaseApolloService,
-    private readonly fireStore: AngularFirestore
-  ) { }
+    private readonly fireStore: AngularFirestore,
+    private readonly store: Store<AppState>
+  ) {
+    super()
+  }
 
   public getCategory(id: number): Observable<Category> {
     const source$ = this.baseApolloService.query<{ id: number }, Category>(getCategoryQuery, (data) => data.getCategory, { id });
@@ -41,6 +50,18 @@ export class CategoriesService {
     });
 
     return source$;
+  }
+
+  public getCategoryTitle(id: number) {
+    let categoryTitle: string
+
+    this.categories$.pipe(
+      map(data => data.filter(c => c.id === id))
+    ).subscribe(category => {
+      if (category[0]) categoryTitle = category[0].title
+    })
+
+    return categoryTitle
   }
 
   public removeCategory(id: number): Observable<boolean> {

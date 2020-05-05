@@ -9,7 +9,7 @@ export interface CompanyCard {
   image?: string;
   url?: string;
   phone?: PhoneNumber;
-  category: number;
+  category: number | string;
   email?: string;
   address?: string;
   wysiwyg?: string;

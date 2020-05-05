@@ -29,7 +29,7 @@ export class DataTableComponent implements OnInit {
 
   @Input() id: string;
   @Input() columns: dataTableColumn[];
-  @Input() data: Object[];
+  @Input() data: object[];
   @Input() actions: dataTableActions;
   @Input() name: string;
 

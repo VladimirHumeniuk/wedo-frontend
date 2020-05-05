@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/firestore';
 import { NbToastrService } from '@nebular/theme';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,20 +6,20 @@ import { EMAIL_REGEXP, URL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constan
 import { CompanyCard, User, Upload, Category } from '../../../../shared/models';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/operators';
 import { UploadService, UserService, CategoriesService } from 'src/app/shared/services';
+import { SafeComponent } from 'src/app/shared/helpers';
 
 @Component({
   selector: 'wd-my-company-card',
   templateUrl: './my-company-card.component.html',
   styleUrls: ['./my-company-card.component.scss']
 })
-export class MyCompanyCardComponent implements OnInit, OnDestroy {
+export class MyCompanyCardComponent extends SafeComponent implements OnInit {
 
   public myCardForm: FormGroup;
 
-  private _user: Subscription;
   public user$: Observable<User> = this.store.select('user');
   public user: User;
 
@@ -31,7 +31,6 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
   private emailRegexp: RegExp = EMAIL_REGEXP;
   private urlRegexp: RegExp = URL_REGEXP;
 
-  private _categories: Subscription;
   public categories: Category[] = [];
 
   constructor(
@@ -42,7 +41,9 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
     private readonly store: Store<AppState>,
     private readonly userService: UserService,
     private readonly categoriesService: CategoriesService
-  ) { }
+  ) {
+    super();
+  }
 
   private formInit(): void {
     this.myCardForm = this.formBuilder.group({
@@ -90,11 +91,10 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
   }
 
   private getAllCategories(): void {
-    this._categories = this.categoriesService.getAllCategories().pipe(
-      take(1)
-    ).subscribe((categories: Category[]) => {
-      this.categories = categories
-    })
+    this.categoriesService.categories$.pipe(
+      takeUntil(this.unsubscriber),
+      tap(categories => this.categories = categories)
+    ).subscribe()
   }
 
   public publishCard(): void {
@@ -165,17 +165,13 @@ export class MyCompanyCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this._user.unsubscribe()
-    this._categories.unsubscribe()
-  }
-
   ngOnInit() {
     this.formInit()
     this.getAllCategories()
 
-    this._user = this.user$.pipe(
-      take(1)
+    this.user$.pipe(
+      take(1),
+      takeUntil(this.unsubscriber)
     ).subscribe((user: User) => {
       this.user = user
 

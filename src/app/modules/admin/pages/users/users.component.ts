@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from 'src/app/shared/services';
 import { User } from 'src/app/shared/models';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { take, map, tap, takeUntil } from 'rxjs/operators';
+import { map, tap, takeUntil } from 'rxjs/operators';
 import { AdminService } from 'src/app/shared/services/admin.service';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { AppState } from 'src/app/app.state';
@@ -15,7 +14,7 @@ import { GetAllUsers } from 'src/app/store/actions/user.action';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent extends SafeComponent implements OnInit, OnDestroy {
+export class UsersComponent extends SafeComponent implements OnInit {
 
   public tableColumns = [
     { title: 'uid', key: 'uid', options: { code: true } },
@@ -25,8 +24,7 @@ export class UsersComponent extends SafeComponent implements OnInit, OnDestroy {
     { title: 'created', key: 'createdAt', options: { date: true } }
   ]
   public actions = { edit: true }
-  public users: any[]
-  private _users: Subscription
+  public users: User[]
 
   constructor(
     private readonly router: Router,

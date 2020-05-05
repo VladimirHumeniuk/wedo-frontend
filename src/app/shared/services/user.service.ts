@@ -15,9 +15,7 @@ import { take } from 'rxjs/operators';
 })
 export class UserService {
 
-  public user$ = this.store.pipe(
-    select('user')
-  );
+  public user$ = this.store.select('user');
 
   constructor(
     private readonly fireStore: AngularFirestore,

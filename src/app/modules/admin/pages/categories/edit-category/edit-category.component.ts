@@ -1,20 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { Category } from 'src/app/shared/models';
 import { CategoriesService } from 'src/app/shared/services';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { NbToastrService } from '@nebular/theme';
+import { SafeComponent } from 'src/app/shared/helpers';
 
 @Component({
   selector: 'wd-edit-category',
   templateUrl: './edit-category.component.html',
   styleUrls: ['./edit-category.component.scss']
 })
-export class EditCategoryComponent implements OnInit, OnDestroy {
+export class EditCategoryComponent extends SafeComponent implements OnInit {
 
-  private _queryParams: Subscription
   public category: Category
 
   public editCategoryForm: FormGroup
@@ -28,7 +27,9 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute
-  ) { }
+  ) {
+    super();
+  }
 
   private formInit(): void {
     this.editCategoryForm = this.formBuilder.group({
@@ -63,17 +64,14 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
     return
   }
 
-  ngOnDestroy() {
-    this._queryParams.unsubscribe()
-  }
-
   ngOnInit(): void {
     this.formInit();
 
-    this._queryParams = this.activatedRoute.queryParams.subscribe((data: Params) => {
+    this.activatedRoute.queryParams.subscribe((data: Params) => {
       if (data.id) {
         this.categoriesService.getCategory(parseInt(data.id)).pipe(
-          take(1)
+          take(1),
+          takeUntil(this.unsubscriber)
         ).subscribe((category: Category) => {
           if (category) {
             Object.keys(category).forEach((key: string) => {
@@ -85,7 +83,8 @@ export class EditCategoryComponent implements OnInit, OnDestroy {
         })
       } else {
         this.categoriesService.getAllCategories().pipe(
-          take(1)
+          take(1),
+          takeUntil(this.unsubscriber)
         ).subscribe((data: Category[]) => {
           this.newItemId = Math.floor(100000 + Math.random() * 900000)
           this.editCategoryForm.controls['id'].setValue(this.newItemId)
