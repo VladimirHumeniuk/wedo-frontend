@@ -1,0 +1,33 @@
+<nb-card class="admin-form">
+  <nb-card-body class="admin-form__body">
+    <div class="admin-form__form">
+      <h2 class="admin-form__title">General:</h2>
+      <div class="admin-form__general">
+        <ng-content select="[general]"></ng-content>
+      </div>
+
+      <div class="admin-form__checkboxes">
+        <ng-content select="[checkboxes]"></ng-content>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<div class="admin-form__controls">
+  <button
+  (click)="goBack($event)"
+  nbButton
+  ghost
+  status="info">
+    Cancel
+  </button>
+
+  <button
+  nbButton
+  status="primary"
+  [disabled]="parentForm.invalid || !parentForm.dirty"
+  [nbSpinner]="loading"
+  type="submit">
+    Save
+  </button>
+</div>

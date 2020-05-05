@@ -25,7 +25,9 @@ export class SidebarNavigationComponent implements OnInit {
     },
     {
       title: 'Categories',
-      icon: 'pricetags-outline'
+      icon: 'pricetags-outline',
+      link: '/admin-panel/categories',
+      pathMatch: 'prefix'
     },
     {
       title: 'Account types',

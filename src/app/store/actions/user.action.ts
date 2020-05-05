@@ -1,8 +1,12 @@
 import { Action } from '@ngrx/store';
 import { User } from './../../shared/models';
 
-export const SAVE_USER         = '[USER] Save'
-export const REMOVE_USER       = '[USER] Remove'
+export const SAVE_USER         = '[USER] Save';
+export const REMOVE_USER       = '[USER] Remove';
+
+export const GET_ALL_USERS          = '[USER] Get All Users';
+export const GET_ALL_USERS_SUCCESS  = '[USER] Get All Users Success';
+export const GET_ALL_USERS_ERROR    = '[USER] Get All Users Error';
 
 export const GET_USER          = '[AUTH] Get User'
 export const AUTHENTICATED     = '[AUTH] Authenticated'
@@ -37,9 +41,28 @@ export class AuthError implements Action {
   constructor(public payload?: any) {}
 }
 
+export class GetAllUsers implements Action {
+  readonly type = GET_ALL_USERS;
+
+  constructor() {}
+}
+export class GetAllUsersSuccess implements Action {
+  readonly type = GET_ALL_USERS_SUCCESS;
+
+  constructor(public payload: { users: User[] }) {}
+}
+
+export class GetAllUsersError implements Action {
+  readonly type = GET_ALL_USERS_ERROR;
+  constructor() {}
+}
+
 export type Actions = SaveUser
   | RemoveUser
   | GetUser
   | Authenticated
   | NotAuthenticated
-  | AuthError;
+  | AuthError
+  | GetAllUsers
+  | GetAllUsersSuccess
+  | GetAllUsersError;

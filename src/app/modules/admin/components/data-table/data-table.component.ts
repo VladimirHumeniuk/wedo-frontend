@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NbDialogService } from '@nebular/theme';
+import { PromptDialogComponent } from './prompt-dialog/prompt-dialog.component';
 
 interface dataTableColumn {
   title: string;
@@ -12,13 +15,9 @@ interface dataTableColumnOptions {
 }
 
 interface dataTableActions {
-  edit?: dataTableAction;
-  remove?: dataTableAction;
-}
-
-interface dataTableAction {
-  active: boolean;
-  action?: any;
+  edit?: boolean;
+  remove?: boolean;
+  add?: boolean;
 }
 
 @Component({
@@ -30,18 +29,48 @@ export class DataTableComponent implements OnInit {
 
   @Input() id: string;
   @Input() columns: dataTableColumn[];
-  @Input() data: Object[];
+  @Input() data: object[];
   @Input() actions: dataTableActions;
+  @Input() name: string;
 
-  @Output() onEdit: EventEmitter<any> = new EventEmitter();
+  @Output() removeEvent: EventEmitter<any> = new EventEmitter();
 
-  public editEvent(id: string): void {
-    this.onEdit.emit([id]);
+  public emitAction(id: string, action: string): void {
+    const actions: { [key: string]: EventEmitter<any> } = {
+      'remove': this.removeEvent
+    }
+
+    actions[action].emit([id])
   }
 
-  constructor() {
+  public openRemovePrompt(id: any): void {
+    const name = this.name
+
+    this.dialogService.open(PromptDialogComponent, {
+      closeOnEsc: true,
+      autoFocus: false,
+      hasScroll: false,
+      context: { name, id }
+    }).onClose.subscribe((proceed: boolean) => {
+      if (proceed) {
+        this.emitAction(id, 'remove')
+      }
+    })
   }
 
-  ngOnInit() { }
+  public goToEdit(id: string): void {
+    this.router.navigate(['edit'], {
+      relativeTo: this.activatedRoute,
+      queryParams: { id }
+    })
+  }
+
+  constructor(
+    private readonly router: Router,
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly dialogService: NbDialogService
+  ) { }
+
+  ngOnInit() {}
 
 }

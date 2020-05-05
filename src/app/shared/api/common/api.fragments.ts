@@ -18,6 +18,13 @@ export const userFieldsFragment = gql`
     }
 `;
 
+export const categoryFieldsFragment = gql`
+    fragment categoryFields on Category {
+      id,
+      title
+    }
+`;
+
 export const companyFieldsFragment = gql`
     fragment companyFields on Company {
       cid,

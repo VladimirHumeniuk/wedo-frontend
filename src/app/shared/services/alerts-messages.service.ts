@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { Observable } from 'rxjs/Observable';
 import { Alert, AlertData } from '../models';
 import {
@@ -7,7 +7,7 @@ import {
   addAlertMutation,
   removeAlertMutation,
   getAlertsQuery
-} from './alerts-messages.api';
+} from '../api/alerts-messages.api';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { UserService } from './user.service';
@@ -42,7 +42,7 @@ export class AlertsMessagesService {
       Alert[]
     >(getAlertsQuery, data => data.getAlerts, {
       uid
-    }, { query: getAlertsQuery , fetchPolicy: 'network-only'})
+    })
     return source;
   }
 

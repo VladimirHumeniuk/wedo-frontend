@@ -1,7 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CompanyCard } from 'src/app/shared/models';
+import { CompanyCard, Category } from 'src/app/shared/models';
 import { ItemsService } from '../../services';
+import { CategoriesService } from 'src/app/shared/services';
+import { take, map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'wd-search-bar',
@@ -10,21 +13,31 @@ import { ItemsService } from '../../services';
 })
 export class SearchBarComponent implements OnInit {
 
-  public homeSearch: FormGroup
+  public homeSearch: FormGroup;
 
-  types = ['Companies', 'Freelancers']
-  categories = ['All', 'Security', 'Cleaning']
+  public categories: Category[] = [];
+
+  public types = ['Companies', 'Freelancers']
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly itemsService: ItemsService
+    private readonly itemsService: ItemsService,
+    private readonly categoriesService: CategoriesService
   ) {  }
 
   private formInit(): void {
     this.homeSearch = this.formBuilder.group({
       search: [''],
       type: ['Companies'],
-      category: ['All']
+      category: []
+    })
+  }
+
+  private getAllCategories(): void {
+    this.categoriesService.getAllCategories().pipe(
+      take(1)
+    ).subscribe((categories: Category[]) => {
+      this.categories = categories
     })
   }
 
@@ -33,8 +46,9 @@ export class SearchBarComponent implements OnInit {
     this.itemsService.getItems(type, search, category).subscribe();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formInit()
+    this.getAllCategories()
   }
 
 }

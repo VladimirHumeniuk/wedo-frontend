@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
-import { BaseApolloService } from 'src/app/modules/core/services/base/base.apollo.service';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from './user.api';
+import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from '../api/user.api';
 import { Observable } from 'rxjs/Observable';
 import { User, CompanyCard } from '../models';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
@@ -25,12 +25,17 @@ export class UserService {
   ) { }
 
   public getAllUsers(): Observable<User[]> {
-    const source = this.baseApolloService.query<{}, User[]>(getAllUsersQuery, (data) => data.getAllUsers);
+    const source = this.baseApolloService.query<{}, User[]>(
+      getAllUsersQuery,
+      (data) => data.getAllUsers);
     return source;
   }
 
   public getUser(uid: string): Observable<User> {
-    const source = this.baseApolloService.query<{ uid: string }, User>(getUserQuery, (data) => data.getUser, { uid });
+    const source = this.baseApolloService.query<{ uid: string }, User>(
+      getUserQuery,
+      (data) => data.getUser,
+      { uid });
     return source;
   }
 
