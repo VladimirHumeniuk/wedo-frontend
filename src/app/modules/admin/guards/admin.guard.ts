@@ -3,8 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { AppState } from 'src/app/app.state';
-import { User } from 'src/app/shared/models';
+import { UserService } from 'src/app/shared/services';
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +11,21 @@ import { User } from 'src/app/shared/models';
 export class AdminGuard implements CanActivate {
   constructor(
     private readonly store: Store<AppState>,
-    private readonly router: Router
+	 private readonly router: Router,
+	 private userService: UserService
   ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      let loggedInUser = this.userService.getLoggedInUserDetails();
 
-    let admin: boolean
+      if (loggedInUser && loggedInUser.uid && loggedInUser.roles.admin) {
+			return true;
+		}
 
-    this.store.select('user').pipe(
-      take(1)
-    ).subscribe((user: User) => admin = user.roles.admin)
-
-    if (!admin) this.router.navigate(['/'])
-
-    return admin
+		this.router.navigate(['/']);
+		return false;
   }
 
 }

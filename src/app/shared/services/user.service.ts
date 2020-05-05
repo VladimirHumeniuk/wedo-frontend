@@ -27,12 +27,17 @@ export class UserService {
   ) { }
 
   public getAllUsers(): Observable<User[]> {
-    const source = this.baseApolloService.query<{}, User[]>(getAllUsersQuery, (data) => data.getAllUsers);
+    const source = this.baseApolloService.query<{}, User[]>(
+      getAllUsersQuery,
+      (data) => data.getAllUsers);
     return source;
   }
 
   public getUser(uid: string): Observable<User> {
-    const source = this.baseApolloService.query<{ uid: string }, User>(getUserQuery, (data) => data.getUser, { uid });
+    const source = this.baseApolloService.query<{ uid: string }, User>(
+      getUserQuery,
+      (data) => data.getUser,
+      { uid });
     return source;
   }
 
@@ -70,5 +75,9 @@ export class UserService {
   public getAuth(): Observable<{ uid: string }> {
     const source$ = this.fireAuth.authState.pipe(take(1)) as Observable<{uid: string}>;
     return source$;
+  }
+
+  public getLoggedInUserDetails() {
+	  return JSON.parse(localStorage.getItem('user'));
   }
 }

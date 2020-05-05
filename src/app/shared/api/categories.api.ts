@@ -19,3 +19,16 @@ export const getCategoryQuery = gql`
     }
     ${categoryFieldsFragment}
 `;
+
+// Mutation
+export const addCategoryMutation = gql`
+    mutation addCategory($category: CategoryInput!) {
+        addCategory(category: $category)
+    }
+`;
+
+export const removeCategoryMutation = gql`
+    mutation removeCategory($id: Int!) {
+        removeCategory(id: $id)
+    }
+`;

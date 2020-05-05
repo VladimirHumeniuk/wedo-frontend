@@ -10,6 +10,7 @@ import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { UsersComponent } from './pages/users/users.component';
 import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 
 const routes: Routes = [
   {
@@ -35,7 +36,16 @@ const routes: Routes = [
       },
       {
         path: 'categories',
-        component: CategoriesComponent
+        children: [
+          {
+            path: '',
+            component: CategoriesComponent
+          },
+          {
+            path: 'edit',
+            component: EditCategoryComponent
+          }
+        ]
       }
     ]
   }

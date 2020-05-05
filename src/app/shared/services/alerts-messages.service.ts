@@ -79,7 +79,7 @@ export class AlertsMessagesService {
       getAlertsQuery,
       (data) => data.getAlerts, {
       uid
-    });
+    })
     return source;
   }
 

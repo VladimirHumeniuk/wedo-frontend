@@ -10,7 +10,8 @@ import {
   NbSidebarModule,
   NbSpinnerModule,
   NbIconModule,
-  NbMenuModule
+  NbMenuModule,
+  NbDialogModule
 } from '@nebular/theme';
 
 // Modules
@@ -29,8 +30,11 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 // Components
 import { AdminComponent } from './admin.component';
 import { UsersComponent } from './pages/users/users.component';
-import { TitleComponent } from './components/title/title.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
+import { AdminFormComponent } from './components/admin-form/admin-form.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
+import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
+import { PromptDialogComponent } from './components/data-table/prompt-dialog/prompt-dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +43,13 @@ import { DataTableComponent } from './components/data-table/data-table.component
     LayoutComponent,
     SidebarNavigationComponent,
     UsersComponent,
-    TitleComponent,
     DataTableComponent,
     EditUserComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    AdminFormComponent,
+    EditCategoryComponent,
+    AdminHeaderComponent,
+    PromptDialogComponent
   ],
   imports: [
     CommonModule,
@@ -53,11 +60,15 @@ import { DataTableComponent } from './components/data-table/data-table.component
     NbCardModule,
     NbCheckboxModule,
     NbLayoutModule,
+    NbDialogModule.forRoot(),
     NbSpinnerModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbIconModule,
     SharedModule
+  ],
+  entryComponents: [
+    PromptDialogComponent
   ]
 })
 export class AdminModule { }

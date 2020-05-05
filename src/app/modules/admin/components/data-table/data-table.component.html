@@ -21,22 +21,23 @@
 
       <ng-container *ngIf="data">
         <tr *ngFor="let row of data">
-          <ng-container *ngFor="let col of columns; let i = index">
-            <td [attr.width]="col.options?.width">
-              <span [className]="col.options?.code ? 'data-table--code' : ''">
-                {{ col.options?.date ? (row[col.key] | date) : row[col.key] }}
-              </span>
-            </td>
-          </ng-container>
+          <td *ngFor="let col of columns" [attr.width]="col.options?.width">
+            <span *ngIf="row[col.key]" [className]="col.options?.code ? 'data-table--code' : ''">
+              {{ col.options?.date ? (row[col.key] | date) : row[col.key] }}
+            </span>
+          </td>
 
           <td *ngIf="actions?.edit" class="data-table__action">
-            <nb-icon (click)="emitAction(row[id], 'edit')" icon="edit-2-outline"></nb-icon>
+            <nb-icon (click)="goToEdit(row[id])" icon="edit-2-outline"></nb-icon>
           </td>
 
+          <!-- Start: remove action -->
           <td *ngIf="actions?.remove" class="data-table__action">
-            <nb-icon (click)="emitAction(row[id], 'remove')" icon="trash-2-outline"></nb-icon>
+            <nb-icon
+            (click)="openRemovePrompt(row[id])"
+            icon="trash-2-outline"></nb-icon>
           </td>
-
+          <!-- End: remove action -->
         </tr>
       </ng-container>
     </tbody>

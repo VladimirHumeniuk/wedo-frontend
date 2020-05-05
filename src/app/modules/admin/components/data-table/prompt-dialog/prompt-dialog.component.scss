@@ -1,0 +1,9 @@
+.prompt-dialog__body {
+  font-size: 1rem;
+}
+
+.prompt-dialog__controllers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 15px;
+}
