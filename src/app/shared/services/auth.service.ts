@@ -12,6 +12,8 @@ import { AppState } from './../../app.state';
 import { User } from '../models';
 import * as UserActions from 'src/app/store/actions/user.action';
 import * as LoginActions from 'src/app/store/actions/login.action';
+import {AddAlert} from 'src/app/store/actions/alert.action';
+import {ALERTS} from 'src/app/shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +51,7 @@ export class AuthService {
           }
         }
 
+        this.store.dispatch(new AddAlert({ uid: user.uid, alert: ALERTS['email-not-verified']}));
         return this.userService.setUserData(user);
       })
       .then(() => this.sendEmailVerification())
@@ -110,12 +113,12 @@ export class AuthService {
         if (pendingCredentials) {
           credentials.user.linkWithCredential(pendingCredentials)
         }
-
-        this.userService.user$.subscribe((user: User) => {
-          if (user) {
-            this.router.navigate(['/'])
-          }
-        })
+        return credentials;
+      })
+      .then(credentials => {
+        if(credentials && credentials.user && credentials.user.uid) {
+          this.router.navigate(['/'])
+        }
       })
       .catch(error => { throw error })
   }

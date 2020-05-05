@@ -11,5 +11,4 @@ export class AdminState {
 }
 
 export const selectAdminFeature = (state: AppState) => state.admin;
-
 export const selectAdminFeatureUsers = createSelector(selectAdminFeature, (state: AdminState) => state.users);

@@ -5,7 +5,7 @@ import { CategoriesState } from 'src/app/store/states/categories.state';
 
 export interface AppState {
   readonly user: User;
-  readonly alert: Alert[];
+  readonly alert: AlertState;
   readonly login: Login;
   readonly admin: AdminState;
   readonly category: CategoriesState;
