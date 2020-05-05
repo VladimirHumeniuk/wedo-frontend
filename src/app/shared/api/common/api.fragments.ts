@@ -62,10 +62,3 @@ export const alertDataFieldsFragment = gql`
     }
     ${alertFieldsFragment}
 `;
-
-export const categoryFieldsFragment = gql`
-    fragment categoryFields on Category {
-      id,
-      title
-    }
-`;

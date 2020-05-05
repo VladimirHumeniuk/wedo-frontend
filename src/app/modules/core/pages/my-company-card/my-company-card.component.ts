@@ -91,10 +91,19 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
   }
 
   private getAllCategories(): void {
-    this.categoriesService.categories$.pipe(
+    const getFromStore = this.categoriesService.categories$.pipe(
       takeUntil(this.unsubscriber),
       tap(categories => this.categories = categories)
     ).subscribe()
+
+    Promise.all([getFromStore]).then(() => {
+      if (!this.categories.length) {
+        this.categoriesService.getAllCategories().pipe(
+          takeUntil(this.unsubscriber),
+          tap(categories => this.categories = categories)
+        ).subscribe()
+      }
+    })
   }
 
   public publishCard(): void {
