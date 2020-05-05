@@ -23,7 +23,9 @@ export class UserEffects {
     switchMap(uid => {
       if (uid) {
         return this.userService.getUser(uid).pipe(
-          map(user => new Authenticated(user))
+          map(user => {
+				return new Authenticated(user)
+			 })
         );
       } else {
         return of(new NotAuthenticated());
