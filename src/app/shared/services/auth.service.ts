@@ -14,6 +14,7 @@ import * as UserActions from 'src/app/store/actions/user.action';
 import * as LoginActions from 'src/app/store/actions/login.action';
 import {AddAlert} from 'src/app/store/actions/alert.action';
 import {ALERTS} from 'src/app/shared/constants';
+import { CloudApiService } from './cloud-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class AuthService {
     private readonly fireStore: AngularFirestore,
     private readonly fireAuth: AngularFireAuth,
     private readonly router: Router,
-    private readonly store: Store<AppState>
+    private readonly store: Store<AppState>,
+    private readonly cloud: CloudApiService
   ) { }
 
   public createUserWithEmailAndPassword(formData: any): Promise<void> {
@@ -113,6 +115,12 @@ export class AuthService {
         if (pendingCredentials) {
           credentials.user.linkWithCredential(pendingCredentials)
         }
+
+        this.cloud.setUserRoles(credentials.user.uid, { admin: true }).then(data => {
+          console.log('🚧  data =>', data)
+          this.fireAuth.currentUser.then(xx => console.log('🚧  xx =>', xx))
+        })
+
         return credentials;
       })
       .then(credentials => {
