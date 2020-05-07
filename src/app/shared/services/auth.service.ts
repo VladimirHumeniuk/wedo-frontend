@@ -9,11 +9,11 @@ import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
 import { take, catchError } from 'rxjs/operators'
 import { AppState } from './../../app.state';
-import { User } from '../models';
+import { User, Roles } from '../models';
 import * as UserActions from 'src/app/store/actions/user.action';
 import * as LoginActions from 'src/app/store/actions/login.action';
-import {AddAlert} from 'src/app/store/actions/alert.action';
-import {ALERTS} from 'src/app/shared/constants';
+import { AddAlert } from 'src/app/store/actions/alert.action';
+import { ALERTS } from 'src/app/shared/constants';
 import { CloudApiService } from './cloud-api.service';
 
 @Injectable({
@@ -41,10 +41,11 @@ export class AuthService {
 
     return this.fireAuth.createUserWithEmailAndPassword(email, password)
       .then((response: firebase.auth.UserCredential) => {
+        const { uid, emailVerified } = response.user
         const user: User = {
-          uid: response.user.uid,
+          uid: uid,
           email: email,
-          emailVerified: response.user.emailVerified,
+          emailVerified: emailVerified,
           accountType: accountType,
           createdAt: new Date(),
           acceptTermsAndConditions: acceptTermsAndConditions,
@@ -52,6 +53,8 @@ export class AuthService {
             readonly: true
           }
         }
+
+        this.cloud.setUserRoles(user.uid, { readonly: true })
 
         this.store.dispatch(new AddAlert({ uid: user.uid, alert: ALERTS['email-not-verified']}));
         return this.userService.setUserData(user);
@@ -77,13 +80,17 @@ export class AuthService {
       .then(() => {
         const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.collection('users').doc(uid)
 
+        const roles: Roles = {
+          readonly: false,
+          author: true
+        }
+
         userLink.set({
           emailVerified: true,
-          roles: {
-            readonly: false,
-            author: true,
-          }
+          roles: roles
         }, { merge: true })
+
+        this.cloud.setUserRoles(uid, { ...roles })
 
         userLink.valueChanges().subscribe((user: User) => {
           this.store.dispatch(new UserActions.SaveUser(user))
@@ -115,12 +122,6 @@ export class AuthService {
         if (pendingCredentials) {
           credentials.user.linkWithCredential(pendingCredentials)
         }
-
-        this.cloud.setUserRoles(credentials.user.uid, { admin: true }).then(data => {
-          console.log('🚧  data =>', data)
-          this.fireAuth.currentUser.then(xx => console.log('🚧  xx =>', xx))
-        })
-
         return credentials;
       })
       .then(credentials => {
