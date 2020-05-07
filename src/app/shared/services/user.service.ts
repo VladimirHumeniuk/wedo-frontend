@@ -4,11 +4,12 @@ import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.serv
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
 import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from '../api/user.api';
 import { Observable } from 'rxjs/Observable';
-import { User, CompanyCard } from '../models';
+import { User, CompanyCard, Roles } from '../models';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
+import { CloudApiService } from './cloud-api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class UserService {
     private readonly fireStore: AngularFirestore,
     private readonly baseApolloService: BaseApolloService,
     private readonly fireAuth: AngularFireAuth,
-    private readonly store: Store<AppState>
+    private readonly store: Store<AppState>,
+    private readonly cloud: CloudApiService
   ) { }
 
   public getAllUsers(): Observable<User[]> {
@@ -66,18 +68,38 @@ export class UserService {
     return source;
   }
 
-  public setUserData(user: User): Promise<void> {
-    const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${user.uid}`)
+  public setUserData(user: User): Promise<any[]> {
+    const { uid, roles } = user
+    const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${uid}`)
 
-    return userLink.set(user, { merge: true })
+    const promises: [any] = [
+      userLink.set(user, { merge: true })
+    ]
+
+    if (roles) {
+      promises.push(this.cloud.setUserRoles(uid, roles))
+    }
+
+    return Promise.all(promises)
+  }
+
+  public validateRoles(): Observable<Roles> {
+    return this.fireAuth.idTokenResult.pipe(
+      take(1),
+      map(response => {
+        if (response && response.claims) {
+          const { readonly, admin, author } = response.claims;
+
+          const roles: Roles = { readonly, admin, author };
+
+          return roles
+        }
+      })
+    )
   }
 
   public getAuth(): Observable<{ uid: string }> {
     const source$ = this.fireAuth.authState.pipe(take(1)) as Observable<{uid: string}>;
     return source$;
-  }
-
-  public getLoggedInUserDetails() {
-	  return JSON.parse(localStorage.getItem('user'));
   }
 }

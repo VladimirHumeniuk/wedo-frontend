@@ -19,10 +19,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: AdminPanelComponent
+        component: AdminPanelComponent,
+        canActivate: [ AdminGuard ]
       },
       {
         path: 'users',
+        canActivate: [ AdminGuard ],
         children: [
           {
             path: '',
@@ -36,6 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'categories',
+        canActivate: [ AdminGuard ],
         children: [
           {
             path: '',

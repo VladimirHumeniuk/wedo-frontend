@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
     private readonly userService: UserService,
     private readonly store: Store<AppState>
   ) {
+
     this.alertsService.alerts$.subscribe((alerts: Alert[]) => {
       this.alerts = alerts
     })

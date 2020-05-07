@@ -83,9 +83,6 @@ export class EditUserComponent extends SafeComponent implements OnInit {
 
           this.toastrService.success('Successfully saved', 'Saved');
         })
-        .then(() => {
-          this.store.dispatch(new GetAllUsers());
-        })
         .catch(error => {
           throw Error(error)
         })
