@@ -16,12 +16,10 @@ export class SidebarNavigationComponent implements OnInit {
       pathMatch: 'prefix'
     },
     {
-      title: 'Cards',
-      icon: 'file-text-outline',
-    },
-    {
-      title: 'Requests',
-      icon: 'bulb-outline',
+      title: 'Companies',
+      icon: 'briefcase-outline',
+      link: '/admin-panel/companies',
+      pathMatch: 'prefix'
     },
     {
       title: 'Categories',
@@ -29,14 +27,18 @@ export class SidebarNavigationComponent implements OnInit {
       link: '/admin-panel/categories',
       pathMatch: 'prefix'
     },
-    {
-      title: 'Account types',
-      icon: 'briefcase-outline'
-    },
-    {
-      title: 'Bin',
-      icon: 'trash-2-outline'
-    }
+    // {
+    //   title: 'Requests',
+    //   icon: 'bulb-outline',
+    // },
+    // {
+    //   title: 'Account types',
+    //   icon: 'briefcase-outline'
+    // },
+    // {
+    //   title: 'Bin',
+    //   icon: 'trash-2-outline'
+    // }
   ]
 
   constructor() { }
