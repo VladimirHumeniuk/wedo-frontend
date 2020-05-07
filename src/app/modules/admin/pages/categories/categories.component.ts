@@ -18,7 +18,7 @@ export class CategoriesComponent extends SafeComponent implements OnInit {
   public categories: Category[]
 
   public tableColumns = [
-    { title: '#id', key: 'id', options: { code: true } },
+    { title: 'ID', key: 'id', options: { code: true } },
     { title: 'Category name', key: 'title' }
   ]
   public actions = { edit: true, remove: true }

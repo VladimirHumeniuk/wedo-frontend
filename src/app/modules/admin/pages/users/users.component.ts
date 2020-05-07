@@ -17,14 +17,15 @@ import { GetAllUsers } from 'src/app/store/actions/user.action';
 export class UsersComponent extends SafeComponent implements OnInit {
 
   public tableColumns = [
-    { title: 'uid', key: 'uid', options: { code: true } },
-    { title: 'email', key: 'email' },
-    { title: 'type', key: 'accountType' },
-    { title: 'company', key: 'company', options: { code: true } },
-    { title: 'created', key: 'createdAt', options: { date: true } }
+    { title: 'ID', key: 'uid', options: { code: true } },
+    { title: 'Email', key: 'email' },
+    { title: 'Type', key: 'accountType' },
+    { title: 'Company', key: 'company', options: { code: true } },
+    { title: 'Created', key: 'createdAt', options: { date: true } }
   ]
   public actions = { edit: true }
   public users: User[]
+  public loading: boolean
 
   constructor(
     private readonly router: Router,
@@ -45,6 +46,7 @@ export class UsersComponent extends SafeComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new GetAllUsers())
+    this.loading = true
     this.adminService.users$
       .pipe(
         takeUntil(this.unsubscriber),
@@ -59,7 +61,10 @@ export class UsersComponent extends SafeComponent implements OnInit {
 
           return users;
         }),
-        tap(users => this.users = users)
+        tap(users => {
+          this.loading = false
+          this.users = users
+        })
       ).subscribe();
   }
 

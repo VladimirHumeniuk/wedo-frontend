@@ -12,6 +12,9 @@ interface dataTableColumn {
 interface dataTableColumnOptions {
   code?: boolean;
   date?: boolean;
+  bool?: boolean;
+  align?: string;
+  minWidth?: number;
 }
 
 interface dataTableActions {
@@ -26,6 +29,8 @@ interface dataTableActions {
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
+
+  @Input() loading: boolean;
 
   @Input() id: string;
   @Input() columns: dataTableColumn[];
