@@ -34,29 +34,34 @@
 
         <ng-container *ngIf="user?.uid">
           <li
-          class="navigation-bar__menu-item"
-          *ngIf="user.roles.admin">
-            <a nbButton
-               ghost
-               status="info"
-               routerLink='/admin-panel'>
+          *ngIf="user.roles.admin"
+          class="navigation-bar__menu-item">
+            <a
+            nbButton
+            ghost
+            status="info"
+            routerLink='/admin-panel'>
                Admin Panel
             </a>
           </li>
 
-          <li class="navigation-bar__menu-item">
-            <a nbButton
-               ghost
-               status="info"
-               routerLink='/my-company-card'>
-              My {{user.accountType === 'company' ? 'Company' : 'Personal'}} Card
+          <li
+          *ngIf="user.accountType === 'business'"
+          class="navigation-bar__menu-item">
+            <a
+            nbButton
+            ghost
+            status="info"
+            routerLink='/my-company-card'>
+              My Business Card
             </a>
           </li>
 
           <li class="navigation-bar__menu-item">
-            <button nbButton
-                    status="info"
-                    (click)="signOut()">
+            <button
+            nbButton
+            status="info"
+            (click)="signOut()">
               Sign Out
             </button>
           </li>
