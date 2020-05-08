@@ -4,6 +4,18 @@
 
 .admin-form__title {
   font-size: 1rem;
+  margin-top: .2rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.admin-form__image,
+.admin-form__general,
+.admin-form__checkboxes,
+.admin-form__textareas {
+  &:empty {
+    display: none;
+  }
 }
 
 .admin-form__general,

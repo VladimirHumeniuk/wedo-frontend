@@ -4,7 +4,7 @@ import { NbToastrService } from '@nebular/theme';
 import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/models';
 import { EMAIL_REGEXP, ALERTS } from 'src/app/shared/constants';
-import { UserService } from 'src/app/shared/services';
+import { UserService, CompaniesService } from 'src/app/shared/services';
 import { take, map, takeUntil, delay } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SafeComponent } from 'src/app/shared/helpers';
@@ -35,6 +35,7 @@ export class EditUserComponent extends SafeComponent implements OnInit {
     private readonly userService: UserService,
     private readonly toastrService: NbToastrService,
     private readonly store: Store<AppState>,
+    private readonly companiesService: CompaniesService
   ) {
     super();
    }
@@ -78,7 +79,7 @@ export class EditUserComponent extends SafeComponent implements OnInit {
       this.userService.setUserData(formData)
         .then(() => {
           if (!this.editUserForm.get('company').pristine && this.editUserForm.get('company').touched) {
-            this.userService.assignCompany(formData.uid, formData.company)
+            this.companiesService.assignCompany(formData.uid, formData.company)
           }
 
           this.toastrService.success('Successfully saved', 'Saved');
@@ -113,7 +114,6 @@ export class EditUserComponent extends SafeComponent implements OnInit {
 
     Object.keys(user).forEach((key: string) => {
       if (this.editUserForm.controls[key]) {
-
         switch (key) {
           case 'roles':
             const rolesForm = this.editUserForm.controls.roles
@@ -145,11 +145,10 @@ export class EditUserComponent extends SafeComponent implements OnInit {
         takeUntil(this.unsubscriber)
       )
       .subscribe((data: Params) => {
-
         this.store.select('admin').pipe(
           map((state) => {
             const userFromState = state.users.filter(user => user.uid === data.id)
-            let user = Object.assign({}, userFromState[0])
+            const user = Object.assign({}, userFromState[0])
             return user
           })
         ).subscribe((user: User) => {

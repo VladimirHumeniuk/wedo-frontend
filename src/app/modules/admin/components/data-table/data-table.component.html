@@ -1,8 +1,10 @@
-<div class="data-table">
+<div class="data-table" [nbSpinner]="loading" nbSpinnerStatus="primary">
   <table class="data-table__table">
     <thead>
       <tr>
-        <th *ngFor="let column of columns"> {{ column.title }} </th>
+        <ng-container *ngFor="let column of columns">
+          <th [ngStyle]="{ 'minWidth.px': column.options?.minWidth, 'textAlign': column.options?.align }"> {{ column.title }} </th>
+        </ng-container>
 
         <ng-container *ngIf="actions">
           <ng-container *ngFor="let action of actions | keys">
@@ -13,18 +15,24 @@
     </thead>
 
     <tbody>
-      <tr *ngIf="!data" class="data-table__no-data">
+      <tr *ngIf="!data || !data.length" class="data-table__no-data">
         <td [attr.colspan]="columns?.length + (actions | keys)?.length">
           No data
         </td>
       </tr>
 
-      <ng-container *ngIf="data">
+      <ng-container *ngIf="data && !loading">
         <tr *ngFor="let row of data">
-          <td *ngFor="let col of columns" [attr.width]="col.options?.width">
-            <span *ngIf="row[col.key]" [className]="col.options?.code ? 'data-table--code' : ''">
+          <td *ngFor="let col of columns" [ngStyle]="{'textAlign': col.options?.align }">
+            <span *ngIf="row[col.key] && !col.options?.bool" [className]="col.options?.code ? 'data-table--code' : ''">
               {{ col.options?.date ? (row[col.key] | date) : row[col.key] }}
             </span>
+
+            <nb-checkbox
+            *ngIf="col.options?.bool"
+            class="data-table__checkbox"
+            status="basic"
+            [checked]="row[col.key]"></nb-checkbox>
           </td>
 
           <td *ngIf="actions?.edit" class="data-table__action">

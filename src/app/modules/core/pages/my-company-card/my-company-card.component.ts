@@ -8,7 +8,7 @@ import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take, takeUntil, tap } from 'rxjs/operators';
-import { UploadService, UserService, CategoriesService } from 'src/app/shared/services';
+import { UploadService, UserService, CategoriesService, CompaniesService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
 
 @Component({
@@ -40,7 +40,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
     private readonly uploadService: UploadService,
     private readonly store: Store<AppState>,
     private readonly userService: UserService,
-    private readonly categoriesService: CategoriesService
+    private readonly categoriesService: CategoriesService,
+    private readonly companiesService: CompaniesService
   ) {
     super();
   }
@@ -168,7 +169,7 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
       if (!this.companyCard) {
         companiesLink.add(formValue)
           .then((res: DocumentReference) => {
-            this.userService.assignCompany(this.user.uid, res.id)
+            this.companiesService.assignCompany(this.user.uid, res.id)
           })
       }
     }
@@ -185,7 +186,7 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
       this.user = user
 
       if (user) {
-        this.userService.getUserCompany(user.company)
+        this.companiesService.getUserCompany(user.company)
           .subscribe((companyCard: CompanyCard) => {
             if (companyCard) {
               this.companyCard = companyCard

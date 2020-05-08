@@ -1,0 +1,15 @@
+<wd-admin-header title="Companies">
+  <a [routerLink]="'edit'" nbButton shape="round" status="warning">
+    <nb-icon icon="plus-outline"></nb-icon>
+    Add
+  </a>
+</wd-admin-header>
+
+<wd-data-table
+[id]="'cid'"
+[loading]="loading"
+[columns]="tableColumns"
+[data]="companies"
+name="company"
+[actions]="actions"
+(removeEvent)="companyRemove($event[0])"></wd-data-table>

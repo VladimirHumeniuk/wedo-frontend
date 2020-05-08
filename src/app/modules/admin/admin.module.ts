@@ -26,15 +26,17 @@ import { SidebarNavigationComponent } from './layout/sidebar-navigation/sidebar-
 import { AdminPanelComponent } from './pages/admin-panel/admin-panel.component';
 import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
+import { UsersComponent } from './pages/users/users.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
+import { CompaniesComponent } from './pages/companies/companies.component';
 
 // Components
 import { AdminComponent } from './admin.component';
-import { UsersComponent } from './pages/users/users.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { AdminFormComponent } from './components/admin-form/admin-form.component';
-import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 import { PromptDialogComponent } from './components/data-table/prompt-dialog/prompt-dialog.component';
+import { EditCompanyComponent } from './pages/companies/edit-company/edit-company.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { PromptDialogComponent } from './components/data-table/prompt-dialog/pro
     AdminFormComponent,
     EditCategoryComponent,
     AdminHeaderComponent,
-    PromptDialogComponent
+    PromptDialogComponent,
+    CompaniesComponent,
+    EditCompanyComponent
   ],
   imports: [
     CommonModule,
