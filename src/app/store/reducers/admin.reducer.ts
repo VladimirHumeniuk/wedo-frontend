@@ -51,6 +51,27 @@ export function adminReducer(
       }
     }
 
+    case CompaniesActions.REMOVE_COMPANY: {
+      return { ...state, loading: true, error: null };
+    }
+
+    case CompaniesActions.REMOVE_COMPANY_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        alerts: [...state.companies.filter(x => x.cid !== action.payload.cid)]
+      };
+    }
+
+    case CompaniesActions.REMOVE_COMPANY_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: 'Company is not removed',
+      }
+    }
+
     default:
       return state;
   }

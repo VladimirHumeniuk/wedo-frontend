@@ -10,4 +10,6 @@
 [loading]="loading"
 [columns]="tableColumns"
 [data]="companies"
-[actions]="actions"></wd-data-table>
+name="company"
+[actions]="actions"
+(removeEvent)="companyRemove($event[0])"></wd-data-table>

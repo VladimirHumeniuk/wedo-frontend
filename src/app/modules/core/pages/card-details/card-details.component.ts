@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService, CategoriesService } from 'src/app/shared/services';
+import { CompaniesService, CategoriesService } from 'src/app/shared/services';
 import { ActivatedRoute } from '@angular/router';
 import { CompanyCard, Category } from 'src/app/shared/models';
 import { SafeComponent } from 'src/app/shared/helpers';
@@ -18,7 +18,7 @@ export class CardDetailsComponent extends SafeComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly userService: UserService,
+    private readonly companiesService: CompaniesService,
     private readonly categoriesService: CategoriesService
   ) {
     super()
@@ -40,7 +40,7 @@ export class CardDetailsComponent extends SafeComponent implements OnInit {
   }
 
   public getCompany(cid: string): void {
-    this.userService.getCompany(cid)
+    this.companiesService.getCompany(cid)
     .pipe(
       take(1),
       takeUntil(this.unsubscriber)

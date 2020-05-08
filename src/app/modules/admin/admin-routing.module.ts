@@ -12,6 +12,7 @@ import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 import { CompaniesComponent } from './pages/companies/companies.component';
+import { EditCompanyComponent } from './pages/companies/edit-company/edit-company.component';
 
 const routes: Routes = [
   {
@@ -57,6 +58,10 @@ const routes: Routes = [
           {
             path: '',
             component: CompaniesComponent,
+          },
+          {
+            path: 'edit',
+            component: EditCompanyComponent
           }
         ]
       }

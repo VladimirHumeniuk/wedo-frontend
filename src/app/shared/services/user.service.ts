@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
-import { getAllUsersQuery, getUserQuery, getCompanyQuery, getAllCompaniesQuery, assignCompanyMutation } from '../api/user.api';
+import { getAllUsersQuery, getUserQuery } from '../api/user.api';
 import { Observable } from 'rxjs/Observable';
 import { User, CompanyCard, Roles } from '../models';
 import { Store, select } from '@ngrx/store';
@@ -40,31 +40,6 @@ export class UserService {
       getUserQuery,
       (data) => data.getUser,
       { uid });
-    return source;
-  }
-
-  public getAllCompanies(): Observable<CompanyCard[]> {
-    const source = this.baseApolloService.query<{}, CompanyCard[]>(getAllCompaniesQuery, (data) => data.getAllCompanies);
-    return source;
-  }
-
-  public getCompany(cid: string): Observable<CompanyCard> {
-    const source = this.baseApolloService.query<{ cid: string }, CompanyCard>(getCompanyQuery, (data) => data.getCompany, { cid });
-    return source;
-  }
-
-  public getUserCompany(cid: string): Observable<CompanyCard> {
-    return this.getCompany(cid);
-  }
-
-  public assignCompany(userId: string, companyId: string): Observable<boolean> {
-    const source = this.baseApolloService.mutation<{
-      userId: string,
-      companyId: string
-    }, boolean>(assignCompanyMutation, (data) => data.assignCompanyMutation, {
-      userId,
-      companyId
-    });
     return source;
   }
 

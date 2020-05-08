@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { CompanyCard, User, Category } from 'src/app/shared/models';
 import { UserService, CategoriesService } from 'src/app/shared/services';
-import { GetAllCompanies } from 'src/app/store/actions/companies.action';
+import { GetAllCompanies, RemoveCompany } from 'src/app/store/actions/companies.action';
 import { AdminService } from 'src/app/shared/services/admin.service';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { takeUntil, map, tap, take, delay, switchMap } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'wd-companies',
@@ -33,8 +34,16 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
     private readonly categoriesService: CategoriesService,
     private readonly adminService: AdminService,
     private readonly store: Store<AppState>,
+    private readonly toastrService: NbToastrService,
   ) {
     super();
+  }
+
+  public companyRemove(cid: string): void {
+    this.store.dispatch(new RemoveCompany({ cid }))
+    this.toastrService.success('Company removed', 'Removed',
+      { icon: 'trash-2-outline' }
+    )
   }
 
   ngOnInit(): void {

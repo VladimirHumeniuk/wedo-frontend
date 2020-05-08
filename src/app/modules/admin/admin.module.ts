@@ -36,6 +36,7 @@ import { DataTableComponent } from './components/data-table/data-table.component
 import { AdminFormComponent } from './components/admin-form/admin-form.component';
 import { AdminHeaderComponent } from './components/admin-header/admin-header.component';
 import { PromptDialogComponent } from './components/data-table/prompt-dialog/prompt-dialog.component';
+import { EditCompanyComponent } from './pages/companies/edit-company/edit-company.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { PromptDialogComponent } from './components/data-table/prompt-dialog/pro
     EditCategoryComponent,
     AdminHeaderComponent,
     PromptDialogComponent,
-    CompaniesComponent
+    CompaniesComponent,
+    EditCompanyComponent
   ],
   imports: [
     CommonModule,

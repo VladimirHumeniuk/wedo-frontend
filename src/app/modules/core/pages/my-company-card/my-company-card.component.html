@@ -93,18 +93,18 @@
           </wd-form-item>
 
         <wd-input-group
-          name="address"
-          type="textarea"
-          [rows]="4"
-          [parentForm]="myCardForm"
-          placeholder="Company address"></wd-input-group>
-          <wd-form-explain *ngIf="
-          myCardForm.controls['address'].errors &&
-          myCardForm.controls['address'].dirty &&
-          myCardForm.controls['address'].touched"
-          [isRelative]="true"
-          [formName]="myCardForm"
-          controlName="address"></wd-form-explain>
+        name="address"
+        type="textarea"
+        [rows]="4"
+        [parentForm]="myCardForm"
+        placeholder="Company address"></wd-input-group>
+        <wd-form-explain *ngIf="
+        myCardForm.controls['address'].errors &&
+        myCardForm.controls['address'].dirty &&
+        myCardForm.controls['address'].touched"
+        [isRelative]="true"
+        [formName]="myCardForm"
+        controlName="address"></wd-form-explain>
         </nb-card-body>
       </nb-card>
     </div>

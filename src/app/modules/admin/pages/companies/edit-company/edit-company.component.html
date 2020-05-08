@@ -1,0 +1,117 @@
+<wd-admin-header title="Edit company"></wd-admin-header>
+
+<form [formGroup]="editCompanyForm" (ngSubmit)="publishCard()">
+  <wd-admin-form [parentForm]="editCompanyForm" [loading]="loading">
+    <ng-container image>
+      <wd-form-item>
+        <wd-file-dropzone
+        name="image"
+        maxSize="250"
+        (upload)="onUpload($event)"
+        (removeImage)="onImageRemove($event)"
+        [parentForm]="editCompanyForm"
+        [valueSrc]="companyCard ? companyCard.image : null"
+        [valueAlt]="companyCard ? companyCard.title : null"
+        ></wd-file-dropzone>
+      </wd-form-item>
+    </ng-container>
+
+    <ng-container general>
+      <wd-form-item>
+        <wd-input-group
+        name="cid"
+        type="text"
+        [parentForm]="editCompanyForm"
+        placeholder="Company ID"
+        [disabled]="true"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="owner"
+        type="text"
+        [parentForm]="editCompanyForm"
+        placeholder="Company owner UID"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="title"
+        type="text"
+        [parentForm]="editCompanyForm"
+        placeholder="Company name"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-select
+        name="category"
+        [parentForm]="editCompanyForm"
+        label="Company category"
+        [clearable]="false"
+        bindLabel="title"
+        bindValue="id"
+        [items]="categories"></wd-select>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="phone"
+        type="tel"
+        label="Phone number"
+        [parentForm]="editCompanyForm"
+        placeholder="Phone number"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="url"
+        type="text"
+        label="URL"
+        [parentForm]="editCompanyForm"
+        placeholder="Company website"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="email"
+        type="email"
+        label="Email address"
+        [parentForm]="editCompanyForm"
+        placeholder="Email address"></wd-input-group>
+      </wd-form-item>
+    </ng-container>
+
+    <ng-container textareas>
+      <wd-form-item>
+        <wd-input-group
+        name="address"
+        type="textarea"
+        [rows]="4"
+        [parentForm]="editCompanyForm"
+        placeholder="Company address"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-input-group
+        name="shortDescription"
+        type="textarea"
+        [rows]="4"
+        label="Short description"
+        [parentForm]="editCompanyForm"
+        placeholder="Short company description"></wd-input-group>
+      </wd-form-item>
+
+      <wd-form-item>
+        <wd-wysiwyg
+        label="Company information"
+        [parentForm]="editCompanyForm"
+        maxLength="900"
+        name="wysiwyg"></wd-wysiwyg>
+      </wd-form-item>
+    </ng-container>
+
+    <ng-container checkboxes>
+      <nb-checkbox formControlName="isShown">Published</nb-checkbox>
+    </ng-container>
+  </wd-admin-form>
+</form>
