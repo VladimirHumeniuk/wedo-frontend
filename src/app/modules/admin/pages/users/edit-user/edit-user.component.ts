@@ -27,7 +27,16 @@ export class EditUserComponent extends SafeComponent implements OnInit {
 
   public loading: boolean
 
-  accountTypes = ['Business', 'Freelancer']
+  public accountTypes = [
+    {
+      value: "business",
+      title: "Business"
+    },
+    {
+      value: "personal",
+      title: "Personal"
+    }
+  ]
 
   constructor(
     private readonly formBuilder: FormBuilder,

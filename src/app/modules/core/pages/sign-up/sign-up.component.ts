@@ -22,12 +22,12 @@ export class SignUpComponent implements OnInit {
 
   public accountTypes = [
     {
-      value: "company",
-      title: "We are Company"
+      value: "business",
+      title: "Business"
     },
     {
-      value: "freelancer",
-      title: "I'm a Freelancer"
+      value: "personal",
+      title: "Personal"
     }
   ]
 

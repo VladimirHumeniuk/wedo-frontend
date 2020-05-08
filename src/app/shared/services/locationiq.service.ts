@@ -11,7 +11,7 @@ export class LocationiqService {
   constructor() { }
 
   public searchLocation(search_string: string) {
-    return fetch(`${this.API_URL}search.php?key=${this.token}&q=,${search_string}&country=Gibraltar&format=json`, {
+    return fetch(`${this.API_URL}search.php?key=${this.token}&q=,${search_string}&countrycodes=GI&format=json`, {
       method: 'GET',
       mode: 'cors',
     })

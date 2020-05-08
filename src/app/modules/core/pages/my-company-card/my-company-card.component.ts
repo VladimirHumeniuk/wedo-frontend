@@ -121,8 +121,7 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
 
       let companyData: CompanyCard = {
         ...formData,
-        owner: uid,
-        created: new Date()
+        owner: uid
       }
 
       const { image, ...formValue } = companyData
@@ -167,7 +166,9 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
       }
 
       if (!this.companyCard) {
-        companiesLink.add(formValue)
+        const newCompany = { ...formValue, created: new Date() }
+
+        companiesLink.add(newCompany)
           .then((res: DocumentReference) => {
             this.companiesService.assignCompany(this.user.uid, res.id)
           })
@@ -178,6 +179,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
   ngOnInit() {
     this.formInit()
     this.getAllCategories()
+
+    this.myCardForm.valueChanges
 
     this.user$.pipe(
       take(1),
