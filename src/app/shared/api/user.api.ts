@@ -3,8 +3,8 @@ import { userFieldsFragment, companyFieldsFragment } from './common/api.fragment
 
 // Api;
 export const getAllUsersQuery = gql`
-    query {
-        getAllUsers {
+    query getAllUsers($lastVisible: Int, $limit: Int) {
+        getAllUsers(lastVisible: $lastVisible, limit: $limit) {
             ...userFields
         }
     }

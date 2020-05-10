@@ -16,6 +16,12 @@ export class CardsGridComponent extends SafeComponent implements OnInit {
 
   public categories: Category[];
 
+  public p: number = 1;
+
+  public changePage(page: number): void {
+    this.p = page
+  }
+
   constructor(
     private readonly categoriesService: CategoriesService
   ) {

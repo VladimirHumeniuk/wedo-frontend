@@ -1,0 +1,54 @@
+@import '../../../../styles/variables/variables';
+
+.pagination {
+  ::ng-deep {
+    [nbButton].appearance-filled.size-medium {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px !important;
+      height: 34px !important;
+      padding: 0 !important;
+
+      &.status-basic {
+        background-color: transparent;
+        border-color: transparent;
+
+        &:hover:not(:disabled) {
+          background-color: #e4e9f2;
+          border-color: #c5cee0;
+        }
+      }
+    }
+
+    [nbButton].size-medium nb-icon {
+      transform: scale(.85) !important;
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  margin: 1.25rem -3.5px;
+
+  &--start {
+    justify-content: flex-start;
+  }
+
+  &--center {
+    justify-content: center;
+  }
+
+  &--end {
+    justify-content: flex-end;
+  }
+}
+
+.pagination__button {
+  margin: 0 3.5px;
+}
+
+.pagination__button--icon {
+  font-size: 10px;
+}

@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { CountdownModule } from 'ngx-countdown';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import {
   NbAlertModule,
@@ -97,6 +98,7 @@ import { PromptPasswordComponent } from './pages/prompt-password/prompt-password
     FontAwesomeModule,
     LeafletModule,
     FormsModule,
+    NgxPaginationModule,
     NbAlertModule,
     NbButtonModule,
     NbCardModule,

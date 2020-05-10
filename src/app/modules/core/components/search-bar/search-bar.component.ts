@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CompanyCard, Category } from 'src/app/shared/models';
 import { ItemsService } from '../../services';

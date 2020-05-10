@@ -1,6 +1,6 @@
 <main class="cards-grid">
   <wd-card
-  *ngFor="let card of items"
+  *ngFor="let card of items | paginate: { id: 'cards-grid', itemsPerPage: 16, currentPage: p }"
   [cid]="card.cid"
   [title]="card.title"
   [category]="getCategoryTitle(card.category)"
@@ -8,3 +8,5 @@
   [description]="card.shortDescription"
   [rating]="card.rating"></wd-card>
 </main>
+
+<wd-pagination id="cards-grid" position="center" (pageChange)="changePage($event)"></wd-pagination>

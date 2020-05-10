@@ -11,7 +11,6 @@ import { SafeComponent } from 'src/app/shared/helpers';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { AddAlert, RemoveAlert } from 'src/app/store/actions/alert.action';
-import { GetAllUsers } from 'src/app/store/actions/user.action';
 
 @Component({
   selector: 'wd-edit-user',
@@ -88,7 +87,7 @@ export class EditUserComponent extends SafeComponent implements OnInit {
       this.userService.setUserData(formData)
         .then(() => {
           if (!this.editUserForm.get('company').pristine && this.editUserForm.get('company').touched) {
-            this.companiesService.assignCompany(formData.uid, formData.company)
+            this.companiesService.assignCompany(formData.uid, formData.company).subscribe()
           }
 
           this.toastrService.success('Successfully saved', 'Saved');

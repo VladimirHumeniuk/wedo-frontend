@@ -10,5 +10,9 @@
 [columns]="tableColumns"
 [data]="categories"
 [actions]="actions"
+pagination="true"
+paginationId="categories-table"
+itemsPerPage="10"
 name="category"
+paginationPosition="end"
 (removeEvent)="categoryRemove($event[0])"></wd-data-table>

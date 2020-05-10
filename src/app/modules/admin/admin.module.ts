@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import {
   NbButtonModule,
@@ -57,6 +58,7 @@ import { EditCompanyComponent } from './pages/companies/edit-company/edit-compan
   ],
   imports: [
     CommonModule,
+    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     AdminRoutingModule,
