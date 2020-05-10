@@ -22,10 +22,13 @@ export class UsersComponent extends SafeComponent implements OnInit {
     { title: 'Type', key: 'accountType' },
     { title: 'Company', key: 'company', options: { code: true } },
     { title: 'Created', key: 'createdAt', options: { date: true } }
-  ]
-  public actions = { edit: true }
-  public users: User[]
-  public loading: boolean
+  ];
+
+  public actions = { edit: true };
+  public users: User[];
+  public loading: boolean;
+
+  public itemsPerPage: number = 10;
 
   constructor(
     private readonly router: Router,

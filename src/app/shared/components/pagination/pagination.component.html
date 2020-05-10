@@ -1,0 +1,52 @@
+<pagination-template
+[id]="id"
+#p="paginationApi"
+maxSize="6"
+(pageChange)="emitPageChange($event)">
+  <ng-container *ngIf="p.pages.length > 1">
+    <div [ngClass]="['pagination', 'pagination--' + position]">
+      <div class="pagination__button">
+        <button
+        nbButton
+        status="basic"
+        (click)="p.previous()"
+        [disabled]="p.isFirstPage()">
+          <nb-icon icon="arrow-ios-back-outline"></nb-icon>
+        </button>
+      </div>
+
+      <div
+      *ngFor="let page of p.pages"
+      class="pagination__button"
+      [class.current]="p.getCurrent() === page.value">
+        <button
+        nbButton
+        [status]="p.getCurrent() === page.value ? 'primary' : 'basic'"
+        (click)="p.setCurrent(page.value)">
+          <span>{{ page.label }}</span>
+        </button>
+      </div>
+
+      <div class="pagination__button">
+        <button
+        nbButton
+        status="basic"
+        (click)="p.next()"
+        [disabled]="p.isLastPage()">
+          <nb-icon icon="arrow-ios-forward-outline"></nb-icon>
+        </button>
+      </div>
+
+      <!-- <div *ngIf="p.pages.length > 6" class="pagination__button">
+        <button
+        nbButton
+        status="basic"
+        (click)="p.setCurrent(p.getLastPage())"
+        [disabled]="p.isLastPage()">
+          <nb-icon icon="arrowhead-right-outline"></nb-icon>
+        </button>
+      </div> -->
+    </div>
+  </ng-container>
+
+</pagination-template>

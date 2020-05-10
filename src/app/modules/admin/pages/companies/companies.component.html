@@ -12,4 +12,8 @@
 [data]="companies"
 name="company"
 [actions]="actions"
+pagination="true"
+paginationId="companies-table"
+itemsPerPage="10"
+paginationPosition="end"
 (removeEvent)="companyRemove($event[0])"></wd-data-table>

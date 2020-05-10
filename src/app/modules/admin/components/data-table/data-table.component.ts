@@ -38,7 +38,15 @@ export class DataTableComponent implements OnInit {
   @Input() actions: dataTableActions;
   @Input() name: string;
 
+  @Input() pagination: boolean;
+  @Input() paginationId: string;
+  @Input() itemsPerPage: number;
+  @Input() paginationPosition: string;
+
   @Output() removeEvent: EventEmitter<any> = new EventEmitter();
+  @Output() pageChange: EventEmitter<any> = new EventEmitter();
+
+  public p: number = 1;
 
   public emitAction(id: string, action: string): void {
     const actions: { [key: string]: EventEmitter<any> } = {
@@ -46,6 +54,11 @@ export class DataTableComponent implements OnInit {
     }
 
     actions[action].emit([id])
+  }
+
+  public changePage(page: number): void {
+    this.p = page
+    this.pageChange.emit(this.p)
   }
 
   public openRemovePrompt(id: any): void {

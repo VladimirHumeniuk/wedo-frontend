@@ -34,14 +34,17 @@ export class CompaniesService {
   }
 
   public assignCompany(userId: string, companyId: string): Observable<boolean> {
-    const source = this.baseApolloService.mutation<{
-      userId: string,
-      companyId: string
-    }, boolean>(assignCompanyMutation, (data) => data.assignCompanyMutation, {
+    const source$ = this.baseApolloService.mutation<
+      {
+        userId: string;
+        companyId: string;
+      },
+      boolean
+    >(assignCompanyMutation, data => data.assignCompanyMutation, {
       userId,
       companyId
     });
-    return source;
+    return source$;
   }
 
   public removeCompany(cid: string): Observable<boolean> {

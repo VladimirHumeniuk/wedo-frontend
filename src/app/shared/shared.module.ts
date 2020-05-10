@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask'
 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {
   NbAlertModule,
@@ -28,6 +29,7 @@ import { ContentEditableDirective } from './directives/content-editable.directiv
 import { SelectComponent } from './components/select/select.component';
 import { TipOffComponent } from './components/tip-off/tip-off.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,8 @@ import { LogoComponent } from './components/logo/logo.component';
     ContentEditableDirective,
     SelectComponent,
     TipOffComponent,
-    LogoComponent
+    LogoComponent,
+    PaginationComponent
   ],
   imports: [
     NgSelectModule,
@@ -52,6 +55,7 @@ import { LogoComponent } from './components/logo/logo.component';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     NbAlertModule,
     NbButtonModule,
     NbInputModule,
@@ -73,7 +77,8 @@ import { LogoComponent } from './components/logo/logo.component';
     WysiwygComponent,
     ContentEditableDirective,
     SelectComponent,
-    TipOffComponent
+    TipOffComponent,
+    PaginationComponent
   ]
 })
 export class SharedModule { }

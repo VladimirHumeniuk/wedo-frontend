@@ -22,7 +22,7 @@
       </tr>
 
       <ng-container *ngIf="data && !loading">
-        <tr *ngFor="let row of data">
+        <tr *ngFor="let row of data | paginate: { id: paginationId, itemsPerPage: itemsPerPage, currentPage: p }">
           <td *ngFor="let col of columns" [ngStyle]="{'textAlign': col.options?.align }">
             <span *ngIf="row[col.key] && !col.options?.bool" [className]="col.options?.code ? 'data-table--code' : ''">
               {{ col.options?.date ? (row[col.key] | date) : row[col.key] }}
@@ -51,3 +51,5 @@
     </tbody>
   </table>
 </div>
+
+<wd-pagination [id]="paginationId" [position]="paginationPosition" *ngIf="pagination" (pageChange)="changePage($event)"></wd-pagination>

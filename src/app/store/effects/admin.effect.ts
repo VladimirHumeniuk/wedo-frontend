@@ -7,6 +7,7 @@ import { UserService, CompaniesService } from 'src/app/shared/services';
 
 import {
   GET_ALL_USERS,
+  GetAllUsers,
   GetAllUsersSuccess,
   GetAllUsersError
 } from 'src/app/store/actions/user.action';
@@ -33,7 +34,9 @@ export class AdminEffects {
   @Effect()
   getAllUsers$: Observable<Action> = this.actions.pipe(
     ofType(GET_ALL_USERS),
-    switchMap(_ => this.userService.getAllUsers()),
+    switchMap((action: GetAllUsers) => {
+      return this.userService.getAllUsers(action.payload.lastVisible, action.payload.limit)
+    }),
     map(users => new GetAllUsersSuccess({ users })),
     catchError(_ => of(new GetAllUsersError()))
   );

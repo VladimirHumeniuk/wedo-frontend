@@ -212,7 +212,7 @@ export class EditCompanyComponent extends SafeComponent implements OnInit {
             companiesLink.doc(res.id).set({ cid: res.id }, { merge: true })
 
             if (newCompany.owner) {
-              this.companiesService.assignCompany(newCompany.owner, res.id)
+              this.companiesService.assignCompany(newCompany.owner, res.id).subscribe()
             }
           }).then(() => {
             this.editCompanyForm.markAsPristine()

@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { UploadService, UserService, CategoriesService, CompaniesService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
+import { GetUser } from 'src/app/store/actions/user.action';
 
 @Component({
   selector: 'wd-my-company-card',
@@ -44,6 +45,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
     private readonly companiesService: CompaniesService
   ) {
     super();
+
+    this.getAllCategories()
   }
 
   private formInit(): void {
@@ -66,7 +69,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(290)
       ]],
-      category: [null, [
+      category: [undefined, [
+        Validators.pattern("^[0-9]*$"),
         Validators.required
       ]],
       wysiwyg: [''],
@@ -101,8 +105,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
       if (!this.categories.length) {
         this.categoriesService.getAllCategories().pipe(
           takeUntil(this.unsubscriber),
-          tap(categories => this.categories = categories)
-        ).subscribe()
+          take(1)
+        ).subscribe(categories => this.categories = categories)
       }
     })
   }
@@ -125,15 +129,9 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
       }
 
       const { image, ...formValue } = companyData
+      const promises = []
 
       if (this.companyCard) {
-        const promises = []
-
-        const updateCompanyData = companiesLink.doc(this.companyCard.cid)
-          .set(formValue, { merge: true })
-
-        promises.push(updateCompanyData)
-
         if (this.upload) {
           const updateImage = this.uploadService.publishUploads(this.upload, this.companyCard.cid).then((url: string) => {
             companiesLink.doc(this.companyCard.cid)
@@ -151,39 +149,52 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
           promises.push(removeImage, clearImageData)
         }
 
-        Promise.all(promises)
-          .then(() => {
-            this.myCardForm.markAsPristine()
-            this.toastrService.success('Company information successfully saved', 'Saved')
-          })
-          .catch(error => {
-            throw new Error(error)
-            this.toastrService.danger('Something went wrong, try again later', 'Error')
-          })
-          .finally(() => {
-            this.loading = false
-          })
+        const updateCompanyData = companiesLink.doc(this.companyCard.cid)
+          .set(formValue, { merge: true })
+
+        promises.push(updateCompanyData)
       }
 
       if (!this.companyCard) {
         const newCompany = { ...formValue, created: new Date() }
 
-        companiesLink.add(newCompany)
+        const publishNewCompany = companiesLink.add(newCompany)
           .then((res: DocumentReference) => {
-            this.companiesService.assignCompany(this.user.uid, res.id)
+            this.companiesService.assignCompany(this.user.uid, res.id).subscribe()
+
+            if (this.upload) {
+              const updateImage = this.uploadService.publishUploads(this.upload, res.id).then((url: string) => {
+                companiesLink.doc(res.id)
+                  .set({ image: url }, { merge: true })
+              })
+            }
           })
+
+        promises.push(publishNewCompany)
       }
+
+      Promise.all(promises)
+        .then(() => {
+          this.myCardForm.markAsPristine()
+          this.toastrService.success('Company information successfully saved', 'Saved')
+        })
+        .catch(error => {
+          throw new Error(error)
+          this.toastrService.danger('Something went wrong, try again later', 'Error')
+        })
+        .finally(() => {
+          // this.store.dispatch(new GetUser());
+          this.loading = false;
+        })
     }
   }
 
   ngOnInit() {
     this.formInit()
-    this.getAllCategories()
 
     this.myCardForm.valueChanges
 
     this.user$.pipe(
-      take(1),
       takeUntil(this.unsubscriber)
     ).subscribe((user: User) => {
       this.user = user
@@ -194,11 +205,24 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
             if (companyCard) {
               this.companyCard = companyCard
               Object.keys(companyCard).forEach((key: string) => {
-                if (
-                  this.myCardForm.controls[key] &&
-                  key !== 'image'
-                ) {
-                  this.myCardForm.controls[key].setValue(companyCard[key])
+                if (this.myCardForm.controls[key]) {
+                  switch (key) {
+                    case 'category':
+                      if (typeof companyCard['category'] === 'string') {
+                        const categoryId = this.categories.filter(cat => cat.title === companyCard[key])[0].id
+                        this.myCardForm.controls[key].setValue(categoryId)
+                      } else {
+                        this.myCardForm.controls[key].setValue(companyCard['category'])
+                      }
+                      break;
+
+                    case 'image':
+                      break;
+
+                    default:
+                      this.myCardForm.controls[key].setValue(companyCard[key])
+                      break;
+                  }
                 }
               })
             }

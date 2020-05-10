@@ -44,7 +44,7 @@ export class AuthError implements Action {
 export class GetAllUsers implements Action {
   readonly type = GET_ALL_USERS;
 
-  constructor() {}
+  constructor(public payload: { lastVisible?: number, limit?: number } = {}) {}
 }
 export class GetAllUsersSuccess implements Action {
   readonly type = GET_ALL_USERS_SUCCESS;
