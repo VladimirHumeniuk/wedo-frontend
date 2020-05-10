@@ -157,7 +157,7 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
 
       if (!this.companyCard) {
         const newCompany = { ...formValue, created: new Date() }
-
+        
         const publishNewCompany = companiesLink.add(newCompany)
           .then((res: DocumentReference) => {
             this.companiesService.assignCompany(this.user.uid, res.id).subscribe()
@@ -191,6 +191,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
 
   ngOnInit() {
     this.formInit()
+
+    this.myCardForm.valueChanges
 
     this.myCardForm.valueChanges
 
