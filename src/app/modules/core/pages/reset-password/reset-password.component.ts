@@ -61,7 +61,7 @@ export class ResetPasswordComponent implements OnInit {
     })
   }
 
-  public updatePassword(): void {
+  public resetPassword(): void {
     this.loading = true
 
     if (this.changePasswordForm.invalid) {
@@ -71,7 +71,7 @@ export class ResetPasswordComponent implements OnInit {
     if (this.changePasswordForm.valid) {
       const { password } = this.changePasswordForm.value
 
-      this.authService.updatePassword(this.oobCode, password)
+      this.authService.resetPassword(this.oobCode, password)
         .then(() => {
           this.passwordUpdated = true
           this.changePasswordForm.reset()

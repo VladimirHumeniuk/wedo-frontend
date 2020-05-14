@@ -1,0 +1,19 @@
+@import '../../../../../styles/variables/variables';
+
+:host {
+  display: block;
+  width: 100%;
+  padding: 30px 14px;
+
+  @media (min-width: $mq-tablet) {
+    padding: 30px 44px;
+  }
+
+  @media (min-width: $mq-tablet-landscape) {
+    padding: 30px 64px;
+  }
+
+  @media (min-width: $mq-desktop) {
+    padding: 30px 84px;
+  }
+}

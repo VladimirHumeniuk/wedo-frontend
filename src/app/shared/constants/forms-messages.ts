@@ -6,6 +6,7 @@ export const FORMS_MESSAGES = {
     toManyRequests: "We have blocked all requests from this device due to unusual activity. Try again later."
   },
   password: {
+    wrongPasswordCurrent: "Incorrect password",
     wrongPassword: "The password is invalid or the user with this email does not exist",
     requiredLength: `Password length should be between 6 and 32 symbols`,
   },

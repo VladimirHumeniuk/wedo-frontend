@@ -1,0 +1,62 @@
+@import '../../../../../../styles/variables/variables';
+
+.warning {
+  display: flex;
+  padding: 15px;
+  width: 100%;
+  border-radius: 6px;
+  background-color: #ffeccc;
+  color: #ba7800;
+  margin-bottom: 20px;
+
+  @media (min-width: $mq-tablet-landscape) {
+    padding: 25px 30px 20px;
+  }
+
+  nb-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.warning__icon {
+  font-weight: 400;
+  margin-right: 15px;
+
+  @media (min-width: $mq-tablet-landscape) {
+    margin-right: 20px;
+  }
+}
+
+.warning__title {
+  font-size: 16px;
+
+  @media (min-width: $mq-tablet-landscape) {
+    font-size: 18px;
+  }
+}
+
+.warning__text {
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 10px;
+
+  a {
+    color: inherit;
+    font-weight: 600;
+  }
+}
+
+.remove-account-form__controls {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  b,
+  .countdown {
+    color: $c-error;
+    font-weight: 900;
+  }
+}

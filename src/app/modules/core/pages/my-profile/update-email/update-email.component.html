@@ -1,0 +1,43 @@
+<form [formGroup]="updateEmailForm" (ngSubmit)="changeEmail()">
+  <wd-form-item>
+    <wd-input-group
+    name="confirmPasswordForEmailChange"
+    type="password"
+    isPrivate="true"
+    label="Current password"
+    [parentForm]="updateEmailForm"
+    placeholder="Current password">
+    </wd-input-group>
+    <wd-form-explain *ngIf="
+    updateEmailForm.controls['confirmPasswordForEmailChange'].errors &&
+    updateEmailForm.controls['confirmPasswordForEmailChange'].dirty &&
+    updateEmailForm.controls['confirmPasswordForEmailChange'].touched"
+    controlName="confirmPasswordForEmailChange"
+    [formName]="updateEmailForm"></wd-form-explain>
+  </wd-form-item>
+
+  <wd-form-item>
+    <wd-input-group
+    name="email"
+    type="email"
+    label="New email"
+    [parentForm]="updateEmailForm"
+    placeholder="New email">
+    </wd-input-group>
+    <wd-form-explain *ngIf="
+    updateEmailForm.controls['email'].errors &&
+    updateEmailForm.controls['email'].dirty &&
+    updateEmailForm.controls['email'].touched"
+    controlName="email"
+    [formName]="updateEmailForm"></wd-form-explain>
+  </wd-form-item>
+
+  <div class="change-password-form__controls">
+    <button
+    nbButton
+    [disabled]="updateEmailForm.invalid"
+    [nbSpinner]="loading"
+    status="primary"
+    type="submit">Update email</button>
+  </div>
+</form>

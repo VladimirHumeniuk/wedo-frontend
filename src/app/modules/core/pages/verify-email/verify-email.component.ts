@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from './../../../../app.state';
 import { AuthService } from 'src/app/shared/services';
+import { CountdownEvent } from 'ngx-countdown';
 
 @Component({
   selector: 'wd-verify-email',
@@ -19,6 +20,10 @@ export class VerifyEmailComponent implements OnInit {
     private readonly store: Store<AppState>,
     private readonly authService: AuthService
   ) { }
+
+  public handleTimerEvent(event: CountdownEvent): void {
+    if (event.action === 'done') this.holdTimer = false
+  }
 
   public resendEmail(): void {
     this.loader = true

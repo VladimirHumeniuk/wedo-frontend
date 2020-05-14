@@ -34,7 +34,8 @@ export class InputGroupComponent implements OnInit {
     this.status = null
   }
 
-  public showPassword(): void {
+  public showPassword(event: Event): void {
+    event.preventDefault()
     this.passVisible = !this.passVisible
 
     if (this.passVisible) {

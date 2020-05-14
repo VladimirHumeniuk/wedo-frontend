@@ -1,11 +1,11 @@
 <ng-container *ngIf="cardDetails">
   <header
   class="card-details__image-cover"
-  [ngStyle]="{'background-image': 'url(' + cardDetails.image + ')'}">
+  [ngStyle]="{'background-image': cardDetails.image ? 'url(' + cardDetails.image + ')' : 'url(https://firebasestorage.googleapis.com/v0/b/wedo-application.appspot.com/o/core%2Fgib-rock-blue.svg?alt=media&token=1f870a01-7703-4819-b38d-870ff1ae9312)'}">
   </header>
 
   <article class="card-details">
-    <div class="card-details__subheader">
+    <wd-content-container class="card-details__subheader">
       <div class="card-details__subheader-title">
         <h1 class="card-details__title">{{cardDetails.title}}</h1>
         <span class="card-details__category">{{cardDetails.category}}</span>
@@ -14,9 +14,9 @@
       <div class="card-details__subheader-controls">
         <wd-social-share></wd-social-share>
       </div>
-    </div>
+    </wd-content-container>
 
-    <main class="card-details__main-info">
+    <wd-content-container class="card-details__main-info">
       <div class="card-details__information">
         <h2 class="card-details__heading">Company information</h2>
         <div [innerHTML]="cardDetails.wysiwyg"></div>
@@ -36,6 +36,6 @@
 
         <wd-location-map [address]="cardDetails.address"></wd-location-map>
       </div>
-    </main>
+    </wd-content-container>
   </article>
 </ng-container>

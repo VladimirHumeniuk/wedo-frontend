@@ -20,6 +20,7 @@ import {
   NbPopoverModule,
   NbLayoutModule,
   NbIconModule,
+  NbTabsetModule,
   NbSpinnerModule
 } from '@nebular/theme';
 
@@ -59,6 +60,13 @@ import { LocationMapComponent } from './components/location-map/location-map.com
 import { SocialShareComponent } from './components/social-share/social-share.component';
 import { SocialButtonComponent } from './components/social-share/social-button/social-button.component';
 import { PromptPasswordComponent } from './pages/prompt-password/prompt-password.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
+import { ChangePasswordComponent } from './pages/my-profile/change-password/change-password.component';
+import { UpdateEmailComponent } from './pages/my-profile/update-email/update-email.component';
+import { RemoveAccountComponent } from './pages/my-profile/remove-account/remove-account.component';
+import { ContentContainerComponent } from './components/content-container/content-container.component';
+import { PageTitleComponent } from './components/page-title/page-title.component';
+import { CardRowComponent } from './components/card-row/card-row.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +93,14 @@ import { PromptPasswordComponent } from './pages/prompt-password/prompt-password
     PromptPasswordComponent,
     LayoutComponent,
     NavigationBarComponent,
-    FooterComponent
+    FooterComponent,
+    MyProfileComponent,
+    ChangePasswordComponent,
+    UpdateEmailComponent,
+    RemoveAccountComponent,
+    ContentContainerComponent,
+    PageTitleComponent,
+    CardRowComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -100,6 +115,7 @@ import { PromptPasswordComponent } from './pages/prompt-password/prompt-password
     FormsModule,
     NgxPaginationModule,
     NbAlertModule,
+    NbTabsetModule,
     NbButtonModule,
     NbCardModule,
     NbCheckboxModule,

@@ -68,4 +68,6 @@ $nb-themes: nb-register-theme((
   menu-item-active-background-color: $c-yellow-900,
   menu-item-hover-background-color: $c-yellow-1000,
 
+  tabset-content-padding: 1.5rem 0 0 0,
+
 ), default, default);

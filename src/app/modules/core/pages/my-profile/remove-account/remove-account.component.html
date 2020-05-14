@@ -1,0 +1,65 @@
+<form [formGroup]="removeAccountForm" (ngSubmit)="holdTimer = !holdTimer">
+  <div class="warning">
+    <div class="warning__icon">
+      <nb-icon icon="alert-circle-outline"></nb-icon>
+    </div>
+
+    <div class="warning__content">
+      <div class="warning__title">Once you delete your account, there is no going back. Please be certain.</div>
+      <div *ngIf="plan && plan !== 'free'" class="warning__text">
+        Are you sure you don’t want to just <a href="#">downgrade</a> your account to a FREE account? We won’t charge your payment information anymore.
+      </div>
+    </div>
+  </div>
+
+  <wd-form-item>
+    <wd-input-group
+    name="removeAccountPasswordConfirm"
+    type="password"
+    isPrivate="true"
+    label="Current password"
+    [parentForm]="removeAccountForm"
+    placeholder="Current password">
+    </wd-input-group>
+  </wd-form-item>
+
+  <wd-form-item>
+    <nb-checkbox
+    name="approval"
+    status="danger"
+    formControlName="approval">
+      I understand that my account will be permanently removed
+    </nb-checkbox>
+  </wd-form-item>
+
+  <div class="remove-account-form__controls">
+    <span *ngIf="!holdTimer"></span>
+    <button
+    nbButton
+    *ngIf="!holdTimer"
+    [disabled]="removeAccountForm.invalid"
+    [nbSpinner]="loading"
+    status="danger"
+    type="submit">
+      Remove my account
+    </button>
+
+    <span *ngIf="holdTimer">
+      <b>Warning!</b> Your account will be removed in&nbsp;
+      <countdown #cd class="countdown" [config]="{leftTime: 5, demand: !holdTimer, format: 'ss'}" (event)="handleTimerEvent($event)"></countdown>
+      &nbsp;sec.
+    </span>
+
+    <button
+    nbButton
+    *ngIf="holdTimer"
+    [disabled]="removeAccountForm.invalid"
+    [nbSpinner]="loading"
+    status="danger"
+    outline
+    (click)="cancelTimer()"
+    type="submit">
+      Abort
+    </button>
+  </div>
+</form>

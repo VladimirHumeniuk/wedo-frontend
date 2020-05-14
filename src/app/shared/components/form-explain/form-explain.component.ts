@@ -56,6 +56,8 @@ export class FormExplainComponent {
             }
           }
       }
+
+      this.errors = this.errors.filter(err => err.message)
     })
   }
 

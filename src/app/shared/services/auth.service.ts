@@ -56,7 +56,6 @@ export class AuthService {
 
         this.cloud.setUserRoles(user.uid, { readonly: true })
 
-        this.store.dispatch(new AddAlert({ uid: user.uid, alert: ALERTS['email-not-verified']}));
         return this.userService.setUserData(user);
       })
       .then(() => this.sendEmailVerification())
@@ -69,7 +68,28 @@ export class AuthService {
     this.fireAuth.user.pipe(
       take(1)
     ).subscribe((user: firebase.User) => {
-      sendEmailVerification = user.sendEmailVerification()
+      const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.collection('users').doc(user.uid)
+
+      const roles: Roles = {
+        readonly: true,
+        author: false
+      }
+
+      sendEmailVerification = user.sendEmailVerification().then(() => {
+        userLink.set({
+          emailVerified: false,
+          email: user.email,
+          roles: roles
+        }, { merge: true })
+        this.cloud.setUserRoles(user.uid, { ...roles })
+        this.store.dispatch(new AddAlert({ uid: user.uid, alert: ALERTS['email-not-verified']}))
+
+        userLink.valueChanges().subscribe((user: User) => {
+          this.store.dispatch(new UserActions.SaveUser(user))
+        })
+      }).then(() => {
+        this.router.navigate(['/verify-email'])
+      })
     })
 
     return sendEmailVerification
@@ -84,12 +104,10 @@ export class AuthService {
           readonly: false,
           author: true
         }
-
         userLink.set({
           emailVerified: true,
           roles: roles
         }, { merge: true })
-
         this.cloud.setUserRoles(uid, { ...roles })
 
         userLink.valueChanges().subscribe((user: User) => {
@@ -109,7 +127,7 @@ export class AuthService {
       .catch(error => { throw error })
   }
 
-  public updatePassword(actionCode: string, newPassword: string): Promise<void> {
+  public resetPassword(actionCode: string, newPassword: string): Promise<void> {
     return this.fireAuth.confirmPasswordReset(actionCode, newPassword)
       .catch(error => { throw error })
   }
@@ -183,7 +201,60 @@ export class AuthService {
 
   public signOut(): Promise<void> {
     this.router.navigate(['/'])
-	 this.store.dispatch(new UserActions.RemoveUser())
+    this.store.dispatch(new UserActions.RemoveUser())
     return this.fireAuth.signOut();
+  }
+
+  public updatePassword(currentPassword: string, newPassword: string): Promise<void> {
+    return this.fireAuth.currentUser.then((user: firebase.User) => {
+      if (user) {
+        const credentials = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword)
+
+        return user.reauthenticateWithCredential(credentials).then(res => {
+          if (res) {
+            return user.updatePassword(newPassword).catch(err => { throw new Error(err.code) })
+          }
+        }).catch(err => { throw new Error(err.code) })
+      }
+    })
+  }
+
+  public updateEmail(currentPassword: string, newEmail: string): Promise<void> {
+    return this.fireAuth.currentUser.then((user: firebase.User) => {
+      if (user) {
+        const credentials = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword)
+
+        return user.reauthenticateWithCredential(credentials).then(res => {
+          if (res) {
+            return user.updateEmail(newEmail)
+              .then(() => {
+                this.sendEmailVerification()
+              })
+          }
+        })
+      }
+    })
+  }
+
+  public removeAccount(currentPassword: string): Promise<void> {
+    return this.fireAuth.currentUser.then((user: firebase.User) => {
+      if (user) {
+        const credentials = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword)
+
+        return user.reauthenticateWithCredential(credentials).then(res => {
+          if (res) {
+            this.store.select('user').pipe(
+              take(1)
+            ).subscribe(storeUser => {
+              if (storeUser.company) {
+                this.fireStore.collection('companies').doc(storeUser.company).delete()
+              }
+
+              user.delete().then(() => this.signOut())
+            })
+          }
+        })
+      }
+    })
   }
 }

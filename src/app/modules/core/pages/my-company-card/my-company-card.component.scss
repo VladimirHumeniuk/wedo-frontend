@@ -3,9 +3,11 @@
 .my-company-card__form {
   display: grid;
   grid-gap: 15px;
+  column-gap: 15px;
 
   @media (min-width: $mq-tablet) {
-    grid-gap: 20px;
+    column-gap: 30px;
+    grid-gap: 30px;
   }
 
   @media (min-width: $mq-tablet-landscape) {
@@ -37,6 +39,7 @@
 }
 
 .my-company-card__card {
+  height: 100%;
   margin-bottom: 0;
 }
 
@@ -71,6 +74,10 @@
 
     .wysiwyg__content {
       height: 100%;
+
+      @media (min-width: $mq-desktop) {
+        min-height: 420px;
+      }
     }
   }
 }
