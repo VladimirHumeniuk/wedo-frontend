@@ -6,17 +6,22 @@
     </nb-card-header>
     <nb-card-body>
       <div class="my-profile__account-info">
-        <wd-card-row>
+        <wd-card-row *ngIf="user.accountType === 'personal'" align="center">
+          <ng-container label>Name</ng-container>
+          <ng-container content>{{ user.username }}</ng-container>
+        </wd-card-row>
+
+        <wd-card-row align="center">
           <ng-container label>Login email</ng-container>
           <ng-container content>{{ user.email }}</ng-container>
         </wd-card-row>
 
-        <wd-card-row>
+        <wd-card-row align="center">
           <ng-container label>Account type</ng-container>
           <ng-container content>{{ user.accountType | titlecase }}</ng-container>
         </wd-card-row>
 
-        <wd-card-row align="center">
+        <wd-card-row *ngIf="user.accountType === 'business'" align="center">
           <ng-container label>Membership plan</ng-container>
           <ng-container content>
             <div class="my-profile__plan">

@@ -1,11 +1,40 @@
 <wd-auth-form heading="Sign Up">
   <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <wd-form-item>
+      <wd-select-group
+      name="accountType"
+      label="Account type"
+      [options]="accountTypes"
+      [parentForm]="signUpForm"
+      placeholder="Account type"></wd-select-group>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['accountType'].errors &&
+      signUpForm.controls['accountType'].dirty"
+      controlName="accountType"
+      [formName]="signUpForm"></wd-form-explain>
+    </wd-form-item>
+
+    <wd-form-item *ngIf="signUpForm.controls['accountType'].value === 'personal'">
+      <wd-input-group
+      name="username"
+      type="text"
+      [parentForm]="signUpForm"
+      [disabled]="!formUnlocked"
+      placeholder="Your name"></wd-input-group>
+      <wd-form-explain *ngIf="
+      signUpForm.controls['username'].errors &&
+      signUpForm.controls['username'].dirty &&
+      signUpForm.controls['username'].touched"
+      controlName="username"
+      [formName]="signUpForm"></wd-form-explain>
+    </wd-form-item>
 
     <wd-form-item>
       <wd-input-group
       name="email"
       type="email"
       [parentForm]="signUpForm"
+      [disabled]="!formUnlocked"
       placeholder="Email"></wd-input-group>
       <wd-form-explain *ngIf="
       signUpForm.controls['email'].errors &&
@@ -21,6 +50,7 @@
       type="password"
       isPrivate="true"
       [parentForm]="signUpForm"
+      [disabled]="!formUnlocked"
       placeholder="Password"></wd-input-group>
       <wd-form-explain *ngIf="
       signUpForm.controls['password'].errors &&
@@ -37,26 +67,13 @@
       isPrivate="true"
       label="Repeat password"
       [parentForm]="signUpForm"
+      [disabled]="!formUnlocked"
       placeholder="Confirm password"></wd-input-group>
       <wd-form-explain *ngIf="
       signUpForm.controls['confirmPassword'].errors &&
       signUpForm.controls['confirmPassword'].dirty &&
       signUpForm.controls['confirmPassword'].touched"
       controlName="confirmPassword"
-      [formName]="signUpForm"></wd-form-explain>
-    </wd-form-item>
-
-    <wd-form-item>
-      <wd-select-group
-      name="accountType"
-      label="Account type"
-      [options]="accountTypes"
-      [parentForm]="signUpForm"
-      placeholder="Account type"></wd-select-group>
-      <wd-form-explain *ngIf="
-      signUpForm.controls['accountType'].errors &&
-      signUpForm.controls['accountType'].dirty"
-      controlName="accountType"
       [formName]="signUpForm"></wd-form-explain>
     </wd-form-item>
 

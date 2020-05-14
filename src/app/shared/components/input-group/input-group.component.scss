@@ -52,7 +52,7 @@
     &[disabled] {
       background-color: #f7f9fc;
       color: rgba(143, 155, 179, 0.65);
-      cursor: text;
+      cursor: auto;
     }
 
     &:hover:not([disabled]) {
@@ -108,6 +108,10 @@
   border: 0;
   color: #1a2138;
   cursor: pointer;
+
+  &[disabled] {
+    cursor: default;
+  }
 
   &--phone {
     font-size: 11px;

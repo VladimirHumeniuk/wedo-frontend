@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 export const userFieldsFragment = gql`
     fragment userFields on User {
         uid,
+        username,
         email,
         accountType,
         acceptTermsAndConditions,
@@ -30,6 +31,12 @@ export const companyFieldsFragment = gql`
       cid,
       title,
       owner,
+      comments {
+        date,
+        text,
+        author,
+        isEdited
+      },
       created,
       image,
       url,

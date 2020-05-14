@@ -54,7 +54,7 @@ export class SignInComponent implements OnInit {
           this.store.dispatch(new GetUser());
         })
         .catch(error => {
-          if (error.code === 'auth/wrong-password') {
+          if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
             const control = this.signInForm.get('password')
 
             control.setErrors({
