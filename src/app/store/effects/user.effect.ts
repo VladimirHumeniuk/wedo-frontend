@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { Action } from '@ngrx/store';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/services';
-import { Authenticated, NotAuthenticated, AuthError } from 'src/app/store/actions/user.action';
+import { GET_USER, Authenticated, NotAuthenticated, AuthError } from 'src/app/store/actions/user.action';
 
 @Injectable()
 export class UserEffects {
@@ -17,7 +17,7 @@ export class UserEffects {
 
   @Effect()
   getUser$: Observable<Action> = this.actions.pipe(
-    ofType('[AUTH] Get User'),
+    ofType(GET_USER),
     switchMap(x => this.userService.getAuth()),
     map((authData: any) => authData && authData.uid || null),
     switchMap(uid => {

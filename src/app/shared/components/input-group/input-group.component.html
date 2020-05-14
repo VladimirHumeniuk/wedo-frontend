@@ -25,7 +25,7 @@
     (focus)="resetStatus()"
     nbInput
     fullWidth
-    [attr.disabled]="disabled" />
+    [attr.disabled]="isDisabled ? true : null" />
 
     <ng-container *ngIf="type === 'date'">
       <input
@@ -38,7 +38,7 @@
       (blur)="getStatus()"
       (focus)="resetStatus()"
       [nbDatepicker]="datepicker"
-      [attr.disabled]="disabled"
+      [attr.disabled]="isDisabled ? true : null"
       readonly
       nbInput
       fullWidth />
@@ -60,7 +60,7 @@
     [validation]="false"
     nbInput
     mask="+000 000 000000000"
-    [attr.disabled]="disabled"
+    [attr.disabled]="isDisabled ? true : null"
     fullWidth />
 
     <textarea
@@ -74,7 +74,7 @@
     (blur)="getStatus()"
     (focus)="resetStatus()"
     [formControlName]="name"
-    [attr.disabled]="disabled"
+    [attr.disabled]="isDisabled ? true : null"
     placeholder="{{placeholder}}">
     </textarea>
 
@@ -88,6 +88,7 @@
     *ngIf="isPrivate"
     class="input-group__addon"
     tabindex="-1"
+    [attr.disabled]="isDisabled ? true : null"
     aria-hidden="true"
     (click)="showPassword($event)">
       <nb-icon class="input-group__private-icon" [icon]="passVisible ? 'eye-off-outline' : 'eye-outline'"></nb-icon>

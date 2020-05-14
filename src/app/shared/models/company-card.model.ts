@@ -1,10 +1,11 @@
 import { PhoneNumber } from 'libphonenumber-js';
-import { Category, Timestamp } from '.';
+import { Category, Timestamp, Comment } from '.';
 
 export interface CompanyCard {
   cid: string;
   title: string;
   owner: string;
+  comments?: Comment[];
   created: Timestamp | Date;
   image?: string;
   url?: string;

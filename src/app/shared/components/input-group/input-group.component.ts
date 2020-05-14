@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { parsePhoneNumberFromString, isValidNumber, PhoneNumber } from 'libphonenumber-js';
 import { FORMS_MESSAGES } from './../../constants';
@@ -9,7 +9,7 @@ import { FormControlService } from '../../services';
   templateUrl: './input-group.component.html',
   styleUrls: ['./input-group.component.scss']
 })
-export class InputGroupComponent implements OnInit {
+export class InputGroupComponent implements OnInit, OnChanges {
 
   @Input() name: string
   @Input() label: string
@@ -21,6 +21,8 @@ export class InputGroupComponent implements OnInit {
   @Input() isPrivate: boolean
   @Input() rows: number
   @Input() disabled: boolean
+
+  public isDisabled: boolean
 
   public status: string
   public passVisible: boolean = false
@@ -48,6 +50,12 @@ export class InputGroupComponent implements OnInit {
   constructor(
     private readonly formControlService: FormControlService,
   ) { }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.disabled) {
+      this.isDisabled = changes.disabled.currentValue
+    }
+  }
 
   ngOnInit() {
     const formControl = this.parentForm.get(this.name)

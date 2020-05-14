@@ -1,6 +1,6 @@
 <p
 class="form-explain"
 [ngClass]="{'form-explain--relative': isRelative}"
-*ngIf="errors">
+*ngIf="errors[0]">
   {{ errors[0].message }}
 </p>

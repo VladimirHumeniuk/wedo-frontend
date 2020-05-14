@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
-import { MustMatch } from 'src/app/shared/helpers';
+import { MustMatch, SafeComponent } from 'src/app/shared/helpers';
 import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
 import { Router } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { GetUser } from 'src/app/store/actions/user.action';
+import { take, tap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'wd-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit {
+export class SignUpComponent extends SafeComponent implements OnInit, AfterViewChecked {
 
   public signUpForm: FormGroup
   public loading: boolean = false
+  public formUnlocked: boolean = false
 
   public accountTypes = [
     {
@@ -35,8 +37,11 @@ export class SignUpComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router,
-    private readonly store: Store<AppState>
-  ) { }
+    private readonly store: Store<AppState>,
+    private changeDetector : ChangeDetectorRef
+  ) {
+    super();
+  }
 
   private formInit(): void {
     this.signUpForm = this.formBuilder.group({
@@ -45,6 +50,7 @@ export class SignUpComponent implements OnInit {
         Validators.email,
         Validators.pattern(EMAIL_REGEXP)
       ]],
+      username: [''],
       password: ['', [
         Validators.required,
         Validators.minLength(this.passwordLength.min),
@@ -108,7 +114,6 @@ export class SignUpComponent implements OnInit {
           throw Error(error)
         })
         .finally(() => {
-          this.signUpForm.reset();
           this.loading = false
         })
     }
@@ -116,9 +121,24 @@ export class SignUpComponent implements OnInit {
     return
   }
 
+  ngAfterViewChecked(){
+    this.changeDetector.detectChanges();
+  }
+
   ngOnInit() {
     this.formInit()
     this.signUpForm.get('confirmPassword').disable()
+
+    this.signUpForm.controls['accountType'].valueChanges
+      .pipe(
+        takeUntil(this.unsubscriber),
+        tap(value => {
+          if (value === 'personal') this.signUpForm.controls['username'].setValidators(Validators.required)
+
+          this.formUnlocked = true
+        })
+      ).subscribe()
+
     this.passwordOnChange()
   }
 

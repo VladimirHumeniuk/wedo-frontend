@@ -34,6 +34,7 @@ export class AuthService {
   public createUserWithEmailAndPassword(formData: any): Promise<void> {
     const {
       email,
+      username,
       accountType,
       acceptTermsAndConditions,
       password
@@ -52,6 +53,10 @@ export class AuthService {
           roles: {
             readonly: true
           }
+        }
+
+        if (accountType === 'personal') {
+          user['username'] = username
         }
 
         this.cloud.setUserRoles(user.uid, { readonly: true })

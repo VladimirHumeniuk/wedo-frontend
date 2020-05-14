@@ -45,15 +45,23 @@ export class UserService {
   }
 
   public setUserData(user: User): Promise<any[]> {
-    const { uid, roles } = user
+    const { uid, roles, username } = user
     const userLink: AngularFirestoreDocument<DocumentData> = this.fireStore.doc(`users/${uid}`)
 
-    const promises: [any] = [
+    const promises: any[] = [
       userLink.set(user, { merge: true })
     ]
 
     if (roles) {
       promises.push(this.cloud.setUserRoles(uid, roles))
+    }
+
+    if (username) {
+      promises.push(this.fireAuth.currentUser.then(user => {
+        user.updateProfile({
+          displayName: username
+        })
+      }))
     }
 
     return Promise.all(promises)
