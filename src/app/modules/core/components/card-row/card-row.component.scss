@@ -1,0 +1,84 @@
+@import '../../../../../styles/variables/variables';
+
+:host {
+  display: block;
+}
+
+:host:first-child {
+  margin-top: -1.5rem;
+}
+
+:host:last-child {
+  .card-row {
+    border-bottom: 0;
+  }
+}
+
+.card-row {
+  // display: flex;
+  padding: 1.5em 0;
+  border-bottom: 1px solid #edf1f7;
+  text-align: left;
+
+  @media (min-width: $mq-tablet-landscape) {
+    display: flex;
+  }
+
+  &--center {
+    align-items: center;
+  }
+
+  &--end {
+    align-items: flex-end;
+  }
+}
+
+.card-row__title {
+  font-weight: $fw-regular;
+  font-size: 1rem;
+  margin: 0 0 12px 0;
+  line-height: 1;
+}
+
+.card-row__label {
+  display: flex;
+  flex: 0 1 30%;
+  font-size: 14px;
+  color: $c-gray-700;
+  margin-bottom: 20px;
+  text-align: right;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (min-width: $mq-tablet-landscape) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-right: 40px;
+    text-align: left;
+    margin-bottom: 0;
+  }
+
+  span {
+    letter-spacing: 0.3px;
+  }
+}
+
+.card-row__content {
+  flex: 0 1 70%;
+}
+
+::ng-deep {
+  .card-row {
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-end;
+
+      wd-form-item {
+        width: 100%;
+      }
+    }
+  }
+}

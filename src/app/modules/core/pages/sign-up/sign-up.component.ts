@@ -16,8 +16,6 @@ import { GetUser } from 'src/app/store/actions/user.action';
 export class SignUpComponent implements OnInit {
 
   public signUpForm: FormGroup
-  private emailRegex: RegExp = EMAIL_REGEXP
-
   public loading: boolean = false
 
   public accountTypes = [
@@ -45,7 +43,7 @@ export class SignUpComponent implements OnInit {
       email: ['', [
         Validators.required,
         Validators.email,
-        Validators.pattern(this.emailRegex)
+        Validators.pattern(EMAIL_REGEXP)
       ]],
       password: ['', [
         Validators.required,
@@ -58,7 +56,7 @@ export class SignUpComponent implements OnInit {
       accountType: ['', [
         Validators.required
       ]],
-      acceptTermsAndConditions: ['', [
+      acceptTermsAndConditions: [false, [
         Validators.requiredTrue
       ]]
     }, {
@@ -94,10 +92,8 @@ export class SignUpComponent implements OnInit {
 
       this.authService.createUserWithEmailAndPassword(formData)
         .then(() => {
-          this.signUpForm.reset();
           this.store.dispatch(new GetUser());
         })
-        .then(() => this.router.navigate(['/verify-email']))
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             const control = this.signUpForm.get('email')
@@ -112,6 +108,7 @@ export class SignUpComponent implements OnInit {
           throw Error(error)
         })
         .finally(() => {
+          this.signUpForm.reset();
           this.loading = false
         })
     }

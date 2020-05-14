@@ -1,0 +1,11 @@
+<div [ngClass]="['card-row', align ? 'card-row--' + align : '']">
+  <div class="card-row__label">
+    <h3 *ngIf="title" class="card-row__title">{{ title }}</h3>
+    <span>
+      <ng-content select="[label]"></ng-content>
+    </span>
+  </div>
+  <div class="card-row__content">
+    <ng-content select="[content]"></ng-content>
+  </div>
+</div>

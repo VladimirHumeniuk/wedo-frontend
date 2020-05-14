@@ -1,8 +1,19 @@
 @import '../../../../styles/variables/variables';
 
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .input-group__header {
   display: flex;
-  align-self: center;
   justify-content: space-between;
   margin-bottom: .5rem;
 }
@@ -25,6 +36,11 @@
 
 .input-group__input {
   position: relative;
+  height: 100%;
+
+  textarea {
+    height: 100%;
+  }
 
   input,
   textarea {

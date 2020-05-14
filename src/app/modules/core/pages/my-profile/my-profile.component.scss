@@ -1,0 +1,45 @@
+@import '../../../../../styles/variables/variables';
+
+.my-profile {
+  display: grid;
+  grid-template-columns: 1.3fr 2fr;
+  column-gap: 30px;
+
+  h2 {
+    font-family: $ff-comfortaa;
+    font-weight: $fw-regular;
+    margin-top: 1rem;
+  }
+
+  ::ng-deep {
+    nb-tab.content-active {
+      overflow: visible;
+    }
+  }
+}
+
+.my-profile__account-info {
+  font-size: 1rem;
+  line-height: 1.78;
+}
+
+.my-profile__plan {
+  display: flex;
+  position: relative;
+
+  ::ng-deep {
+    [nbButton].appearance-outline.status-info.my-profile__plan-action {
+      background-color: #fff;
+      z-index: 1;
+    }
+  }
+}
+
+.my-profile__plan-status {
+  justify-content: flex-start;
+  pointer-events: none;
+}
+
+.my-profile__plan-action {
+  margin-left: -25px;
+}

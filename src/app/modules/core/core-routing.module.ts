@@ -16,6 +16,7 @@ import { InvalidActionCodeComponent } from './pages/invalid-action-code/invalid-
 import { MyCompanyCardComponent } from './pages/my-company-card/my-company-card.component';
 import { CardDetailsComponent } from './pages/card-details/card-details.component';
 import { PromptPasswordComponent } from './pages/prompt-password/prompt-password.component';
+import { MyProfileComponent } from './pages/my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -72,6 +73,11 @@ const routes: Routes = [
             component: InvalidActionCodeComponent
           }
         ]
+      },
+      {
+        path: 'my-profile',
+        component: MyProfileComponent,
+        canActivate: [IsUser]
       },
       {
         path: 'my-company-card',

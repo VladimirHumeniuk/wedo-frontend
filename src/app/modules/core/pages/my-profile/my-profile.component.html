@@ -1,0 +1,70 @@
+<wd-content-container>
+  <wd-page-title title="Profile settings"></wd-page-title>
+  <nb-card>
+    <nb-card-header>
+      Account Info
+    </nb-card-header>
+    <nb-card-body>
+      <div class="my-profile__account-info">
+        <wd-card-row>
+          <ng-container label>Login email</ng-container>
+          <ng-container content>{{ user.email }}</ng-container>
+        </wd-card-row>
+
+        <wd-card-row>
+          <ng-container label>Account type</ng-container>
+          <ng-container content>{{ user.accountType | titlecase }}</ng-container>
+        </wd-card-row>
+
+        <wd-card-row align="center">
+          <ng-container label>Membership plan</ng-container>
+          <ng-container content>
+            <div class="my-profile__plan">
+              <button
+              nbButton
+              fullWidth
+              hero
+              class="my-profile__plan-status"
+              status="info">
+                <nb-icon icon="award"></nb-icon> Free
+              </button>
+
+              <a
+              nbButton
+              status="info"
+              outline
+              class="my-profile__plan-action">
+                Change plan
+              </a>
+            </div>
+          </ng-container>
+        </wd-card-row>
+      </div>
+    </nb-card-body>
+  </nb-card>
+
+  <nb-card>
+    <nb-card-header>Settings</nb-card-header>
+    <nb-card-body>
+      <wd-card-row title="Change password">
+        <ng-container label>Last time password was changed:<br/> {{ user.createdAt._seconds * 1000 | date: 'medium' }}</ng-container>
+        <ng-container content>
+          <wd-change-password></wd-change-password>
+        </ng-container>
+      </wd-card-row>
+
+      <wd-card-row title="Change email">
+        <ng-container label>Last time email was changed:<br/> {{ user.createdAt._seconds * 1000 | date: 'medium' }}</ng-container>
+        <ng-container content>
+          <wd-update-email></wd-update-email>
+        </ng-container>
+      </wd-card-row>
+
+      <wd-card-row title="Remove account">
+        <ng-container content>
+          <wd-remove-account></wd-remove-account>
+        </ng-container>
+      </wd-card-row>
+    </nb-card-body>
+  </nb-card>
+</wd-content-container>

@@ -17,12 +17,15 @@ body {
   font-family: 'Open Sans', sans-serif;
 }
 
-.nb-theme-default nb-card-body {
-  @media (max-width: $mq-tablet - 1px) {
-    padding: 1.35rem 1.55rem;
-  }
+.nb-theme-default {
+  nb-card-body,
+  nb-card-header {
+    @media (max-width: $mq-tablet - 1px) {
+      padding: 1.35rem 1.55rem;
+    }
 
-  @media (max-width: $mq-phone-landscape - 1px) {
-    padding: 1rem 1.25rem;
+    @media (max-width: $mq-phone-landscape - 1px) {
+      padding: 1rem 1.25rem;
+    }
   }
 }
