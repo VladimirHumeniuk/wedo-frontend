@@ -29,7 +29,6 @@
 }
 
 .card-details__main-info,
-.card-details__comments,
 .card-details__subheader {
   padding: 30px 30px 40px;
 
@@ -46,43 +45,24 @@
   }
 }
 
-.card-details__comments {
+.card-details__comments-wrapper {
   background-color: $c-gray-200;
-  padding-top: 50px;
-  padding-bottom: 100px;
+  padding: 20px 30px 40px;
 
   @media (min-width: $mq-tablet) {
+    padding: 30px 60px 60px;
     margin-bottom: calc(-1rem - 2px);
   }
 
   @media (min-width: $mq-tablet-landscape) {
+    padding: 40px 80px 80px;
     margin-bottom: calc(-1.35rem - 2px);
   }
 
   @media (min-width: $mq-desktop) {
+    padding: 50px 100px 100px;
     margin-bottom: calc(-1.5rem - 2px);
   }
-}
-
-.card-details__comments-title {
-  font-size: 20px;
-  color: $c-gray-700;
-  line-height: 1;
-  margin: 2px 0;
-}
-
-.card-details__no-comments {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 140px;
-  background-color: #fff;
-  width: 100%;
-  margin-top: 20px;
-  border: 1px solid $c-gray-400;
-  padding: 20px;
-  font-size: 15px;
-  border-radius: 14px;
 }
 
 .card-details__subheader {

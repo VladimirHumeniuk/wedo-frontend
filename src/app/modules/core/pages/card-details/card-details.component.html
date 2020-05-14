@@ -38,14 +38,11 @@
       </div>
     </wd-content-container>
 
-    <wd-content-container class="card-details__comments">
-      <section class="card-details__comments-container">
-        <h2 class="card-details__comments-title">People feedback</h2>
-
-        <article *ngIf="!cardDetails.comments" class="card-details__no-comments">
-          No feedback yet
-        </article>
-      </section>
+    <wd-content-container class="card-details__comments-wrapper">
+      <wd-comments-section
+      [cid]="cardDetails.cid"
+      [comments]="cardDetails.comments">
+      </wd-comments-section>
     </wd-content-container>
   </article>
 </ng-container>

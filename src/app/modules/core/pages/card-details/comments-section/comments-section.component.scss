@@ -1,0 +1,22 @@
+@import '../../../../../../styles/variables/variables';
+
+.comments-section__title {
+  font-size: 20px;
+  color: $c-gray-700;
+  line-height: 1;
+  margin: 2px 0;
+}
+
+.comments-section__no-comments {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  background-color: #fff;
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid $c-gray-400;
+  padding: 20px;
+  font-size: 15px;
+  border-radius: 14px;
+}

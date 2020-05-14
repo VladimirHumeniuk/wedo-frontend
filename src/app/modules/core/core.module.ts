@@ -67,6 +67,8 @@ import { RemoveAccountComponent } from './pages/my-profile/remove-account/remove
 import { ContentContainerComponent } from './components/content-container/content-container.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { CardRowComponent } from './components/card-row/card-row.component';
+import { CommentsSectionComponent } from './pages/card-details/comments-section/comments-section.component';
+import { CommentComponent } from './pages/card-details/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +102,9 @@ import { CardRowComponent } from './components/card-row/card-row.component';
     RemoveAccountComponent,
     ContentContainerComponent,
     PageTitleComponent,
-    CardRowComponent
+    CardRowComponent,
+    CommentsSectionComponent,
+    CommentComponent
   ],
   imports: [
     AngularFireAuthModule,
