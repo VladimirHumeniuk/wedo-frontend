@@ -13,6 +13,12 @@
   }
 }
 
+.card-details__rating {
+  display: block;
+  margin-top: 10px;
+  margin-left: -2px;
+}
+
 .card-details__image-cover {
   height: 420px;
   background-size: cover;
@@ -28,20 +34,32 @@
   }
 }
 
-.card-details__main-info,
-.card-details__subheader {
-  padding: 30px 30px 40px;
+.card-details__subheader,
+.card-details__main-info {
+  padding: 30px 30px;
 
   @media (min-width: $mq-tablet) {
-    padding: 30px 60px 40px;
+    padding: 30px 60px;
   }
 
   @media (min-width: $mq-tablet-landscape) {
-    padding: 30px 80px 60px;
+    padding: 30px 80px;
   }
 
   @media (min-width: $mq-desktop) {
-    padding: 30px 100px 80px;
+    padding: 30px 100px;
+  }
+}
+
+.card-details__main-info {
+  padding-bottom: 40px;
+
+  @media (min-width: $mq-tablet-landscape) {
+    padding-bottom: 60px;
+  }
+
+  @media (min-width: $mq-desktop) {
+    padding-bottom: 80px;
   }
 }
 

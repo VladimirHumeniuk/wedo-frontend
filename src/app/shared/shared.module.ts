@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask'
 
@@ -30,6 +31,7 @@ import { SelectComponent } from './components/select/select.component';
 import { TipOffComponent } from './components/tip-off/tip-off.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
+import { RatingComponent } from './components/rating/rating.component';
 
 @NgModule({
   declarations: [
@@ -46,9 +48,11 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     SelectComponent,
     TipOffComponent,
     LogoComponent,
-    PaginationComponent
+    PaginationComponent,
+    RatingComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     NgSelectModule,
     NgxMaskModule.forRoot(),
     RouterModule,
@@ -78,7 +82,8 @@ import { PaginationComponent } from './components/pagination/pagination.componen
     ContentEditableDirective,
     SelectComponent,
     TipOffComponent,
-    PaginationComponent
+    PaginationComponent,
+    RatingComponent
   ]
 })
 export class SharedModule { }

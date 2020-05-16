@@ -1,7 +1,5 @@
-import { Timestamp } from '.';
-
 export interface Comment {
-  date: Timestamp | Date;
+  date: any;
   text: string;
   author: string;
   isEdited: boolean;

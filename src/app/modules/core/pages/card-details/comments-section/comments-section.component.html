@@ -1,11 +1,41 @@
 <section class="comments-section">
   <h2 class="comments-section__title">People feedback</h2>
 
-  <article *ngIf="!cardDetails" class="comments-section__no-comments">
+  <article *ngIf="!comments" class="comments-section__no-comments">
     No feedback yet
   </article>
 
-  <form class="comments-section__feedback">
-    <textarea></textarea>
+  <form class="comments-section__feedback" [formGroup]="feedbackForm">
+    <div class="comments-section__textarea">
+      <nb-user
+      size="large"
+      color="#fff"
+      [name]="user.username"
+      onlyPicture>
+      </nb-user>
+
+      <wd-rating [parentForm]="feedbackForm" [business]="business" name="feedbackRating"></wd-rating>
+      <textarea autosize name="text" formControlName="text" rows="1" placeholder="Add a feedback..."></textarea>
+
+      <div
+      class="comments-section__feedback-length"
+      [ngClass]="{
+        'comments-section__feedback-length--invalid': length > 340,
+        'comments-section__feedback-length--visible': length > 0
+      }">
+        {{length}}/{{340}}
+      </div>
+    </div>
+
+    <div class="comments-section__feedback-footer">
+      <button
+      nbButton
+      [disabled]="feedbackForm.invalid"
+      [nbSpinner]="loading"
+      status="primary"
+      type="submit">
+        Post my feedback
+      </button>
+    </div>
   </form>
 </section>

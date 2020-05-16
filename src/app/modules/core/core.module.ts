@@ -11,6 +11,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AutosizeModule } from 'ngx-autosize';
 
 import {
   NbAlertModule,
@@ -21,7 +22,8 @@ import {
   NbLayoutModule,
   NbIconModule,
   NbTabsetModule,
-  NbSpinnerModule
+  NbSpinnerModule,
+  NbUserModule
 } from '@nebular/theme';
 
 // Environments
@@ -114,6 +116,7 @@ import { CommentComponent } from './pages/card-details/comment/comment.component
     CoreRoutingModule,
     CountdownModule,
     CommonModule,
+    AutosizeModule,
     FontAwesomeModule,
     LeafletModule,
     FormsModule,
@@ -126,6 +129,7 @@ import { CommentComponent } from './pages/card-details/comment/comment.component
     NbIconModule,
     NbLayoutModule,
     NbPopoverModule,
+    NbUserModule,
     NbSpinnerModule,
     ReactiveFormsModule,
     SharedModule

@@ -43,6 +43,7 @@
     "libphonenumber-js": "^1.7.51",
     "ngrx-store-localstorage": "^9.0.0",
     "ngrx-store-logger": "^0.2.3",
+    "ngx-autosize": "^1.7.5",
     "ngx-countdown": "^9.0.1",
     "ngx-mask": "^9.0.2",
     "ngx-pagination": "^5.0.0",

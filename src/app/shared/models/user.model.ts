@@ -1,4 +1,4 @@
-import { Roles, Timestamp } from '.';
+import { Roles } from '.';
 
 export interface User {
   uid: string;
@@ -6,7 +6,7 @@ export interface User {
   email: string;
   emailVerified: boolean;
   accountType: string;
-  createdAt: Timestamp | Date;
+  createdAt: any;
   acceptTermsAndConditions: boolean;
   company?: string;
   roles: Roles;
