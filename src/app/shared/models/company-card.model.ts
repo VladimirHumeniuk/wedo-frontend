@@ -16,4 +16,5 @@ export interface CompanyCard {
   wysiwyg?: string;
   shortDescription: string;
   isShown: boolean;
+  rating?: number;
 }

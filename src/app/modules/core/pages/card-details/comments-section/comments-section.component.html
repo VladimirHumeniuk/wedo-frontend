@@ -1,11 +1,260 @@
 <section class="comments-section">
   <h2 class="comments-section__title">People feedback</h2>
 
-  <article *ngIf="!comments" class="comments-section__no-comments">
+  <article *ngIf="comments.length === 0" class="comments-section__no-comments">
     No feedback yet
   </article>
 
-  <form class="comments-section__feedback" [formGroup]="feedbackForm">
+  <ng-container *ngFor="let comment of comments">
+    <div [ngClass]="{'comment': true, 'comment--is-own': user.uid === comment.author.uid }">
+      <div class="comment__wrapper">
+        <article class="comment__content">
+          <div class="comment__author">
+            <nb-user
+            size="large"
+            color="#fff"
+            [name]="comment.author.username"
+            [title]="getDateTitle(comment.date, comment.isEdited)">
+            </nb-user>
+          </div>
+
+          <form
+          class="comment__form"
+          [formGroup]="feedbackForm"
+          (ngSubmit)="postFeedback(comment.id)"
+          #editFeedbackForm="ngForm">
+            <wd-rating
+            class="comment__rating"
+            [parentForm]="inEdit === comment.author.uid ? feedbackForm : null"
+            [name]="inEdit === comment.author.uid ? 'star' : null"
+            [value]="comment.rating"></wd-rating>
+
+            <div *ngIf="inEdit !== comment.author.uid" class="comment__text">
+              {{ comment.text }}
+            </div>
+
+            <div
+            *ngIf="inEdit === comment.author.uid"
+            class="comments-section__feedback-length"
+            [ngClass]="{
+              'comments-section__feedback-length--invalid': length > 500,
+              'comments-section__feedback-length--visible': length > 480
+            }">
+              {{length}}/{{500}}
+            </div>
+
+            <textarea
+            *ngIf="inEdit === comment.author.uid"
+            #editCommentTextarea
+            autosize
+            rows="1"
+            formControlName="text"></textarea>
+          </form>
+
+          <form
+          [ngClass]="{ 'answer__form': true, 'answer__form--with-answer': comment.answer?.text }"
+          [formGroup]="answerForm"
+          (ngSubmit)="postAnswer(comment.id, comment.answer)"
+          #editAnswerForm="ngForm">
+            <div *ngIf="comment.answer">
+              <div class="comment__author" *ngIf="comment.answer.date">
+                <nb-user
+                size="large"
+                color="#fff"
+                [name]="business"
+                [title]="getDateTitle(comment.answer.date, comment.answer.isEdited)">
+                </nb-user>
+              </div>
+
+              <div *ngIf="!inAnswer && comment.answer" class="answer__text">
+                {{ comment.answer?.text }}
+              </div>
+            </div>
+
+            <div *ngIf="!comment.answer && inAnswer === comment.id" class="answer__title">Replying to {{comment.author.username}} feedback,</div>
+
+            <div
+            *ngIf="inAnswer === comment.id"
+            class="comments-section__feedback-length"
+            [ngClass]="{
+              'comments-section__feedback-length--invalid': length > 500,
+              'comments-section__feedback-length--visible': length > 480
+            }">
+              {{length}}/{{500}}
+            </div>
+
+            <textarea
+            *ngIf="inAnswer === comment.id"
+            #editAnswerTextarea
+            autosize
+            rows="2"
+            name="text"
+            formControlName="text"></textarea>
+          </form>
+        </article>
+      </div>
+
+      <div class="comment__footer"
+      [nbSpinner]="loading === comment.id"
+      *ngIf="user.accountType !== 'business' || user.company === cid">
+        <div
+        *ngIf="
+        user.accountType !== 'business'
+        &&
+        comment.author.uid !== user.uid"
+        class="comment__comment-feedback">
+          <span>
+            Was this feedback useful for you?
+          </span>
+
+          <div>
+
+            <button
+            (click)="postFeedbackVote(comment.id, true)"
+            nbButton>
+              Yes
+            </button>
+
+            <button
+            (click)="postFeedbackVote(comment.id, false)"
+            nbButton>
+              No
+            </button>
+          </div>
+        </div>
+
+        <div class="comment__controls">
+          <ng-container *ngIf="cid === user.company">
+            <button
+            *ngIf="inAnswer === comment.id"
+            (click)="toggleAnswer($event)"
+            nbButton>
+              Cancel
+            </button>
+
+            <button
+            *ngIf="inAnswer === comment.id"
+            nbButton
+            (click)="editAnswerForm.ngSubmit.emit()"
+            status="primary">
+              Post my answer
+            </button>
+
+            <button
+            *ngIf="(!inAnswer || inAnswer !== comment.id) && comment.answer"
+            nbButton
+            [nbPopover]="deleteAnswerPrompt"
+            nbPopoverPlacement="left">
+              Delete my answer
+            </button>
+
+            <ng-template #deleteAnswerPrompt>
+              <div class="comment__popover">
+                <div class="comment__popover-body">
+                  <nb-icon icon="alert-circle-outline"></nb-icon>
+                  Are you sure you want to delete your answer?
+                </div>
+
+                <div class="comment__popover-controls">
+                  <button
+                  nbButton
+                  size="small"
+                  outline
+                  (click)="closePopover()">
+                    Cancel
+                  </button>
+
+                  <button
+                  nbButton
+                  size="small"
+                  status="danger"
+                  (click)="deleteAnswer(comment.id)">
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+
+            <button
+            nbButton
+            *ngIf="!inAnswer || inAnswer !== comment.id"
+            (click)="toggleAnswer($event, comment.id, comment.answer?.text)"
+            status="primary">
+              {{ comment.answer ? 'Edit answer' : 'Answer' }}
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="comment.author.uid === user.uid">
+            <button
+            *ngIf="!inEdit"
+            nbButton
+            [nbPopover]="deleteFeedbackPrompt"
+            nbPopoverPlacement="left">
+              Delete
+            </button>
+
+            <ng-template #deleteFeedbackPrompt>
+              <div class="comment__popover">
+                <div class="comment__popover-body">
+                  <nb-icon icon="alert-circle-outline"></nb-icon>
+                  Are you sure you want to delete your feedback?
+                </div>
+
+                <div class="comment__popover-controls">
+                  <button
+                  nbButton
+                  size="small"
+                  outline
+                  (click)="closePopover()">
+                    Cancel
+                  </button>
+
+                  <button
+                  nbButton
+                  size="small"
+                  status="danger"
+                  (click)="deleteComment(comment.id, comment.author.uid)">
+                    Yes
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+
+            <button
+            *ngIf="!inEdit"
+            (click)="toggleEdit($event, comment.text, comment.rating, comment.author.uid)"
+            nbButton
+            status="primary">
+              Edit
+            </button>
+
+            <button
+            *ngIf="inEdit === comment.author.uid"
+            (click)="toggleEdit($event)"
+            nbButton
+            ghost>
+              Cancel
+            </button>
+
+            <button
+            *ngIf="inEdit === comment.author.uid"
+            (click)="editFeedbackForm.ngSubmit.emit()"
+            [disabled]="feedbackForm.invalid"
+            nbButton
+            status="primary">
+              Save
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <form
+  *ngIf="user.accountType === 'personal' && !isCommented"
+  class="comments-section__feedback"
+  [formGroup]="feedbackForm"
+  (ngSubmit)="postFeedback()">
     <div class="comments-section__textarea">
       <nb-user
       size="large"
@@ -14,16 +263,17 @@
       onlyPicture>
       </nb-user>
 
-      <wd-rating [parentForm]="feedbackForm" [business]="business" name="feedbackRating"></wd-rating>
+      <wd-rating [parentForm]="feedbackForm" [business]="business" name="star"></wd-rating>
       <textarea autosize name="text" formControlName="text" rows="1" placeholder="Add a feedback..."></textarea>
 
       <div
+      *ngIf="length >= 480"
       class="comments-section__feedback-length"
       [ngClass]="{
-        'comments-section__feedback-length--invalid': length > 340,
-        'comments-section__feedback-length--visible': length > 0
+        'comments-section__feedback-length--invalid': length > 500,
+        'comments-section__feedback-length--visible': length > 480
       }">
-        {{length}}/{{340}}
+        {{length}}/{{500}}
       </div>
     </div>
 

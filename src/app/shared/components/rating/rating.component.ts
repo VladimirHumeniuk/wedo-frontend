@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
   trigger,
@@ -17,13 +17,6 @@ import { SafeComponent } from '../../helpers';
     trigger(
       'inOutAnimation',
       [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate('0.12s ease-in', style({ opacity: 1 }))
-          ]
-        ),
         transition(
           ':leave',
           [
@@ -50,20 +43,21 @@ export class RatingComponent extends SafeComponent implements OnInit {
     super();
   }
 
-  public rate(index: number): void {
+  public rate(event: Event, index: number): void {
+    event.preventDefault()
+
     this.rating = index;
     this.parentForm.controls[this.name].patchValue(index)
   }
 
-  public isBelowRating(index: number): boolean {
-    return this.rating >= index || !this.parentForm && this.getWidth(index) > 0
-  }
-
   public getWidth(index: number): number | void {
-    if (Math.floor(index % this.rating) === 0) {
-      if (this.rating % 1 === 0) return 100
-      else return parseFloat((this.rating % 1).toFixed(2)) * 100
-    }
+    const rating = this.rating + 1
+
+    if (rating <= index) return null
+
+    if (rating - index < 1) return parseFloat((rating - index * 1).toFixed(2)) * 100
+
+    return 100
   }
 
   ngOnInit(): void {
@@ -77,7 +71,11 @@ export class RatingComponent extends SafeComponent implements OnInit {
       ).subscribe()
     }
 
-    if (this.value) this.rating = parseFloat(this.value.toFixed(1))
+    if (this.value) {
+      this.rating = parseFloat(this.value.toFixed(1))
+
+      if (this.parentForm) this.parentForm.controls[this.name].patchValue(this.value)
+    }
   }
 
 }

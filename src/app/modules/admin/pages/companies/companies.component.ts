@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { CompanyCard, User, Category } from 'src/app/shared/models';
-import { UserService, CategoriesService } from 'src/app/shared/services';
+import { UserService, CategoriesService, CountersService } from 'src/app/shared/services';
 import { GetAllCompanies, RemoveCompany } from 'src/app/store/actions/companies.action';
 import { AdminService } from 'src/app/shared/services/admin.service';
 import { AppState } from 'src/app/app.state';
@@ -29,12 +29,15 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
   public companies: CompanyCard[]
   public loading: boolean
 
+  public total: number
+
   constructor(
     private readonly userService: UserService,
     private readonly categoriesService: CategoriesService,
     private readonly adminService: AdminService,
     private readonly store: Store<AppState>,
     private readonly toastrService: NbToastrService,
+    private readonly countersService: CountersService
   ) {
     super();
   }

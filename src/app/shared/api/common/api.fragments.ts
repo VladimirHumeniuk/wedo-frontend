@@ -32,10 +32,15 @@ export const companyFieldsFragment = gql`
       title,
       owner,
       comments {
+        id,
         date,
         text,
-        author,
-        isEdited
+        author {
+          uid,
+          username
+        },
+        isEdited,
+        rating
       },
       created,
       image,
@@ -47,6 +52,7 @@ export const companyFieldsFragment = gql`
       wysiwyg,
       shortDescription,
       isShown,
+      rating,
     }
 `;
 

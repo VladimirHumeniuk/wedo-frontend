@@ -1,34 +1,34 @@
-<div class="rating" *ngIf="parentForm && name" [formGroup]="parentForm">
+<div class="rating rating--form" *ngIf="parentForm && name" [formGroup]="parentForm">
   <input
   id="{{name}}"
   class="rating-input"
   [formControlName]="name"
   type="number">
-  <button *ngFor="let num of [1, 2, 3, 4, 5]" [ngClass]="['rating-icon', isBelowRating(num) ? 'rating-icon--is-active' : '']" (click)="rate(num)">
+  <button *ngFor="let num of [1, 2, 3, 4, 5]" [ngClass]="['rating-icon', getWidth(num) && rating ? 'rating-icon--is-active' : '']" (click)="rate($event, num)">
     <span class="rating__star-container">
       <span class="rating__star">
         <nb-icon icon="star-outline"></nb-icon>
       </span>
 
-      <span class="rating__star" [style.width.%]="getWidth(num)" *ngIf="isBelowRating(num)" [@inOutAnimation]>
+      <span class="rating__star" [style.width.%]="getWidth(num)" *ngIf="getWidth(num) && rating" [@inOutAnimation]>
         <nb-icon icon="star"></nb-icon>
       </span>
     </span>
   </button>
 
   <div
-  *ngIf="isInvalid && parentForm.dirty && !parentForm.controls[name].value" [@inOutAnimation]
+  *ngIf="isInvalid && parentForm.dirty && parentForm.touched && !parentForm.controls[name].value" [@inOutAnimation]
   class="rating__error">Please indicate how you rate {{business}}</div>
 </div>
 
-<div class="rating" *ngIf="!parentForm || !name">
-  <span *ngFor="let num of [1, 2, 3, 4, 5]" [ngClass]="['rating-icon', isBelowRating(num) ? 'rating-icon--is-active' : '']">
+<div class="rating" *ngIf="!parentForm && value" [attr.title]="rating">
+  <span *ngFor="let num of [1, 2, 3, 4, 5]" [ngClass]="['rating-icon', getWidth(num) ? 'rating-icon--is-active' : '']">
     <span class="rating__star-container">
       <span class="rating__star">
         <nb-icon icon="star-outline"></nb-icon>
       </span>
 
-      <span *ngIf="isBelowRating(num)" class="rating__star" [style.width.%]="getWidth(num)">
+      <span *ngIf="getWidth(num)" class="rating__star" [style.width.%]="getWidth(num)">
         <nb-icon icon="star"></nb-icon>
       </span>
     </span>

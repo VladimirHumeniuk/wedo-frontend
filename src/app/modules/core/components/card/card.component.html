@@ -23,7 +23,12 @@
 
       <div class="card__footer">
         <div class="card__rating">
-          {{ rating ? rating : '–' }}
+          <span *ngIf="rating">
+            {{ rating }}
+            <nb-icon class="card__star-icon" icon="star"></nb-icon>
+          </span>
+
+          <span *ngIf="!rating"> - </span>
         </div>
         <a routerLink="card/{{url}}">
           <nb-icon icon="arrow-forward-outline"></nb-icon>

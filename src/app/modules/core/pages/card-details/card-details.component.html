@@ -9,7 +9,10 @@
       <div class="card-details__subheader-title">
         <h1 class="card-details__title">{{cardDetails.title}}</h1>
         <span class="card-details__category">{{cardDetails.category}}</span>
-        <wd-rating class="card-details__rating" [value]="4.5"></wd-rating>
+        <wd-rating
+        class="card-details__rating"
+        [value]="cardDetails.rating"
+        [voters]="feedbacksCounter"></wd-rating>
       </div>
 
       <div class="card-details__subheader-controls">
@@ -42,8 +45,7 @@
     <wd-content-container class="card-details__comments-wrapper">
       <wd-comments-section
       [business]="cardDetails.title"
-      [cid]="cardDetails.cid"
-      [comments]="cardDetails.comments">
+      [cid]="cardDetails.cid">
       </wd-comments-section>
     </wd-content-container>
   </article>
