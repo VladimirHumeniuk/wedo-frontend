@@ -2,6 +2,8 @@
 
 @import '~@nebular/theme/styles/globals';
 
+@import "~mapbox-gl/dist/mapbox-gl.css";
+
 @include nb-install() {
   @include nb-theme-global();
 };

@@ -1,10 +1,12 @@
 <div class="location-map">
   <ng-container *ngIf="latLon">
-    <div
+    <mgl-map
     class="location-map__map"
-    leaflet
-    [leafletOptions]="options"
-    [leafletLayers]="layers">
-    </div>
+    [style]="'mapbox://styles/vhumeniuk/ckaf4evzu221h1inml684wgfm'"
+    [zoom]="[15]"
+    [center]="latLon">
+      <mgl-control mglNavigation></mgl-control>
+      <mgl-marker [lngLat]="latLon"></mgl-marker>
+    </mgl-map>
   </ng-container>
 </div>
