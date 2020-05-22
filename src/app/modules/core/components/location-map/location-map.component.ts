@@ -1,5 +1,5 @@
-import { LocationiqService } from './../../../../shared/services/locationiq.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { LocationiqService } from './../../../../shared/services/locationiq.service';
 
 @Component({
   selector: 'wd-location-map',

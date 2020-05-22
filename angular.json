@@ -44,12 +44,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "",
-                "output": "assets/"
-              }
+              "src/assets"
             ],
             "styles": [
               "node_modules/@nebular/theme/styles/prebuilt/default.css",

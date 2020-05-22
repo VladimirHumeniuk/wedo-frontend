@@ -294,7 +294,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
       })
       ).subscribe()
 
-      this.feedbackFormInit()
+    this.feedbackFormInit()
 
     this.fireStore.collection('companies').doc(this.cid).collection('comments').valueChanges().pipe(
       takeUntil(this.unsubscriber),
