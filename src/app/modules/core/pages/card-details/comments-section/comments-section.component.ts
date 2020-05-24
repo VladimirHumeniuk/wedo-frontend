@@ -201,7 +201,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
           .then(() => {
             this.recountStars()
           }).then(() => {
-            if (!id) this.countersService.updateCounter(starsRef, 5, 'inc')
+            if (!id) this.countersService.updateCounter(starsRef, 5, 1)
           }).finally(() => {
             this.loading = null
             if (this.inEdit) this.inEdit = null
@@ -215,7 +215,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
 
     this.fireStore.collection('companies').doc(this.cid).collection('comments').doc(id).delete().then(() => {
       this.fireStore.collection('stars').doc(`${author}_${this.cid}`).delete().then(() => {
-        this.countersService.updateCounter(starsRef, 5, 'dec')
+        this.countersService.updateCounter(starsRef, 5, -1)
         this.recountStars()
       })
     })

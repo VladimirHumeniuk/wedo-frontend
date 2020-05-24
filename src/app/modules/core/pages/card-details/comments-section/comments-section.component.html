@@ -96,7 +96,7 @@
 
       <div class="comment__footer"
       [nbSpinner]="loading === comment.id"
-      *ngIf="user.uid && (user.accountType !== 'business' || user.company === cid)">
+      *ngIf="user.uid && user.roles.author && (user.accountType !== 'business' || user.company === cid)">
         <div
         *ngIf="
         user.accountType !== 'business'
@@ -251,7 +251,7 @@
   </ng-container>
 
   <form
-  *ngIf="user.accountType === 'personal' && !isCommented"
+  *ngIf="user.accountType === 'personal' && !isCommented && user.roles.author"
   class="comments-section__feedback"
   [formGroup]="feedbackForm"
   (ngSubmit)="postFeedback()">

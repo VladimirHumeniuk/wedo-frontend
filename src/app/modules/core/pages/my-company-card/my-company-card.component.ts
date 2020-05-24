@@ -165,7 +165,7 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
 
             const counterRef = this.fireStore.collection('counters').doc('companies').ref
 
-            this.countersService.updateCounter(counterRef, 5, 'inc')
+            this.countersService.updateCounter(counterRef, 5, 1)
 
             if (this.upload) {
               const updateImage = this.uploadService.publishUploads(this.upload, res.id).then((url: string) => {

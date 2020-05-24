@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { takeUntil, map, tap, take, delay, switchMap } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { NbToastrService } from '@nebular/theme';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'wd-companies',
@@ -32,6 +33,7 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
   public total: number
 
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly userService: UserService,
     private readonly categoriesService: CategoriesService,
     private readonly adminService: AdminService,
@@ -53,6 +55,8 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
     this.store.dispatch(new GetAllCompanies())
 
     this.loading = true
+
+    // this.countersService.getCount(this.fireStore.collection('counters').doc('companies').ref).then(d => console.log('🚧  d =>', d))
 
     this.adminService.companies$
       .pipe(

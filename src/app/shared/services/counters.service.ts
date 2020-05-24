@@ -25,12 +25,12 @@ export class CountersService {
     return batch.commit();
   }
 
-  public updateCounter(ref: DocumentReference, num_shards: number, type: 'inc' | 'dec'): Promise<void> {
+  public updateCounter(ref: DocumentReference, num_shards: number, val: number): Promise<void> {
     const shard_id = Math.floor(Math.random() * num_shards).toString();
     const shard_ref = ref.collection('shards').doc(shard_id);
 
     return shard_ref.set({
-      'count': firestore.FieldValue.increment(type === 'dec' ? -1 : 1)
+      'count': firestore.FieldValue.increment(val)
     }, { merge: true });
   }
 
