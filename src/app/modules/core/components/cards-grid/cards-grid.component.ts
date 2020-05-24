@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CategoriesService, RatingService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { takeUntil, take, tap } from 'rxjs/operators';
+import { RatingGraphService } from 'src/app/shared/services/rating.graph.service';
 
 @Component({
   selector: 'wd-cards-grid',
@@ -24,7 +25,7 @@ export class CardsGridComponent extends SafeComponent implements OnInit {
 
   constructor(
     private readonly categoriesService: CategoriesService,
-    private readonly ratingService: RatingService
+    private readonly ratingService: RatingGraphService,
   ) {
     super()
   }

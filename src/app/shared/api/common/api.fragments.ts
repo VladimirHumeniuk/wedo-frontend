@@ -75,3 +75,35 @@ export const alertDataFieldsFragment = gql`
     }
     ${alertFieldsFragment}
 `;
+
+// Comment
+export const commentFieldsFragment = gql`
+  fragment commentsFields on Comment {
+    id,
+    date,
+    text,
+    isEdited,
+    rating,
+    answer {
+      date,
+      text,
+      isEdited
+    },
+    votes {
+      value
+    },
+    author {
+      uid,
+      username
+    }
+  }
+`;
+
+// Star
+export const starFieldsFragment = gql`
+  fragment starsFields on Star {
+    cid,
+    uid,
+    value
+  }
+`;

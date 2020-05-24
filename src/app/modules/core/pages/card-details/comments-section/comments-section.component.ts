@@ -11,6 +11,8 @@ import { Store } from '@ngrx/store';
 import { firestore } from 'firebase/app';
 import { RatingService, CountersService } from 'src/app/shared/services';
 import { DatePipe } from '@angular/common';
+import { CommentService } from 'src/app/shared/services/comment.service';
+import { RatingGraphService } from 'src/app/shared/services/rating.graph.service';
 
 @Component({
   selector: 'wd-comments-section',
@@ -52,7 +54,9 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly fireStore: AngularFirestore,
     private readonly ratingService: RatingService,
-    private readonly countersService: CountersService
+    private readonly countersService: CountersService,
+    private readonly commentService: CommentService,
+    private readonly ratingGraphService: RatingGraphService,
   ) {
     super();
   }
@@ -98,7 +102,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
   }
 
   private recountStars(): Subscription {
-    return this.ratingService.getCompanyStars(this.cid)
+    return this.ratingGraphService.getCompanyStars(this.cid)
     .pipe(
       takeUntil(this.unsubscriber),
       take(1),
@@ -128,7 +132,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
   }
 
   public getDateTitle(date: any, isEdited: boolean): string {
-    return `${this.datePipe.transform(new Date(date.seconds * 1000), 'd MMMM, y, hh:mm a')} ${isEdited ? '\u00a0(edited)' : ''}`
+    return `${this.datePipe.transform(new Date(date._seconds * 1000), 'd MMMM, y, hh:mm a')} ${isEdited ? '\u00a0(edited)' : ''}`
   }
 
   public postAnswer(id: string, hasAnswer: any): void {
@@ -296,9 +300,8 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
 
       this.feedbackFormInit()
 
-    this.fireStore.collection('companies').doc(this.cid).collection('comments').valueChanges().pipe(
+    this.commentService.getCompanyComments(this.cid).pipe(
       takeUntil(this.unsubscriber),
-      map((data: Comment[]) => data.map(comment => comment)),
       tap(comments => {
         if (this.user.accountType === 'personal') {
           this.isCommented = !!comments.find(comment => comment.author.uid === this.uid)
@@ -306,7 +309,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
 
         this.comments = comments
       })
-    ).subscribe()
+    ).subscribe();
   }
 
 }
