@@ -47,21 +47,21 @@
 
     .ng-touched {
       &:not(.ng-pristine) {
-        &.ng-valid:not(.ng-select-opened) {
-          &:hover {
-            .ng-select-container {
-              border-color: #00997a;
-            }
+      //   &.ng-valid:not(.ng-select-opened) {
+      //     &:hover {
+      //       .ng-select-container {
+      //         border-color: #00997a;
+      //       }
 
-            .ng-dropdown-panel {
-              border-top-color: #00997a;
-            }
-          }
+      //       .ng-dropdown-panel {
+      //         border-top-color: #00997a;
+      //       }
+      //     }
 
-          .ng-select-container {
-            border-color: $c-success;
-          }
-        }
+      //     .ng-select-container {
+      //       border-color: $c-success;
+      //     }
+      //   }
 
         &.ng-invalid {
           &:hover {

@@ -18,7 +18,7 @@
             <a nbButton
                ghost
                status="info"
-               routerLink='/sign-in'>
+               routerLink="/sign-in">
               Login
             </a>
           </li>
@@ -26,7 +26,7 @@
           <li class="navigation-bar__menu-item">
             <a nbButton
                status="info"
-               routerLink='/sign-up'>
+               routerLink="/sign-up">
               Sign Up
             </a>
           </li>
@@ -40,20 +40,32 @@
             nbButton
             ghost
             status="info"
-            routerLink='/admin-panel'>
+            routerLink="/admin-panel">
                Admin Panel
             </a>
           </li>
 
           <li
-          *ngIf="user.accountType === 'business'"
+          *ngIf="user.accountType === 'business' && user.company"
           class="navigation-bar__menu-item">
             <a
             nbButton
             ghost
             status="info"
-            routerLink='/my-company-card'>
+            [routerLink]="'/card/' + user.company">
               My Business Card
+            </a>
+          </li>
+
+          <li
+          *ngIf="user.accountType === 'business' && !user.company"
+          class="navigation-bar__menu-item">
+            <a
+            nbButton
+            ghost
+            status="info"
+            [routerLink]="'/card/' + user.company">
+              Create Business Card
             </a>
           </li>
 
@@ -63,7 +75,7 @@
             shape="round"
             status="info"
             ghost
-            routerLink='/my-profile'>
+            routerLink="/my-profile">
               <nb-icon icon="bell-outline"></nb-icon>
             </a>
           </li>
@@ -73,7 +85,7 @@
             nbButton
             shape="round"
             status="info"
-            routerLink='/my-profile'>
+            routerLink="/my-profile">
               <nb-icon icon="person-outline"></nb-icon>
             </a>
           </li>

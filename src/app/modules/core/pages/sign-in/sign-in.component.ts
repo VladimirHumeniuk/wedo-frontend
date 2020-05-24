@@ -33,8 +33,7 @@ export class SignInComponent implements OnInit {
       ]],
       password: ['', [
         Validators.required,
-      ]],
-      rememberUser: ['']
+      ]]
     })
   }
 

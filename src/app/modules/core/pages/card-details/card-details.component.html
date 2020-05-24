@@ -17,6 +17,14 @@
 
       <div class="card-details__subheader-controls">
         <wd-social-share></wd-social-share>
+
+        <a
+        routerLink="/my-company-card"
+        *ngIf="cardDetails.cid === user.company"
+        class="card-details__edit"
+        nbButton>
+          Edit information
+        </a>
       </div>
     </wd-content-container>
 

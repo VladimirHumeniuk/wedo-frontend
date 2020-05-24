@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services';
 import { MustMatch, SafeComponent } from 'src/app/shared/helpers';
 import { EMAIL_REGEXP, FORMS_MESSAGES } from 'src/app/shared/constants';
-import { Router } from '@angular/router';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { GetUser } from 'src/app/store/actions/user.action';
@@ -36,9 +35,8 @@ export class SignUpComponent extends SafeComponent implements OnInit, AfterViewC
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly router: Router,
     private readonly store: Store<AppState>,
-    private changeDetector : ChangeDetectorRef
+    private readonly changeDetector : ChangeDetectorRef
   ) {
     super();
   }

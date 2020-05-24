@@ -3,6 +3,7 @@
 .select-group {
   ::ng-deep {
     nb-select button {
+      background-color: #fff;
       border-color: rgb(228, 233, 242);
       transition-property: border, background-color, color, box-shadow;
       transition-timing-function: ease-in;
