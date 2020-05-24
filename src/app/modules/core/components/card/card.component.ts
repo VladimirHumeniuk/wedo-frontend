@@ -19,7 +19,10 @@ export class CardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.url = this.title.replace(/\s+/g, '-').toLowerCase()
+    // this.url = this.title.replace(/\s+/g, '-').toLowerCase()
+
+    // For testing purpose
+    this.url = this.cid;
   }
 
 }
