@@ -7,8 +7,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { CountdownModule } from 'ngx-countdown';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AutosizeModule } from 'ngx-autosize';
@@ -27,7 +27,7 @@ import {
 } from '@nebular/theme';
 
 // Environments
-import { environment } from '../../../environments/environment';
+import { environment, mapboxgl } from '../../../environments/environment';
 
 // Modules
 import { CoreRoutingModule } from './core-routing.module';
@@ -118,7 +118,6 @@ import { CommentComponent } from './pages/card-details/comment/comment.component
     CommonModule,
     AutosizeModule,
     FontAwesomeModule,
-    LeafletModule,
     FormsModule,
     NgxPaginationModule,
     NbAlertModule,
@@ -132,7 +131,10 @@ import { CommentComponent } from './pages/card-details/comment/comment.component
     NbUserModule,
     NbSpinnerModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: mapboxgl.accessToken
+    })
   ],
   providers: [
     AngularFirestore

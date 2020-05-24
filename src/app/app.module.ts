@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
@@ -64,7 +63,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     NbSpinnerModule,
     NbToastrModule.forRoot({ duration: 4000 }),
     NbThemeModule.forRoot({ name: 'default' }),
-    LeafletModule,
     // Apollo Setup
     HttpClientModule,
     ApolloModule,
