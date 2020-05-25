@@ -5,10 +5,23 @@ import gql from 'graphql-tag';
 export const getCompanyCommentsQuery = gql`
     query getCompanyComments($cid: String!) {
         getCompanyComments(cid: $cid) {
-            ...commentsFields
+            ...commentFields
         }
     }
     ${commentFieldsFragment}
 `;
 
+
+// Mutation
+export const setCommentMutation = gql`
+    mutation setComment($companyId: String!, $comment: CommentInput!) {
+        setComment(companyId: $companyId, comment: $comment)
+    }
+`;
+
+export const addCommentMutation = gql`
+    mutation addComment($companyId: String!, $comment: CommentInput!) {
+        addComment(companyId: $companyId, comment: $comment)
+    }
+`;
 
