@@ -12,7 +12,6 @@ import { firestore } from 'firebase/app';
 import { RatingService, CountersService } from 'src/app/shared/services';
 import { DatePipe } from '@angular/common';
 import { CommentService } from 'src/app/shared/services/comment.service';
-import { RatingGraphService } from 'src/app/shared/services/rating.graph.service';
 
 @Component({
   selector: 'wd-comments-section',
@@ -55,8 +54,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     private readonly fireStore: AngularFirestore,
     private readonly ratingService: RatingService,
     private readonly countersService: CountersService,
-    private readonly commentService: CommentService,
-    private readonly ratingGraphService: RatingGraphService,
+    private readonly commentService: CommentService
   ) {
     super();
   }
@@ -86,23 +84,14 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     })
   }
 
-  private saveComment(comment: Comment, id?: string): Promise<any> {
-    const commentsRef = this.fireStore.collection('companies')
-                                      .doc(this.cid)
-                                      .collection('comments')
-
-    if (id) {
-      return commentsRef.doc(id).set(comment, { merge: true })
-    }
-
-    return this.fireStore.collection('companies')
-      .doc(this.cid)
-      .collection('comments')
-      .add(comment)
+  private saveComment(companyId: string, comment: Comment): Promise<any> {
+    return comment.id
+      ? this.commentService.setComment(companyId, comment).toPromise()
+      : this.commentService.addComment(companyId, comment).toPromise();
   }
 
   private recountStars(): Subscription {
-    return this.ratingGraphService.getCompanyStars(this.cid)
+    return this.ratingService.getCompanyStars(this.cid)
     .pipe(
       takeUntil(this.unsubscriber),
       take(1),
@@ -172,22 +161,19 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
       const { text, star } = this.feedbackForm.value
 
       const comment: Comment = {
+        id,
         author: {
           uid,
           username
         },
-        text: text,
+        text,
         isEdited: this.isCommented,
         rating: star
-      }
+      };
 
-      if (!id) comment['date'] = firestore.FieldValue.serverTimestamp()
-
-      let promises = [
-        this.saveComment(comment, id).then(res => {
-          if (!id) this.saveComment({ id: res.id }, res.id)
-        })
-      ]
+      const promises = [
+        this.saveComment(this.cid, comment)
+      ];
 
       const starsRef = this.fireStore.collection('counters').doc('stars').collection('companies').doc(this.cid).ref
 
@@ -201,7 +187,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
       }
 
       Promise.all(promises).then(() => {
-        this.ratingService.setStar(uid, this.cid, star)
+        this.ratingService.setStar(uid, this.cid, star).toPromise()
           .then(() => {
             this.recountStars()
           }).then(() => {
@@ -306,7 +292,6 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
         if (this.user.accountType === 'personal') {
           this.isCommented = !!comments.find(comment => comment.author.uid === this.uid)
         }
-
         this.comments = comments
       })
     ).subscribe();

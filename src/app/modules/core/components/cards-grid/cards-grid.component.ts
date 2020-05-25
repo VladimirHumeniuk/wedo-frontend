@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CompanyCard, Category } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
-import { CategoriesService, RatingService } from 'src/app/shared/services';
+import { CategoriesService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { takeUntil, take, tap } from 'rxjs/operators';
-import { RatingGraphService } from 'src/app/shared/services/rating.graph.service';
+import { RatingService } from 'src/app/shared/services/rating.service';
 
 @Component({
   selector: 'wd-cards-grid',
@@ -25,7 +25,7 @@ export class CardsGridComponent extends SafeComponent implements OnInit {
 
   constructor(
     private readonly categoriesService: CategoriesService,
-    private readonly ratingService: RatingGraphService,
+    private readonly ratingService: RatingService,
   ) {
     super()
   }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
+import { Star } from 'src/app/shared/models/star.model';
+import { getCompanyStarsQuery, getUserStarsQuery, setStarMutation } from 'src/app/shared/api/stars.api';
 
 @Injectable({
   providedIn: 'root'
@@ -8,26 +10,33 @@ import { Observable } from 'rxjs';
 export class RatingService {
 
   constructor(
-    private readonly fireStore: AngularFirestore,
+    private readonly baseApolloService: BaseApolloService,
   ) { }
 
-  public getUserStars(uid: string): Observable<any[]> {
-    const starsRef = this.fireStore.collection('stars', ref => ref.where('uid', '==', uid))
-
-    return starsRef.valueChanges()
+  public getCompanyStars(companyId: string): Observable<any[]> {
+    const source = this.baseApolloService.query<{cid: string}, Star[]>(
+        getCompanyStarsQuery,
+        (data) => data.getCompanyStars,
+        { cid: companyId });
+      return source;
   }
 
-  public getCompanyStars(cid: string): Observable<any[]> {
-    const starsRef = this.fireStore.collection('stars', ref => ref.where('cid', '==', cid))
-
-    return starsRef.valueChanges()
+  public getUserStars(userId: string): Observable<any[]> {
+    const source = this.baseApolloService.query<{uid: string}, Star[]>(
+        getUserStarsQuery,
+        (data) => data.getUserStars,
+        { uid: userId });
+      return source;
   }
 
-  public setStar(uid: string, cid: string, value: number) {
-    const star = { uid, cid, value }
+  public setStar(uid: string, cid: string, value: number): Observable<boolean> {
+    const star = { uid, cid, value };
+    const source$ = this.baseApolloService.mutation<{star: Star}, boolean>(
+        setStarMutation,
+        data => data.setStar, {
+        star
+    });
 
-    const starPath = `${star.uid}_${star.cid}`;
-
-    return this.fireStore.collection('stars').doc(starPath).set(star)
+    return source$;
   }
 }
