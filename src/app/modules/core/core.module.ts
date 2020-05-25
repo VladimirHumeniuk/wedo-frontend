@@ -7,10 +7,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { CountdownModule } from 'ngx-countdown';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AutosizeModule } from 'ngx-autosize';
 
 import {
   NbAlertModule,
@@ -21,11 +22,12 @@ import {
   NbLayoutModule,
   NbIconModule,
   NbTabsetModule,
-  NbSpinnerModule
+  NbSpinnerModule,
+  NbUserModule
 } from '@nebular/theme';
 
 // Environments
-import { environment } from '../../../environments/environment';
+import { environment, mapboxgl } from '../../../environments/environment';
 
 // Modules
 import { CoreRoutingModule } from './core-routing.module';
@@ -67,6 +69,8 @@ import { RemoveAccountComponent } from './pages/my-profile/remove-account/remove
 import { ContentContainerComponent } from './components/content-container/content-container.component';
 import { PageTitleComponent } from './components/page-title/page-title.component';
 import { CardRowComponent } from './components/card-row/card-row.component';
+import { CommentsSectionComponent } from './pages/card-details/comments-section/comments-section.component';
+import { CommentComponent } from './pages/card-details/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +104,9 @@ import { CardRowComponent } from './components/card-row/card-row.component';
     RemoveAccountComponent,
     ContentContainerComponent,
     PageTitleComponent,
-    CardRowComponent
+    CardRowComponent,
+    CommentsSectionComponent,
+    CommentComponent
   ],
   imports: [
     AngularFireAuthModule,
@@ -110,8 +116,8 @@ import { CardRowComponent } from './components/card-row/card-row.component';
     CoreRoutingModule,
     CountdownModule,
     CommonModule,
+    AutosizeModule,
     FontAwesomeModule,
-    LeafletModule,
     FormsModule,
     NgxPaginationModule,
     NbAlertModule,
@@ -122,9 +128,13 @@ import { CardRowComponent } from './components/card-row/card-row.component';
     NbIconModule,
     NbLayoutModule,
     NbPopoverModule,
+    NbUserModule,
     NbSpinnerModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgxMapboxGLModule.withConfig({
+      accessToken: mapboxgl.accessToken
+    })
   ],
   providers: [
     AngularFirestore

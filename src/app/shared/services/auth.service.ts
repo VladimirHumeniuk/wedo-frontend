@@ -4,7 +4,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import { AngularFirestore, AngularFirestoreDocument, DocumentData } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreDocument, DocumentData, DocumentReference } from '@angular/fire/firestore';
 import { Store } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
 import { take, catchError } from 'rxjs/operators'
@@ -15,11 +15,14 @@ import * as LoginActions from 'src/app/store/actions/login.action';
 import { AddAlert } from 'src/app/store/actions/alert.action';
 import { ALERTS } from 'src/app/shared/constants';
 import { CloudApiService } from './cloud-api.service';
+import { CountersService } from './counters.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private counterRef: DocumentReference = this.fireStore.collection('counters').doc('users').ref
 
   constructor(
     private readonly toastrService: NbToastrService,
@@ -28,7 +31,8 @@ export class AuthService {
     private readonly fireAuth: AngularFireAuth,
     private readonly router: Router,
     private readonly store: Store<AppState>,
-    private readonly cloud: CloudApiService
+    private readonly cloud: CloudApiService,
+    private readonly countersService: CountersService
   ) { }
 
   public createUserWithEmailAndPassword(formData: any): Promise<void> {
@@ -63,7 +67,10 @@ export class AuthService {
 
         return this.userService.setUserData(user);
       })
-      .then(() => this.sendEmailVerification())
+      .then(() => {
+        this.sendEmailVerification()
+        this.countersService.updateCounter(this.counterRef, 5, 1)
+      })
       .catch(error => { throw error })
   }
 
@@ -248,6 +255,8 @@ export class AuthService {
 
         return user.reauthenticateWithCredential(credentials).then(res => {
           if (res) {
+            this.countersService.updateCounter(this.counterRef, 5, -1)
+
             this.store.select('user').pipe(
               take(1)
             ).subscribe(storeUser => {
@@ -255,7 +264,9 @@ export class AuthService {
                 this.fireStore.collection('companies').doc(storeUser.company).delete()
               }
 
-              user.delete().then(() => this.signOut())
+              user.delete().then(() => {
+                this.signOut()
+              })
             })
           }
         })

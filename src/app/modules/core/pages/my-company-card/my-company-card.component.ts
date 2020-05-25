@@ -8,7 +8,7 @@ import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take, takeUntil, tap } from 'rxjs/operators';
-import { UploadService, UserService, CategoriesService, CompaniesService } from 'src/app/shared/services';
+import { UploadService, UserService, CategoriesService, CompaniesService, CountersService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { GetUser } from 'src/app/store/actions/user.action';
 
@@ -42,7 +42,8 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
     private readonly store: Store<AppState>,
     private readonly userService: UserService,
     private readonly categoriesService: CategoriesService,
-    private readonly companiesService: CompaniesService
+    private readonly companiesService: CompaniesService,
+    private readonly countersService: CountersService
   ) {
     super();
 
@@ -161,6 +162,10 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
         const publishNewCompany = companiesLink.add(newCompany)
           .then((res: DocumentReference) => {
             this.companiesService.assignCompany(this.user.uid, res.id).subscribe()
+
+            const counterRef = this.fireStore.collection('counters').doc('companies').ref
+
+            this.countersService.updateCounter(counterRef, 5, 1)
 
             if (this.upload) {
               const updateImage = this.uploadService.publishUploads(this.upload, res.id).then((url: string) => {

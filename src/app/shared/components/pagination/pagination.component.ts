@@ -10,6 +10,7 @@ export class PaginationComponent implements OnInit {
 
   @Input() id: string;
   @Input() position: string;
+  @Input() total: number;
 
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
 

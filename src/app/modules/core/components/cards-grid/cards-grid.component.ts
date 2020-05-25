@@ -3,7 +3,8 @@ import { CompanyCard, Category } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
 import { CategoriesService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, take, tap } from 'rxjs/operators';
+import { RatingService } from 'src/app/shared/services/rating.service';
 
 @Component({
   selector: 'wd-cards-grid',
@@ -23,13 +24,25 @@ export class CardsGridComponent extends SafeComponent implements OnInit {
   }
 
   constructor(
-    private readonly categoriesService: CategoriesService
+    private readonly categoriesService: CategoriesService,
+    private readonly ratingService: RatingService,
   ) {
     super()
   }
 
   public getCategoryTitle(id: number): string {
     return this.categoriesService.getCategoryTitle(id)
+  }
+
+  public getCardRating(cid: string): number {
+    let rating
+
+    this.ratingService.getCompanyStars(cid).pipe(
+      take(1),
+      tap(val => rating = val)
+    ).subscribe()
+
+    return rating
   }
 
   ngOnInit() {

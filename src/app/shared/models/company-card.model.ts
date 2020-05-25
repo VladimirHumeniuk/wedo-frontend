@@ -1,12 +1,12 @@
 import { PhoneNumber } from 'libphonenumber-js';
-import { Category, Timestamp, Comment } from '.';
+import { Category, Comment } from '.';
 
 export interface CompanyCard {
   cid: string;
   title: string;
   owner: string;
   comments?: Comment[];
-  created: Timestamp | Date;
+  created: any;
   image?: string;
   url?: string;
   phone?: PhoneNumber;
@@ -16,4 +16,5 @@ export interface CompanyCard {
   wysiwyg?: string;
   shortDescription: string;
   isShown: boolean;
+  rating?: number;
 }

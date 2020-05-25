@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { CompaniesService, CategoriesService } from 'src/app/shared/services';
+import { CompaniesService, CategoriesService, CountersService, RatingService } from 'src/app/shared/services';
 import { ActivatedRoute } from '@angular/router';
-import { CompanyCard, Category } from 'src/app/shared/models';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { CompanyCard, Category, User } from 'src/app/shared/models';
 import { SafeComponent } from 'src/app/shared/helpers';
-import { takeUntil, take, map } from 'rxjs/operators';
+import { takeUntil, take, map, tap } from 'rxjs/operators';
+import { AppState } from 'src/app/app.state';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'wd-card-details',
@@ -16,10 +20,20 @@ export class CardDetailsComponent extends SafeComponent implements OnInit {
   public cardDetails: CompanyCard;
   public categories: Category[];
 
+  public user$: Observable<User> = this.store.select('user');
+  public user: User;
+
+  public rating: number;
+  public feedbacksCounter: number;
+
   constructor(
+    private readonly store: Store<AppState>,
     private readonly route: ActivatedRoute,
+    private readonly fireStore: AngularFirestore,
     private readonly companiesService: CompaniesService,
-    private readonly categoriesService: CategoriesService
+    private readonly categoriesService: CategoriesService,
+    private readonly countersService: CountersService,
+    private readonly ratingService: RatingService
   ) {
     super()
   }
@@ -52,9 +66,18 @@ export class CardDetailsComponent extends SafeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user$.pipe(
+      takeUntil(this.unsubscriber),
+      tap(user => this.user = user)
+      ).subscribe()
+
     this.route.paramMap.subscribe(params => {
       const cid = params.get('cid')
       this.getCompany(cid)
+
+      this.countersService.getCount(
+        this.fireStore.collection('counters').doc('stars').collection('companies').doc(cid).ref
+      ).then(amount => this.feedbacksCounter = amount)
     })
   }
 }

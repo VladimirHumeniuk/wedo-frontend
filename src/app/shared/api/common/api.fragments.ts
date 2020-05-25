@@ -32,10 +32,15 @@ export const companyFieldsFragment = gql`
       title,
       owner,
       comments {
+        id,
         date,
         text,
-        author,
-        isEdited
+        author {
+          uid,
+          username
+        },
+        isEdited,
+        rating
       },
       created,
       image,
@@ -47,6 +52,7 @@ export const companyFieldsFragment = gql`
       wysiwyg,
       shortDescription,
       isShown,
+      rating,
     }
 `;
 
@@ -68,4 +74,36 @@ export const alertDataFieldsFragment = gql`
       }
     }
     ${alertFieldsFragment}
+`;
+
+// Comment
+export const commentFieldsFragment = gql`
+  fragment commentFields on Comment {
+    id,
+    date,
+    text,
+    isEdited,
+    rating,
+    answer {
+      date,
+      text,
+      isEdited
+    },
+    votes {
+      value
+    },
+    author {
+      uid,
+      username
+    }
+  }
+`;
+
+// Star
+export const starFieldsFragment = gql`
+  fragment starFields on Star {
+    cid,
+    uid,
+    value
+  }
 `;

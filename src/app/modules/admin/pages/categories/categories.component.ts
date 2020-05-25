@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoriesService } from 'src/app/shared/services';
+import { CategoriesService, CountersService } from 'src/app/shared/services';
 import { Category } from 'src/app/shared/models';
 import { map, tap, takeUntil } from 'rxjs/operators';
 import { NbToastrService } from '@nebular/theme';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { GetAllCategories, RemoveCategory } from 'src/app/store/actions/categories.action';
 
@@ -15,6 +16,8 @@ import { GetAllCategories, RemoveCategory } from 'src/app/store/actions/categori
 })
 export class CategoriesComponent extends SafeComponent implements OnInit {
 
+  private counterRef: DocumentReference = this.fireStore.collection('counters').doc('categories').ref
+
   public categories: Category[]
 
   public tableColumns = [
@@ -24,15 +27,18 @@ export class CategoriesComponent extends SafeComponent implements OnInit {
   public actions = { edit: true, remove: true }
 
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly categoriesService: CategoriesService,
     private readonly toastrService: NbToastrService,
-    private readonly store: Store<AppState>
+    private readonly store: Store<AppState>,
+    private readonly countersService: CountersService
   ) {
     super();
   }
 
   public categoryRemove(id: number): void {
     this.store.dispatch(new RemoveCategory({ id }))
+    this.countersService.updateCounter(this.counterRef, 5, -1)
     this.toastrService.success('Category removed', 'Removed',
       { icon: 'trash-2-outline' }
     )

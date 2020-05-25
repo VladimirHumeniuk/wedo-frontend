@@ -9,10 +9,22 @@
       <div class="card-details__subheader-title">
         <h1 class="card-details__title">{{cardDetails.title}}</h1>
         <span class="card-details__category">{{cardDetails.category}}</span>
+        <wd-rating
+        class="card-details__rating"
+        [value]="cardDetails.rating"
+        [voters]="feedbacksCounter"></wd-rating>
       </div>
 
       <div class="card-details__subheader-controls">
         <wd-social-share></wd-social-share>
+
+        <a
+        routerLink="/my-company-card"
+        *ngIf="cardDetails.cid === user.company"
+        class="card-details__edit"
+        nbButton>
+          Edit information
+        </a>
       </div>
     </wd-content-container>
 
@@ -38,14 +50,11 @@
       </div>
     </wd-content-container>
 
-    <wd-content-container class="card-details__comments">
-      <section class="card-details__comments-container">
-        <h2 class="card-details__comments-title">People feedback</h2>
-
-        <article *ngIf="!cardDetails.comments" class="card-details__no-comments">
-          No feedback yet
-        </article>
-      </section>
+    <wd-content-container class="card-details__comments-wrapper">
+      <wd-comments-section
+      [business]="cardDetails.title"
+      [cid]="cardDetails.cid">
+      </wd-comments-section>
     </wd-content-container>
   </article>
 </ng-container>

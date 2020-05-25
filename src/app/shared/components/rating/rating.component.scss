@@ -1,0 +1,91 @@
+@import '../../../../styles/variables/variables';
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  font-size: 2rem;
+
+  &--form {
+    .rating-icon {
+      cursor: pointer;
+    }
+  }
+}
+
+.rating-icon {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  font-size: 0;
+  opacity: .8;
+  cursor: default;
+
+  &:focus {
+    outline-width: 2px;
+  }
+
+  &--is-active {
+    color: $c-yellow-1000;
+    opacity: 1;
+  }
+}
+
+.rating__error {
+  font-size: 14px;
+  color: $c-error;
+  margin-left: 10px;
+}
+
+.rating-input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.rating__star-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.rating__star {
+  display: block;
+  position: relative;
+  width: 23px;
+  height: 23px;
+  overflow: hidden;
+
+  ::ng-deep {
+    nb-icon {
+      height: 23px;
+      width: 23px;
+      vertical-align: middle;
+    }
+  }
+
+  &:nth-child(2) {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.rating__value {
+  margin-left: 20px;
+  color: $c-gray-1000;
+  font-size: 16px;
+  margin-bottom: -1px;
+}
+
+.rating__voters {
+  font-size: 14px;
+  padding: 0 7px;
+  color: $c-gray-700;
+  margin-top: -1px;
+}

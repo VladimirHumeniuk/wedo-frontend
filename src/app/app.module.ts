@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { DatePipe } from '@angular/common';
 import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
@@ -63,7 +63,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     NbSpinnerModule,
     NbToastrModule.forRoot({ duration: 4000 }),
     NbThemeModule.forRoot({ name: 'default' }),
-    LeafletModule,
     // Apollo Setup
     HttpClientModule,
     ApolloModule,
@@ -71,7 +70,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     SharedModule,
     StoreModule.forRoot(reducers, { metaReducers })
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

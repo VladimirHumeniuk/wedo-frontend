@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { CompanyCard, User, Category } from 'src/app/shared/models';
-import { UserService, CategoriesService } from 'src/app/shared/services';
+import { UserService, CategoriesService, CountersService } from 'src/app/shared/services';
 import { GetAllCompanies, RemoveCompany } from 'src/app/store/actions/companies.action';
 import { AdminService } from 'src/app/shared/services/admin.service';
 import { AppState } from 'src/app/app.state';
@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { takeUntil, map, tap, take, delay, switchMap } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { NbToastrService } from '@nebular/theme';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'wd-companies',
@@ -29,12 +30,16 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
   public companies: CompanyCard[]
   public loading: boolean
 
+  public total: number
+
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly userService: UserService,
     private readonly categoriesService: CategoriesService,
     private readonly adminService: AdminService,
     private readonly store: Store<AppState>,
     private readonly toastrService: NbToastrService,
+    private readonly countersService: CountersService
   ) {
     super();
   }
@@ -50,6 +55,8 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
     this.store.dispatch(new GetAllCompanies())
 
     this.loading = true
+
+    // this.countersService.getCount(this.fireStore.collection('counters').doc('companies').ref).then(d => console.log('🚧  d =>', d))
 
     this.adminService.companies$
       .pipe(

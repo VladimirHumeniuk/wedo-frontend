@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Category } from 'src/app/shared/models';
-import { CategoriesService } from 'src/app/shared/services';
+import { CategoriesService, CountersService } from 'src/app/shared/services';
+import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
 import { take, takeUntil } from 'rxjs/operators';
 import { NbToastrService } from '@nebular/theme';
 import { SafeComponent } from 'src/app/shared/helpers';
@@ -14,6 +15,8 @@ import { SafeComponent } from 'src/app/shared/helpers';
 })
 export class EditCategoryComponent extends SafeComponent implements OnInit {
 
+  private counterRef: DocumentReference = this.fireStore.collection('counters').doc('categories').ref
+
   public category: Category
 
   public editCategoryForm: FormGroup
@@ -22,11 +25,13 @@ export class EditCategoryComponent extends SafeComponent implements OnInit {
   public newItemId: number
 
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly toastrService: NbToastrService,
     private readonly categoriesService: CategoriesService,
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
-    private readonly activatedRoute: ActivatedRoute
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly countersService: CountersService
   ) {
     super();
   }
@@ -56,6 +61,7 @@ export class EditCategoryComponent extends SafeComponent implements OnInit {
 
       this.categoriesService.addCategory(formData).toPromise()
         .finally(() => {
+          this.countersService.updateCounter(this.counterRef, 5, 1)
           this.router.navigate(['/admin-panel/categories'])
           this.toastrService.success('Successfully saved', 'Saved')
         })

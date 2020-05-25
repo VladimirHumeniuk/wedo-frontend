@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserService } from 'src/app/shared/services';
+import { UserService, CountersService } from 'src/app/shared/services';
 import { User } from 'src/app/shared/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, tap, takeUntil } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { SafeComponent } from 'src/app/shared/helpers';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { GetAllUsers } from 'src/app/store/actions/user.action';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'wd-users',
@@ -31,11 +32,13 @@ export class UsersComponent extends SafeComponent implements OnInit {
   public itemsPerPage: number = 10;
 
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly router: Router,
     private readonly activatedRoute: ActivatedRoute,
     private readonly userService: UserService,
     private readonly adminService: AdminService,
     private readonly store: Store<AppState>,
+    private readonly countersService: CountersService
   ) {
     super();
   }

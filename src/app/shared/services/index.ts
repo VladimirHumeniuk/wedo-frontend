@@ -7,3 +7,5 @@ export * from './upload.service';
 export * from './locationiq.service';
 export * from './categories.service';
 export * from './companies.service';
+export * from './rating.service';
+export * from './counters.service';
