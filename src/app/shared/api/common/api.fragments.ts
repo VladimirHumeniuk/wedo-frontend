@@ -78,7 +78,7 @@ export const alertDataFieldsFragment = gql`
 
 // Comment
 export const commentFieldsFragment = gql`
-  fragment commentsFields on Comment {
+  fragment commentFields on Comment {
     id,
     date,
     text,
@@ -101,7 +101,7 @@ export const commentFieldsFragment = gql`
 
 // Star
 export const starFieldsFragment = gql`
-  fragment starsFields on Star {
+  fragment starFields on Star {
     cid,
     uid,
     value

@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 export const getCompanyStarsQuery = gql`
     query getCompanyStars($cid: String!) {
         getCompanyStars(cid: $cid) {
-            ...starFieldsFragment
+            ...starFields
         }
     }
     ${starFieldsFragment}
@@ -14,9 +14,16 @@ export const getCompanyStarsQuery = gql`
 export const getUserStarsQuery = gql`
     query getUserStars($cid: String!) {
         getUserStars(cid: $cid) {
-            ...starFieldsFragment
+            ...starFields
         }
     }
     ${starFieldsFragment}
 `;
 
+
+// Mutation
+export const setStarMutation = gql`
+    mutation setStar($star: StarInput!) {
+        setStar(star: $star)
+    }
+`;
