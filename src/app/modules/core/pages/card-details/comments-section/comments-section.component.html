@@ -95,7 +95,7 @@
       </div>
 
       <div class="comment__footer"
-      [nbSpinner]="user.uid && user.roles.author && comment.author.uid === user.uid && (loader.isLoading(UPDATE_COMPANY_COMMENT) || loader.isLoading(REMOVE_COMPANY_COMMENT))"
+      [nbSpinner]="comment.author.uid === user.uid && (loader.isLoading(UPDATE_COMPANY_COMMENT) || loader.isLoading(REMOVE_COMPANY_COMMENT))"
       *ngIf="user.accountType !== 'business' || user.company === cid">
         <div
         *ngIf="
