@@ -25,3 +25,9 @@ export const addCommentMutation = gql`
     }
 `;
 
+export const removeCommentMutation = gql`
+    mutation removeComment($companyId: String!, $commentId: String!) {
+        removeComment(companyId: $companyId, commentId: $commentId)
+    }
+`;
+

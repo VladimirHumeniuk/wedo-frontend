@@ -35,7 +35,7 @@
   </span>
 
   <ng-container *ngIf="voters">
-    <span class="rating__value">{{value}}</span>
+    <span class="rating__value">{{value | number : '1.0-1'}}</span>
     <span class="rating__voters">({{voters}} Voters)</span>
   </ng-container>
 </div>
