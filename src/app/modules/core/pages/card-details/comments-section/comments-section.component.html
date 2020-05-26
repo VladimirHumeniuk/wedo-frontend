@@ -52,6 +52,7 @@
           </form>
 
           <form
+          *ngIf="user.accountType !== 'business' || user.company === cid"
           [ngClass]="{ 'answer__form': true, 'answer__form--with-answer': comment.answer?.text }"
           [formGroup]="answerForm"
           (ngSubmit)="postAnswer(comment.id, comment.answer)"
