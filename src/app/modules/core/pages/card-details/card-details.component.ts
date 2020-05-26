@@ -1,3 +1,4 @@
+import { GET_ALL_COMPANY_COMMENTS } from 'src/app/store/actions/comment.action';
 import { Component, OnInit } from '@angular/core';
 import { CompaniesService, CategoriesService, CountersService, RatingService } from 'src/app/shared/services';
 import { ActivatedRoute } from '@angular/router';
@@ -8,6 +9,7 @@ import { takeUntil, take, map, tap } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { Loader } from 'src/app/shared/helpers/loader';
 
 @Component({
   selector: 'wd-card-details',
@@ -25,6 +27,9 @@ export class CardDetailsComponent extends SafeComponent implements OnInit {
 
   public rating: number;
   public feedbacksCounter: number;
+
+  loader: Loader = Loader.instance;
+  GET_ALL_COMPANY_COMMENTS = GET_ALL_COMPANY_COMMENTS;
 
   constructor(
     private readonly store: Store<AppState>,

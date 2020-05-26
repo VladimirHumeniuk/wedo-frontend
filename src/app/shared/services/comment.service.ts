@@ -2,14 +2,21 @@ import { Injectable } from '@angular/core';
 import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import { Observable } from 'rxjs/Observable';
 import { Comment } from '../models';
-import { getCompanyCommentsQuery, setCommentMutation, addCommentMutation } from 'src/app/shared/api/comments.api';
+import { getCompanyCommentsQuery, setCommentMutation, addCommentMutation, removeCommentMutation } from 'src/app/shared/api/comments.api';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.state';
+import { selectCommentFeatureComments } from 'src/app/store/states/comment.state';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
+
+  readonly comments$: Observable<Comment[]> = this.store.select(selectCommentFeatureComments);
+
   constructor(
     private readonly baseApolloService: BaseApolloService,
+    private readonly store: Store<AppState>,
   ) { }
 
   public getCompanyComments(companyId: string): Observable<Comment[]> {
@@ -38,6 +45,18 @@ export class CommentService {
         data => data.setComment, {
             companyId,
             comment,
+        }
+    );
+
+    return source$;
+  }
+
+  public removeComment(companyId: string, commentId: string): Observable<boolean> {
+    const source$ = this.baseApolloService.mutation<{companyId: string, commentId: string}, boolean>(
+        removeCommentMutation,
+        data => data.removeComment, {
+            companyId,
+            commentId,
         }
     );
 
