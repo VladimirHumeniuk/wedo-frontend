@@ -1,20 +1,24 @@
 <form [formGroup]="homeSearch" (ngSubmit)="search()">
   <nb-card>
     <nb-card-body class="search-bar">
+      <ais-instantsearch [config]="searchConfig">
+        <ais-search-box (change)="searchChanged($event)"></ais-search-box>
+
+        <ais-hits *ngIf="showResults">
+          <ng-template let-hits="hits">
+            <div *ngFor="let hit of hits">
+              {{ hit | json }}
+            </div>
+          </ng-template>
+        </ais-hits>
+      </ais-instantsearch>
+
       <wd-input-group
       class="search-bar__search"
       name="search"
       type="search"
       [parentForm]="homeSearch"
       placeholder="Search..."></wd-input-group>
-
-      <!-- <wd-select
-      class="search-bar__type"
-      name="type"
-      [parentForm]="homeSearch"
-      label="From"
-      [searchable]="false"
-      [items]="types"></wd-select> -->
 
       <wd-select
       placeholder="All"

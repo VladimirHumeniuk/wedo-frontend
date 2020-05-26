@@ -5,6 +5,7 @@ import { ItemsService } from '../../services';
 import { CategoriesService } from 'src/app/shared/services';
 import { take, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'wd-search-bar',
@@ -17,13 +18,26 @@ export class SearchBarComponent implements OnInit {
 
   public categories: Category[] = [];
 
-  public types = ['Companies', 'Freelancers']
+  public searchConfig = {
+    ...environment.algolia,
+    indexName: 'companies_search'
+  }
+
+  showResults: boolean = false
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly itemsService: ItemsService,
     private readonly categoriesService: CategoriesService
   ) {  }
+
+  public searchChanged(query: any): void {
+    if (query.length) {
+      this.showResults = true
+    } else {
+      this.showResults = false
+    }
+  }
 
   private formInit(): void {
     this.homeSearch = this.formBuilder.group({
