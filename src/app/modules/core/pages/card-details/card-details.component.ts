@@ -22,9 +22,6 @@ export class CardDetailsComponent extends SafeComponent implements OnInit {
   public rating: number;
   public feedbacksCounter: number;
 
-  loader: Loader = Loader.instance;
-  GET_ALL_COMPANY_COMMENTS = GET_ALL_COMPANY_COMMENTS;
-
   constructor(
     private readonly route: ActivatedRoute,
     private readonly fireStore: AngularFirestore,

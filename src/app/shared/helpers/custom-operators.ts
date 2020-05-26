@@ -6,8 +6,6 @@ export const trackExecution = <T, U>(key: string, source: (action: T) => Observa
     UnaryFunction<Observable<T>, Observable<U>>  => {
     const operator = pipe(
         tap<T>(_ => loader.lock(key)),
-        // // TODO - REMOVE DELAY
-        delay(3000),
         switchMap(source),
         tap(_ => loader.unlock(key)),
         finalize(() => loader.unlock(key))
