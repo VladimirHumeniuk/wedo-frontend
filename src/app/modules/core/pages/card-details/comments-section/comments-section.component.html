@@ -95,7 +95,7 @@
       </div>
 
       <div class="comment__footer"
-      [nbSpinner]="loading === comment.id"
+      [nbSpinner]="comment.author.uid === user.uid && (loader.isLoading(UPDATE_COMPANY_COMMENT) || loader.isLoading(REMOVE_COMPANY_COMMENT))"
       *ngIf="user.accountType !== 'business' || user.company === cid">
         <div
         *ngIf="
@@ -281,7 +281,7 @@
       <button
       nbButton
       [disabled]="feedbackForm.invalid"
-      [nbSpinner]="loading"
+      [nbSpinner]="loader.isLoading(ADD_COMPANY_COMMENT)"
       status="primary"
       type="submit">
         Post my feedback

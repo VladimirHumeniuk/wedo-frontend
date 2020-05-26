@@ -3,7 +3,8 @@ import {
   alertReducer,
   loginReducer,
   adminReducer,
-  categoriesReducer
+  categoriesReducer,
+  commentReducer
 } from '.';
 
 export const reducers = {
@@ -11,5 +12,6 @@ export const reducers = {
   alert: alertReducer,
   login: loginReducer,
   admin: adminReducer,
-  category: categoriesReducer
+  category: categoriesReducer,
+  comment: commentReducer,
 }

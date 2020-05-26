@@ -13,7 +13,7 @@ export class RatingService {
     private readonly baseApolloService: BaseApolloService,
   ) { }
 
-  public getCompanyStars(companyId: string): Observable<any[]> {
+  public getCompanyStars(companyId: string): Observable<Star[]> {
     const source = this.baseApolloService.query<{cid: string}, Star[]>(
         getCompanyStarsQuery,
         (data) => data.getCompanyStars,
@@ -21,7 +21,7 @@ export class RatingService {
       return source;
   }
 
-  public getUserStars(userId: string): Observable<any[]> {
+  public getUserStars(userId: string): Observable<Star[]> {
     const source = this.baseApolloService.query<{uid: string}, Star[]>(
         getUserStarsQuery,
         (data) => data.getUserStars,

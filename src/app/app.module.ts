@@ -37,6 +37,8 @@ import { UserEffects } from './store/effects/user.effect';
 import { AlertEffects } from 'src/app/store/effects/alert.effect';
 import { AdminEffects } from 'src/app/store/effects/admin.effect';
 import { CategoriesEffects } from 'src/app/store/effects/categories.effect';
+import { CommentEffects } from 'src/app/store/effects/comment.effect';
+import { RatingEffects } from 'src/app/store/effects/rating.effect';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
@@ -56,7 +58,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
       UserEffects,
       AlertEffects,
       AdminEffects,
-      CategoriesEffects
+      CategoriesEffects,
+      CommentEffects,
+      RatingEffects
     ]),
     NbButtonModule,
     NbEvaIconsModule,
