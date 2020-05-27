@@ -1,10 +1,10 @@
 <main class="cards-grid">
   <wd-card
   *ngFor="let card of items | paginate: { id: 'cards-grid', itemsPerPage: 16, currentPage: p }"
-  [cid]="card.cid"
+  [cid]="card.objectID"
   [title]="card.title"
   [category]="getCategoryTitle(card.category)"
-  [image]="card.image ? card.image : 'https://firebasestorage.googleapis.com/v0/b/wedo-application.appspot.com/o/core%2Fgib-rock-blue.svg?alt=media&token=1f870a01-7703-4819-b38d-870ff1ae9312'"
+  [image]="card.image ? card.image : 'assets/image-placeholder-light.svg'"
   [description]="card.shortDescription"
   [rating]="card.rating"></wd-card>
 </main>

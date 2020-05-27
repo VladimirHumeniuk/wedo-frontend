@@ -28,11 +28,10 @@ export class UserService {
     private readonly cloud: CloudApiService
   ) { }
 
-  public getAllUsers(lastVisible?: number, limit?: number): Observable<User[]> {
-    const source = this.baseApolloService.query<{ lastVisible?: number; limit?: number; }, User[]>(
+  public getAllUsers(): Observable<User[]> {
+    const source = this.baseApolloService.query<{}, User[]>(
       getAllUsersQuery,
-      (data) => data.getAllUsers,
-      { lastVisible, limit });
+      (data) => data.getAllUsers);
     return source;
   }
 

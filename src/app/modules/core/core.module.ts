@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { NgAisModule } from 'angular-instantsearch';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { CountdownModule } from 'ngx-countdown';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -132,6 +133,7 @@ import { CommentComponent } from './pages/card-details/comment/comment.component
     NbSpinnerModule,
     ReactiveFormsModule,
     SharedModule,
+    NgAisModule,
     NgxMapboxGLModule.withConfig({
       accessToken: mapboxgl.accessToken
     })

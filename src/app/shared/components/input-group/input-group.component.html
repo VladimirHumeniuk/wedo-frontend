@@ -21,8 +21,9 @@
     [formControlName]="name"
     fieldSize="large"
     [status]="status"
-    (blur)="getStatus()"
-    (focus)="resetStatus()"
+    (blur)="onBlur()"
+    (focus)="onFocus()"
+    [attr.autocomplete]="autocomplete ? autocomplete : null"
     nbInput
     fullWidth
     [attr.disabled]="isDisabled ? true : null" />

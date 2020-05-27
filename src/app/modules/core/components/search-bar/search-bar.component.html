@@ -5,16 +5,29 @@
       class="search-bar__search"
       name="search"
       type="search"
+      autocomplete="off"
       [parentForm]="homeSearch"
+      (focus)="toggleHits()"
+      (blur)="toggleHits()"
+      (keyup)="search(true)"
       placeholder="Search..."></wd-input-group>
 
-      <!-- <wd-select
-      class="search-bar__type"
-      name="type"
-      [parentForm]="homeSearch"
-      label="From"
-      [searchable]="false"
-      [items]="types"></wd-select> -->
+      <ul class="search-bar__hits" *ngIf="hits.length > 0 && showResults">
+        <li *ngFor="let hit of hits">
+          <a class="search-bar__hit" routerLink="card/{{hit.objectID}}">
+            <div class="search-bar__hit-picture">
+              <img
+              [attr.src]="hit.image ? hit.image : 'assets/image-placeholder-light.svg'"
+              [attr.alt]="hit.title" />
+            </div>
+
+            <div class="search-bar__hit-info">
+              <div class="search-bar__hit-title">{{ hit.title }} <span>in</span> {{ getCategoryTitle(hit.category) }}</div>
+              <div class="search-bar__hit-text">{{ hit.shortDescription }}</div>
+            </div>
+          </a>
+        </li>
+      </ul>
 
       <wd-select
       placeholder="All"
@@ -28,6 +41,7 @@
 
       <button
       nbButton
+      [nbSpinner]="loading"
       class="search-bar__submit"
       status="warning"
       type="submit">

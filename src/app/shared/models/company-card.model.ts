@@ -18,3 +18,12 @@ export interface CompanyCard {
   isShown: boolean;
   rating?: number;
 }
+
+export interface CompanyPreview {
+  objectID: string;
+  title: string;
+  image?: string;
+  category: number;
+  shortDescription: string;
+  rating?: number;
+}

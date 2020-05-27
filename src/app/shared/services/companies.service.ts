@@ -20,13 +20,13 @@ export class CompaniesService {
   ) { }
 
   public getAllCompanies(): Observable<CompanyCard[]> {
-    const source = this.baseApolloService.query<{}, CompanyCard[]>(getAllCompaniesQuery, (data) => data.getAllCompanies);
-    return source;
+    const source$ = this.baseApolloService.query<{}, CompanyCard[]>(getAllCompaniesQuery, (data) => data.getAllCompanies);
+    return source$;
   }
 
   public getCompany(cid: string): Observable<CompanyCard> {
-    const source = this.baseApolloService.query<{ cid: string }, CompanyCard>(getCompanyQuery, (data) => data.getCompany, { cid });
-    return source;
+    const source$ = this.baseApolloService.query<{ cid: string }, CompanyCard>(getCompanyQuery, (data) => data.getCompany, { cid });
+    return source$;
   }
 
   public getUserCompany(cid: string): Observable<CompanyCard> {
@@ -44,6 +44,7 @@ export class CompaniesService {
       userId,
       companyId
     });
+
     return source$;
   }
 

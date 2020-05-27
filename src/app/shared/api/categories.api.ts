@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { categoryFieldsFragment } from './common/api.fragments';
 
-// Api;
+// API
 export const getAllCategoriesQuery = gql`
     query {
         getAllCategories {

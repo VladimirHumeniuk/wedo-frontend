@@ -26,6 +26,17 @@ export const categoryFieldsFragment = gql`
     }
 `;
 
+export const companyPreviewFieldsFragment = gql`
+    fragment companyPreviewFields on CompanyPreview {
+      objectID,
+      title,
+      image,
+      category,
+      shortDescription,
+      rating
+    }
+`
+
 export const companyFieldsFragment = gql`
     fragment companyFields on Company {
       cid,

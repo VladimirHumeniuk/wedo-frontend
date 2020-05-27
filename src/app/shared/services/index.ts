@@ -9,3 +9,4 @@ export * from './categories.service';
 export * from './companies.service';
 export * from './rating.service';
 export * from './counters.service';
+export * from './algolia.service';

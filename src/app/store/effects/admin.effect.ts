@@ -35,7 +35,7 @@ export class AdminEffects {
   getAllUsers$: Observable<Action> = this.actions.pipe(
     ofType(GET_ALL_USERS),
     switchMap((action: GetAllUsers) => {
-      return this.userService.getAllUsers(action.payload.lastVisible, action.payload.limit)
+      return this.userService.getAllUsers()
     }),
     map(users => new GetAllUsersSuccess({ users })),
     catchError(_ => of(new GetAllUsersError()))
