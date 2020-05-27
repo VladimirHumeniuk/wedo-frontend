@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertsMessagesService, UserService, CategoriesService, CompaniesService } from './../../../../shared/services';
 import { Alert, CompanyPreview } from './../../../../shared/models';
-import { ItemsService } from '../../services';
 import { tap, first, takeUntil } from 'rxjs/operators';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
@@ -21,7 +20,6 @@ export class HomeComponent extends SafeComponent implements OnInit {
 
   constructor(
     private readonly alertsService: AlertsMessagesService,
-    private readonly itemsService: ItemsService,
     private readonly userService: UserService,
     private readonly store: Store<AppState>,
     private readonly companiesService: CompaniesService

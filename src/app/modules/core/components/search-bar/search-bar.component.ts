@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CompanyCard, Category, CompanyPreview } from 'src/app/shared/models';
-import { ItemsService } from '../../services';
 import { CategoriesService, AlgoliaService } from 'src/app/shared/services';
 import { take, map, tap, takeUntil, filter, takeWhile, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -30,7 +29,6 @@ export class SearchBarComponent extends SafeComponent implements OnInit {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly itemsService: ItemsService,
     private readonly categoriesService: CategoriesService,
     private readonly algoliaService: AlgoliaService
   ) {
