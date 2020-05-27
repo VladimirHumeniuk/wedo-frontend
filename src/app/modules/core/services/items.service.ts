@@ -18,15 +18,14 @@ export class ItemsService {
     private readonly baseApolloService: BaseApolloService
   ) { }
 
-  public getItems(type: string, search?: string, category?: number): Observable<Item[]> {
+  public getItems(search?: string, category?: number): Observable<Item[]> {
     const source = this.baseApolloService.query<{
-      type: string,
       search?: string,
       category?: number
     }, Item[]>(
         getItemsQuery,
         (data) => data.getItems,
-        { type, search, category }
+        { search, category }
       )
       .pipe(tap(x => this.items$.next(x)));
 

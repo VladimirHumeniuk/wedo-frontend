@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { parsePhoneNumberFromString, isValidNumber, PhoneNumber } from 'libphonenumber-js';
 import { FORMS_MESSAGES } from './../../constants';
@@ -21,12 +21,35 @@ export class InputGroupComponent implements OnInit, OnChanges {
   @Input() isPrivate: boolean
   @Input() rows: number
   @Input() disabled: boolean
+  @Input() autocomplete: string
+
+  @Output() blur: EventEmitter<any> = new EventEmitter();
+  @Output() focus: EventEmitter<any> = new EventEmitter();
 
   public isDisabled: boolean
 
   public status: string
   public passVisible: boolean = false
   public phoneNumber: PhoneNumber
+
+  private emitAction(action: string): void {
+    const actions: { [key: string]: EventEmitter<any> } = {
+      'blur': this.blur,
+      'focus': this.focus
+    }
+
+    actions[action].emit()
+  }
+
+  public onFocus() {
+    this.emitAction('focus')
+    this.resetStatus()
+  }
+
+  public onBlur() {
+    this.emitAction('blur')
+    this.getStatus()
+  }
 
   public getStatus() {
     this.status = this.formControlService.getControlStatus(this.name, this.parentForm)

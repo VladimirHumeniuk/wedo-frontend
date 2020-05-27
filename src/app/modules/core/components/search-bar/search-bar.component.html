@@ -1,24 +1,33 @@
 <form [formGroup]="homeSearch" (ngSubmit)="search()">
   <nb-card>
     <nb-card-body class="search-bar">
-      <ais-instantsearch [config]="searchConfig">
-        <ais-search-box (change)="searchChanged($event)"></ais-search-box>
-
-        <ais-hits *ngIf="showResults">
-          <ng-template let-hits="hits">
-            <div *ngFor="let hit of hits">
-              {{ hit | json }}
-            </div>
-          </ng-template>
-        </ais-hits>
-      </ais-instantsearch>
-
       <wd-input-group
       class="search-bar__search"
       name="search"
       type="search"
+      autocomplete="off"
       [parentForm]="homeSearch"
+      (focus)="toggleHits()"
+      (blur)="toggleHits()"
+      (keyup)="search(true)"
       placeholder="Search..."></wd-input-group>
+
+      <ul class="search-bar__hits" *ngIf="hits.length > 0 && showResults">
+        <li *ngFor="let hit of hits">
+          <a class="search-bar__hit" routerLink="card/{{hit.objectID}}">
+            <div class="search-bar__hit-picture">
+              <img
+              [attr.src]="hit.image ? hit.image : 'assets/image-placeholder-light.svg'"
+              [attr.alt]="hit.title" />
+            </div>
+
+            <div class="search-bar__hit-info">
+              <div class="search-bar__hit-title">{{ hit.title }} <span>in</span> {{ getCategoryTitle(hit.category) }}</div>
+              <div class="search-bar__hit-text">{{ hit.shortDescription }}</div>
+            </div>
+          </a>
+        </li>
+      </ul>
 
       <wd-select
       placeholder="All"
@@ -32,6 +41,7 @@
 
       <button
       nbButton
+      [nbSpinner]="loading"
       class="search-bar__submit"
       status="warning"
       type="submit">
