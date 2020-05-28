@@ -11,8 +11,11 @@ export const indexSearchQuery = gql`
           filters: $filters,
           page: $page
         ) {
-          ... on CompanyPreview {
-            ...companyPreviewFields
+          total,
+          hits {
+            ... on CompanyPreview {
+              ...companyPreviewFields
+            }
           }
         }
     }

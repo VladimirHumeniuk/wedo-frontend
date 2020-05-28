@@ -3,14 +3,11 @@ export const fragmentTypes = {
       types: [
         {
           kind: 'UNION',
-          name: 'Item',
+          name: 'SearchItem',
           possibleTypes: [
             {
-              name: 'Company'
+              name: 'CompanyPreview'
             },
-            {
-              name: 'User'
-            }
           ]
         }
       ]
