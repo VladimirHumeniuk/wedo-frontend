@@ -14,15 +14,17 @@ export class AlgoliaService {
     private readonly baseApolloService: BaseApolloService
   ) { }
 
-  public indexSearch(collection: string, query?: string, filters?: string, page?: number): Observable<CompanyPreview[]> {
+  public indexSearch(collection: string, hitsPerPage: number, query?: string, filters?: string, page?: number): Observable<CompanyPreview[]> {
     const source = this.baseApolloService.query<{
       collection: string;
+      hitsPerPage: number,
       query: string;
       filters: string;
       page: number;
     }, CompanyPreview[]> (
       indexSearchQuery, (data) => data.indexSearch, {
         collection,
+        hitsPerPage,
         query,
         filters,
         page

@@ -8,7 +8,6 @@ import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { fragmentTypes as introspectionQueryResultData } from './fragment-types';
-import { NgAisModule } from 'angular-instantsearch';
 
 import { environment } from 'src/environments/environment';
 
@@ -68,7 +67,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
     NbSpinnerModule,
     NbToastrModule.forRoot({ duration: 4000 }),
     NbThemeModule.forRoot({ name: 'default' }),
-    NgAisModule.forRoot(),
     // Apollo Setup
     HttpClientModule,
     ApolloModule,

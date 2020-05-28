@@ -123,6 +123,7 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
     if (this.myCardForm.valid) {
       const formData: CompanyCard = this.myCardForm.value
       const companiesLink: AngularFirestoreCollection = this.fireStore.collection('companies')
+      const counterPublishedRef = this.fireStore.collection('counters').doc('companies-published').ref
 
       let companyData: CompanyCard = {
         ...formData,
@@ -150,6 +151,10 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
           promises.push(removeImage, clearImageData)
         }
 
+        if (this.companyCard.isShown != formValue.isShown) {
+          this.countersService.updateCounter(counterPublishedRef, 5, formValue.isShown ? 1 : -1)
+        }
+
         const updateCompanyData = companiesLink.doc(this.companyCard.cid)
           .set(formValue, { merge: true })
 
@@ -163,9 +168,13 @@ export class MyCompanyCardComponent extends SafeComponent implements OnInit {
           .then((res: DocumentReference) => {
             this.companiesService.assignCompany(this.user.uid, res.id).subscribe()
 
-            const counterRef = this.fireStore.collection('counters').doc('companies').ref
+            const counterTotalRef = this.fireStore.collection('counters').doc('companies-total').ref
 
-            this.countersService.updateCounter(counterRef, 5, 1)
+            this.countersService.updateCounter(counterTotalRef, 5, 1)
+
+            if (formValue.isShown) {
+              this.countersService.updateCounter(counterPublishedRef, 5, 1)
+            }
 
             if (this.upload) {
               const updateImage = this.uploadService.publishUploads(this.upload, res.id).then((url: string) => {

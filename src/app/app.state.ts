@@ -5,10 +5,10 @@ import { CategoriesState } from 'src/app/store/states/categories.state';
 import { CommentState } from 'src/app/store/states/comment.state';
 
 export interface AppState {
-  readonly user: User;
-  readonly alert: AlertState;
-  readonly login: Login;
-  readonly admin: AdminState;
-  readonly category: CategoriesState;
-  readonly comment: CommentState
+  user: User;
+  alert: AlertState;
+  login: Login;
+  admin: AdminState;
+  category: CategoriesState;
+  comment: CommentState
 }
