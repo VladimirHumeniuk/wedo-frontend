@@ -11,6 +11,7 @@ describe('Sign in page', () => {
   beforeAll(() => {
     page = new AppPage()
     page.navigateTo(`${browser.baseUrl}sign-in`)
+    browser.sleep(1000)
   })
 
   afterAll(() => {

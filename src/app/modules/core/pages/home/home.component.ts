@@ -15,8 +15,10 @@ import { SafeComponent } from 'src/app/shared/helpers';
 })
 export class HomeComponent extends SafeComponent implements OnInit {
 
-  alerts: Alert[]
-  itemsToShow: CompanyPreview[]
+  public alerts: Alert[];
+  public itemsToShow: CompanyPreview[];
+  public total: number;
+  public searchPage: number = 1;
 
   constructor(
     private readonly alertsService: AlertsMessagesService,
@@ -31,14 +33,23 @@ export class HomeComponent extends SafeComponent implements OnInit {
     })
   }
 
-  public searchHandler(result: any) {
+  public passCurrentPage(page: number): void {
+    if (page) this.searchPage = page
+  }
+
+  public searchHandler(result: any): void {
     if (result) this.itemsToShow = result
+  }
+
+  public totalHandler(result: any): void {
+    if (result) this.total = result
   }
 
   ngOnInit(): void {
     this.store.dispatch(new GetAllCategories())
 
     this.userService.user$.pipe(
+      takeUntil(this.unsubscriber),
       first(),
       tap(({ uid }) => this.store.dispatch(new GetAllAlerts({ uid })))
     ).subscribe();

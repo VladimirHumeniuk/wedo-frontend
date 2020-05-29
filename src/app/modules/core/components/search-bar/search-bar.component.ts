@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CompanyCard, Category, CompanyPreview } from 'src/app/shared/models';
+import { CompanyCard, Category, CompanyPreview, SearchResult } from 'src/app/shared/models';
 import { CategoriesService, AlgoliaService } from 'src/app/shared/services';
 import { take, map, tap, takeUntil, filter, takeWhile, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -12,9 +12,11 @@ import { SafeComponent } from 'src/app/shared/helpers';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent extends SafeComponent implements OnInit {
+export class SearchBarComponent extends SafeComponent implements OnInit, OnChanges {
 
+  @Input() page: number;
   @Output() result: EventEmitter<CompanyPreview[]> = new EventEmitter();
+  @Output() total: EventEmitter<number> = new EventEmitter();
 
   private searchIndex: string = 'companies_search';
 
@@ -64,41 +66,69 @@ export class SearchBarComponent extends SafeComponent implements OnInit {
     }, 150)
   }
 
-  public search(isKeyup?: boolean): void {
-    const { search, category } = this.homeSearch.value
-    const submitClick = !isKeyup && (search.length > 0 || category)
-    const isEmpty = !category && search.length === 0
-    const isPristine = this.pristine && isEmpty
-
-    if (isPristine) return
-
-    if (submitClick) this.loading = true
-
-    if (isKeyup) {
-      const mq = window.matchMedia('(max-width: 767px)')
-      if (mq.matches) return
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.page.previousValue != changes.page.currentValue) {
+      this.search(false, true)
     }
+  }
 
-    this.algoliaService.indexSearch(this.searchIndex, search, category ? `category = ${category}` : undefined)
-      .pipe(
-        takeUntil(this.unsubscriber),
-        tap((result: CompanyPreview[])=> {
+  public search(isKeyup?: boolean, isPagination?: boolean): void {
+    if (this.homeSearch) {
+      const { search, category } = this.homeSearch.value
+      const submitClick = !isKeyup && (search.length > 0 || category)
+      const isEmpty = !category && search.length === 0
+      const isPristine = this.pristine && isEmpty
+      const nextPage = this.page - 1
 
-          if (isKeyup) {
-            if (search.length > 3) this.hits = result
-            else this.hits = []
-          }
+      if (submitClick) this.loading = true
+      if (isPristine && !isPagination) return
 
-          if (!isKeyup) this.result.emit(result)
+      if (isKeyup) {
+        const mq = window.matchMedia('(max-width: 767px)')
+        if (mq.matches) return
+      }
 
-          if (submitClick) {
-            this.pristine = false
-            this.loading = false
-          }
+      let q = {
+        collection: this.searchIndex,
+        hitsPerPage: 20,
+        query: search,
+        filters: undefined,
+        page: 0
+      }
 
-          if (isEmpty) this.pristine = true
-        })
-      ).subscribe()
+      if (category) q.filters = `category = ${category}`
+      if (!isKeyup) q.page = nextPage
+
+      this.algoliaService.indexSearch(
+        q.collection,
+        q.hitsPerPage,
+        q.query,
+        q.filters,
+        q.page
+      )
+        .pipe(
+          takeUntil(this.unsubscriber),
+          tap((result: SearchResult)=> {
+
+            if (isKeyup) {
+              if (search.length > 3) this.hits = result.hits
+              else this.hits = []
+            }
+
+            if (!isKeyup) {
+              this.result.emit(result.hits)
+              this.total.emit(result.total)
+            }
+
+            if (submitClick) {
+              this.pristine = false
+              this.loading = false
+            }
+
+            if (isEmpty) this.pristine = true
+          })
+        ).subscribe()
+    }
   }
 
   ngOnInit(): void {

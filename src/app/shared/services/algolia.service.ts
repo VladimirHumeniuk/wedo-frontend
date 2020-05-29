@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, Query } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { CompanyPreview } from '../models';
+import { SearchResult } from '../models';
 import { BaseApolloService } from './base/base.apollo.service';
 import { indexSearchQuery } from '../api/algolia.api';
 
@@ -14,15 +14,17 @@ export class AlgoliaService {
     private readonly baseApolloService: BaseApolloService
   ) { }
 
-  public indexSearch(collection: string, query?: string, filters?: string, page?: number): Observable<CompanyPreview[]> {
+  public indexSearch(collection: string, hitsPerPage: number, query?: string, filters?: string, page?: number): Observable<SearchResult> {
     const source = this.baseApolloService.query<{
       collection: string;
+      hitsPerPage: number,
       query: string;
       filters: string;
       page: number;
-    }, CompanyPreview[]> (
+    }, SearchResult> (
       indexSearchQuery, (data) => data.indexSearch, {
         collection,
+        hitsPerPage,
         query,
         filters,
         page

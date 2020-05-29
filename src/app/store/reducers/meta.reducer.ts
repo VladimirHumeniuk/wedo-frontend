@@ -11,7 +11,10 @@ export function logger(reducer: ActionReducer<AppState>): any {
 export function clearState(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
   return function(state: AppState, action: Action): AppState {
     if (action.type === REMOVE_USER) {
-      state = undefined;
+      state.user = undefined;
+      state.alert = undefined;
+      state.admin = undefined;
+      state.login = undefined;
     }
     return reducer(state, action);
   };

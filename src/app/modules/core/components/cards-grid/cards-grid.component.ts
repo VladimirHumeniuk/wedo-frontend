@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { CompanyCard, Category } from 'src/app/shared/models';
 import { Observable } from 'rxjs';
-import { CategoriesService } from 'src/app/shared/services';
+import { CategoriesService, CountersService } from 'src/app/shared/services';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { takeUntil, take, tap } from 'rxjs/operators';
 import { RatingService } from 'src/app/shared/services/rating.service';
@@ -14,18 +15,22 @@ import { RatingService } from 'src/app/shared/services/rating.service';
 export class CardsGridComponent extends SafeComponent implements OnInit {
 
   @Input() items: CompanyCard[];
+  @Input() total: number;
+  @Output() currentPage: EventEmitter<number> = new EventEmitter()
 
   public categories: Category[];
-
   public p: number = 1;
 
   public changePage(page: number): void {
     this.p = page
+    this.currentPage.emit(page)
   }
 
   constructor(
+    private readonly fireStore: AngularFirestore,
     private readonly categoriesService: CategoriesService,
     private readonly ratingService: RatingService,
+    private readonly countersService: CountersService
   ) {
     super()
   }
