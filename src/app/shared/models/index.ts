@@ -6,3 +6,4 @@ export * from './login.model';
 export * from './roles.model';
 export * from './category.model';
 export * from './comment.model';
+export * from './search-result.model';

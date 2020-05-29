@@ -15,11 +15,10 @@ import { RatingService } from 'src/app/shared/services/rating.service';
 export class CardsGridComponent extends SafeComponent implements OnInit {
 
   @Input() items: CompanyCard[];
+  @Input() total: number;
   @Output() currentPage: EventEmitter<number> = new EventEmitter()
 
   public categories: Category[];
-
-  public total: number;
   public p: number = 1;
 
   public changePage(page: number): void {
@@ -58,8 +57,6 @@ export class CardsGridComponent extends SafeComponent implements OnInit {
         tap((categories: Category[]) => (this.categories = categories))
       )
       .subscribe();
-
-    this.countersService.getCount(this.fireStore.collection('counters').doc('companies-published').ref).then(amount => this.total = amount);
   }
 
 }

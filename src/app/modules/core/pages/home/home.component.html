@@ -1,5 +1,10 @@
-<wd-search-bar (result)="searchHandler($event)" [page]="searchPage"></wd-search-bar>
+<wd-search-bar
+(result)="searchHandler($event)"
+(total)="totalHandler($event)"
+[page]="searchPage">
+</wd-search-bar>
 <wd-cards-grid
 [items]="itemsToShow"
+[total]="total"
 (currentPage)="passCurrentPage($event)">
 </wd-cards-grid>

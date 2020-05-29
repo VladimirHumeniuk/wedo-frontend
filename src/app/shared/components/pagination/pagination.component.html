@@ -2,7 +2,8 @@
 [id]="id"
 #p="paginationApi"
 maxSize="6"
-(pageChange)="emitPageChange($event)">
+(pageChange)="emitPageChange($event)"
+(pageBoundsCorrection)="emitPageBoundsCorrection($event)">
   <ng-container *ngIf="p.pages.length > 1">
     <div [ngClass]="['pagination', 'pagination--' + position]">
       <div class="pagination__button">

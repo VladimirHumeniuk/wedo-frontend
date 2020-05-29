@@ -15,8 +15,9 @@ import { SafeComponent } from 'src/app/shared/helpers';
 })
 export class HomeComponent extends SafeComponent implements OnInit {
 
-  public alerts: Alert[]
-  public itemsToShow: CompanyPreview[]
+  public alerts: Alert[];
+  public itemsToShow: CompanyPreview[];
+  public total: number;
   public searchPage: number = 1;
 
   constructor(
@@ -33,11 +34,15 @@ export class HomeComponent extends SafeComponent implements OnInit {
   }
 
   public passCurrentPage(page: number): void {
-    if (page) this.searchPage = page[0]
+    if (page) this.searchPage = page
   }
 
   public searchHandler(result: any): void {
     if (result) this.itemsToShow = result
+  }
+
+  public totalHandler(result: any): void {
+    if (result) this.total = result
   }
 
   ngOnInit(): void {

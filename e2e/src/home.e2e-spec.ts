@@ -7,6 +7,7 @@ describe('Home page', () => {
   beforeAll(() => {
     page = new AppPage()
     page.navigateTo(browser.baseUrl)
+    browser.sleep(1000)
   })
 
   it('should render navigation bar', () => {

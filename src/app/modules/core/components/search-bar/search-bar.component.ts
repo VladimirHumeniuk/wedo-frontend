@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CompanyCard, Category, CompanyPreview } from 'src/app/shared/models';
+import { CompanyCard, Category, CompanyPreview, SearchResult } from 'src/app/shared/models';
 import { CategoriesService, AlgoliaService } from 'src/app/shared/services';
 import { take, map, tap, takeUntil, filter, takeWhile, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,7 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
 
   @Input() page: number;
   @Output() result: EventEmitter<CompanyPreview[]> = new EventEmitter();
+  @Output() total: EventEmitter<number> = new EventEmitter();
 
   private searchIndex: string = 'companies_search';
 
@@ -89,14 +90,14 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
 
       let q = {
         collection: this.searchIndex,
-        hitsPerPage: 1,
+        hitsPerPage: 20,
         query: search,
         filters: undefined,
         page: 0
       }
 
       if (category) q.filters = `category = ${category}`
-      if (!submitClick) q.page = nextPage
+      if (!isKeyup) q.page = nextPage
 
       this.algoliaService.indexSearch(
         q.collection,
@@ -107,13 +108,17 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
       )
         .pipe(
           takeUntil(this.unsubscriber),
-          tap((result: CompanyPreview[])=> {
+          tap((result: SearchResult)=> {
+
             if (isKeyup) {
-              if (search.length > 3) this.hits = result
+              if (search.length > 3) this.hits = result.hits
               else this.hits = []
             }
 
-            if (!isKeyup) this.result.emit(result)
+            if (!isKeyup) {
+              this.result.emit(result.hits)
+              this.total.emit(result.total)
+            }
 
             if (submitClick) {
               this.pristine = false

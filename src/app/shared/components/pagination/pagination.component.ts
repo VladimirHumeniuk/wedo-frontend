@@ -13,11 +13,16 @@ export class PaginationComponent implements OnInit {
   @Input() total: number;
 
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
+  @Output() pageBoundsCorrection: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
   public emitPageChange(event: any): void {
-    this.pageChange.emit([event])
+    this.pageChange.emit(event)
+  }
+
+  public emitPageBoundsCorrection(event: any): void {
+    this.pageBoundsCorrection.emit(event)
   }
 
   ngOnInit(): void {

@@ -8,6 +8,7 @@
   </div>
 
   <ng-select
+  id="{{name}}"
   class="select__input"
   [ngClass]="{'select__input--pristine': parentForm.controls[name].pristine}"
   [formControlName]="name"

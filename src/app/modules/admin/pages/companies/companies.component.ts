@@ -55,9 +55,6 @@ export class CompaniesComponent extends SafeComponent implements OnInit {
     this.store.dispatch(new GetAllCompanies())
 
     this.loading = true
-
-    // this.countersService.getCount(this.fireStore.collection('counters').doc('companies').ref).then(d => console.log('🚧  d =>', d))
-
     this.adminService.companies$
       .pipe(
         takeUntil(this.unsubscriber),
