@@ -3,13 +3,19 @@ import { companyPreviewFieldsFragment } from './common/api.fragments';
 
 // API
 export const indexSearchQuery = gql`
-    query indexSearch($collection: String!, $hitsPerPage: Int!, $query: String, $filters: String, $page: Int) {
+    query indexSearch(
+      $collection: String!,
+      $query: String!,
+      $hitsPerPage: Int!,
+      $page: Int,
+      $filters: String
+    ) {
         indexSearch(
           collection: $collection,
-          hitsPerPage: $hitsPerPage,
           query: $query,
-          filters: $filters,
-          page: $page
+          hitsPerPage: $hitsPerPage,
+          page: $page,
+          filters: $filters
         ) {
           total,
           hits {

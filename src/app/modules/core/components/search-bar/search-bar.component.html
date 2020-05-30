@@ -39,8 +39,19 @@
       label="In category"
       [items]="categories"></wd-select>
 
+      <wd-select
+      placeholder="Date"
+      class="search-bar__sort"
+      name="sort"
+      [parentForm]="homeSearch"
+      bindLabel="title"
+      bindValue="value"
+      label="Sort by"
+      [items]="sortBy"></wd-select>
+
       <button
       nbButton
+      [disabled]="homeSearch.invalid || !homeSearch.dirty"
       [nbSpinner]="loading"
       class="search-bar__submit"
       status="warning"
