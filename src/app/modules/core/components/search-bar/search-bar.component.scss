@@ -8,22 +8,24 @@
   grid-template-areas:
   'search'
   'category'
+  'sort'
   'submit';
 
   @media (min-width: $mq-phone-landscape) {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-    'search category'
+    'search search'
+    'category sort'
     'submit submit';
   }
 
   @media (min-width: $mq-tablet) {
-    grid-template-columns: 2fr 1fr 0.5fr;
-    grid-template-areas: 'search category submit';
+    grid-template-columns: 2fr 1fr 1fr 0.5fr;
+    grid-template-areas: 'search category sort submit';
   }
 
   @media (min-width: $mq-desktop) {
-    grid-template-columns: 3fr 1fr 0.5fr;
+    grid-template-columns: 3fr 1fr 1fr 0.5fr;
   }
 }
 
@@ -37,6 +39,19 @@
 
 .search-bar__category {
   grid-area: category;
+}
+
+.search-bar__sort {
+  grid-area: sort;
+
+  ::ng-deep {
+    .ng-pristine {
+      .ng-value {
+        opacity: .6;
+        font-weight: 400;
+      }
+    }
+  }
 }
 
 .search-bar__submit {

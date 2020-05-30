@@ -18,13 +18,23 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
   @Output() result: EventEmitter<CompanyPreview[]> = new EventEmitter();
   @Output() total: EventEmitter<number> = new EventEmitter();
 
-  private searchIndex: string = 'companies_search';
+  private searchIndex = {
+    default: 'companies_search',
+    rating: 'companies_search_rating_desc',
+    date: 'companies_search_date_desc'
+  };
 
   public loading: boolean = false;
-  private pristine: boolean;
 
   public homeSearch: FormGroup;
   public categories: Category[] = [];
+  public sortBy = [{
+    title: 'Date',
+    value: 'date'
+  }, {
+    title: 'Rating',
+    value: 'rating'
+  }]
 
   public hits: any[] = [];
   public showResults: boolean = false;
@@ -40,7 +50,8 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
   private formInit(): void {
     this.homeSearch = this.formBuilder.group({
       search: [''],
-      category: []
+      category: [],
+      sort: ['date']
     })
   }
 
@@ -74,14 +85,10 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
 
   public search(isKeyup?: boolean, isPagination?: boolean): void {
     if (this.homeSearch) {
-      const { search, category } = this.homeSearch.value
-      const submitClick = !isKeyup && (search.length > 0 || category)
-      const isEmpty = !category && search.length === 0
-      const isPristine = this.pristine && isEmpty
+      const { search, category, sort } = this.homeSearch.value
       const nextPage = this.page - 1
 
-      if (submitClick) this.loading = true
-      if (isPristine && !isPagination) return
+      if (this.homeSearch.dirty) this.loading = true
 
       if (isKeyup) {
         const mq = window.matchMedia('(max-width: 767px)')
@@ -89,27 +96,27 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
       }
 
       let q = {
-        collection: this.searchIndex,
-        hitsPerPage: 20,
+        collection: this.searchIndex.default,
         query: search,
-        filters: undefined,
-        page: 0
+        hitsPerPage: 20,
+        page: 0,
+        filters: undefined
       }
 
       if (category) q.filters = `category = ${category}`
+      if (sort) q.collection = this.searchIndex[sort]
       if (!isKeyup) q.page = nextPage
 
       this.algoliaService.indexSearch(
         q.collection,
-        q.hitsPerPage,
         q.query,
-        q.filters,
-        q.page
+        q.hitsPerPage,
+        q.page,
+        q.filters
       )
         .pipe(
           takeUntil(this.unsubscriber),
           tap((result: SearchResult)=> {
-
             if (isKeyup) {
               if (search.length > 3) this.hits = result.hits
               else this.hits = []
@@ -120,12 +127,10 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
               this.total.emit(result.total)
             }
 
-            if (submitClick) {
-              this.pristine = false
+            if (this.homeSearch.dirty) {
               this.loading = false
+              this.homeSearch.markAsPristine()
             }
-
-            if (isEmpty) this.pristine = true
           })
         ).subscribe()
     }
@@ -134,7 +139,6 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
   ngOnInit(): void {
     this.formInit()
     this.search()
-    this.pristine = true
     this.getAllCategories()
 
     this.homeSearch.get('search').valueChanges.pipe(
