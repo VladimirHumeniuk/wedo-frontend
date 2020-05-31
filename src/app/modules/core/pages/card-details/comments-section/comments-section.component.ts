@@ -46,21 +46,23 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
   @Input() cid: string;
   @Input() business: string;
 
-  loader: Loader = Loader.instance;
-
+  public sortingOptions: string[] = [
+    'Date',
+    'Rating (descending)',
+    'Rating (ascending)'
+  ];
+  public loader: Loader = Loader.instance;
   public comments: Comment[] = [];
   public user$: Observable<User> = this.store.select('user');
   public user: User;
   public uid: string;
-
   public loading: string | boolean;
   public length: number;
-
   public feedbackForm: FormGroup;
   public answerForm: FormGroup;
-
+  public sortingForm: FormGroup;
   public isCommented: boolean;
-
+  public votedForFeedback: string[] = [];
   public inAnswer: string;
   public inEdit: string;
 
@@ -81,6 +83,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.sortingFormInit();
     this.feedbackFormInit();
     this.answerFormInit();
 
@@ -158,6 +161,12 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     });
   }
 
+  private sortingFormInit(): void {
+    this.sortingForm = this.formBuilder.group({
+      sort: ['Date']
+    })
+  }
+
   private saveComment(companyId: string, comment: Comment) {
     return comment.id
       ? this.store.dispatch(new UpdateCompanyComment({ companyId, comment }))
@@ -178,8 +187,11 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
       .doc(id)
       .collection('votes')
       .doc(this.uid)
-      .set({ value: vote })
-      .then(() => (this.loading = null));
+      .set({ value: vote }, { merge: true })
+      .then(() => {
+        this.votedForFeedback.push(id);
+        this.loading = null
+      });
   }
 
   public getDateTitle(date: any, isEdited: boolean): string {

@@ -51,7 +51,7 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
     this.homeSearch = this.formBuilder.group({
       search: [''],
       category: [],
-      sort: ['date']
+      sort: []
     })
   }
 

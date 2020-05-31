@@ -1,8 +1,28 @@
 <section class="comments-section">
-  <h2 class="comments-section__title">People feedback</h2>
+  <div class="comments-section__header">
+    <h2 class="comments-section__title">People feedback</h2>
+
+    <form [formGroup]="sortingForm">
+      <wd-select
+      class="sort-select"
+      label="Sort by"
+      name="sort"
+      [clearable]="false"
+      [parentForm]="sortingForm"
+      [items]="sortingOptions"
+      ></wd-select>
+    </form>
+  </div>
 
   <article *ngIf="comments.length === 0" class="comments-section__no-comments">
     No feedback yet
+    <div *ngIf="!user.uid">
+      <a routerLink="/sign-in">Login</a> to write a review
+    </div>
+
+    <div *ngIf="user.roles.readonly">
+      Please, <a routerLink="/verify-email">verify email</a> to write a review
+    </div>
   </article>
 
   <ng-container *ngFor="let comment of comments">
@@ -96,20 +116,32 @@
       </div>
 
       <div class="comment__footer"
-      [nbSpinner]="comment.author.uid === user.uid && (loader.isLoading(UPDATE_COMPANY_COMMENT) || loader.isLoading(REMOVE_COMPANY_COMMENT))"
-      *ngIf="user.accountType !== 'business' || user.company === cid">
+      [nbSpinner]="
+      comment.author.uid === user.uid &&
+      (
+        loader.isLoading(UPDATE_COMPANY_COMMENT) ||
+        loader.isLoading(REMOVE_COMPANY_COMMENT)
+      )"
+      *ngIf="
+        user.uid &&
+        user.roles.author &&
+        (
+          user.accountType !== 'business' ||
+          user.company === cid
+        )">
+
+        <!-- Start: Vote for feedback -->
         <div
         *ngIf="
-        user.accountType !== 'business'
-        &&
-        comment.author.uid !== user.uid"
+        user.accountType !== 'business' &&
+        comment.author.uid !== user.uid &&
+        !votedForFeedback.includes(comment.id)"
         class="comment__comment-feedback">
           <span>
             Was this feedback useful for you?
           </span>
 
           <div>
-
             <button
             (click)="postFeedbackVote(comment.id, true)"
             nbButton>
@@ -124,6 +156,14 @@
           </div>
         </div>
 
+        <div
+        *ngIf="votedForFeedback.includes(comment.id)"
+        class="comment__comment-feedback">
+          <span>Thanks for letting us know how you feel about this feedback!</span>
+        </div>
+        <!-- End: Vote for feedback -->
+
+        <!-- Start: Controls for feedback and answers -->
         <div class="comment__controls">
           <ng-container *ngIf="cid === user.company">
             <button
@@ -247,10 +287,12 @@
             </button>
           </ng-container>
         </div>
+        <!-- End: Controls for feedback and answers -->
       </div>
     </div>
   </ng-container>
 
+  <!-- Start: New feedback form -->
   <form
   *ngIf="user.accountType === 'personal' && !isCommented && user.roles.author"
   class="comments-section__feedback"
@@ -289,4 +331,5 @@
       </button>
     </div>
   </form>
+  <!-- End: New feedback form -->
 </section>
