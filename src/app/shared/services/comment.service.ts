@@ -6,6 +6,7 @@ import { getCompanyCommentsQuery, setCommentMutation, addCommentMutation, remove
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.state';
 import { selectCommentFeatureComments } from 'src/app/store/states/comment.state';
+import { QueryPayloadInput } from 'src/app/shared/models/query/query-payload.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +14,18 @@ import { selectCommentFeatureComments } from 'src/app/store/states/comment.state
 export class CommentService {
 
   readonly comments$: Observable<Comment[]> = this.store.select(selectCommentFeatureComments);
+  private readonly defaulQuery = new QueryPayloadInput();
 
   constructor(
     private readonly baseApolloService: BaseApolloService,
     private readonly store: Store<AppState>,
   ) { }
 
-  public getCompanyComments(companyId: string): Observable<Comment[]> {
-    const source = this.baseApolloService.query<{cid: string}, Comment[]>(
+  public getCompanyComments(companyId: string, query: QueryPayloadInput = this.defaulQuery): Observable<Comment[]> {
+    const source = this.baseApolloService.query<{cid: string, query: QueryPayloadInput}, Comment[]>(
       getCompanyCommentsQuery,
       (data) => data.getCompanyComments,
-      { cid: companyId });
+      { cid: companyId, query: QueryPayloadInput.getQueryRequest(query) });
     return source;
   }
 

@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 
 // Api
 export const getCompanyCommentsQuery = gql`
-    query getCompanyComments($cid: String!) {
-        getCompanyComments(cid: $cid) {
+    query getCompanyComments($cid: String!, $query: QueryPayloadInput) {
+        getCompanyComments(cid: $cid, query: $query) {
             ...commentFields
         }
     }

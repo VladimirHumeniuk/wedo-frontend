@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Comment } from './../../shared/models';
+import { QueryPayloadInput } from 'src/app/shared/models/query/query-payload.model';
 
 export const ADD_COMPANY_COMMENT         = '[COMMENT] Add Company Comment';
 export const ADD_COMPANY_COMMENT_SUCCESS = '[COMMENT] Add Company Comment Succes';
@@ -16,6 +17,8 @@ export const REMOVE_COMPANY_COMMENT_ERROR   = '[COMMENT] Remove Company Comment 
 export const GET_ALL_COMPANY_COMMENTS         = '[COMMENT] Get All Company Comments';
 export const GET_ALL_COMPANY_COMMENTS_SUCCESS = '[COMMENT] Get All Company Comment Success';
 export const GET_ALL_COMPANY_COMMENTS_ERROR   = '[COMMENT] Get All Company Comment Error';
+
+export const APPLY_ORDER_TO_COMPANY_COMMENTS  = '[COMMENT] Apply Order To Company Comments';
 
 export class AddCompanyComment implements Action {
   readonly type = ADD_COMPANY_COMMENT;
@@ -69,7 +72,7 @@ export class RemoveCompanyCommentError implements Action {
 export class GetAllCompanyComments implements Action {
   readonly type = GET_ALL_COMPANY_COMMENTS;
 
-  constructor(public payload: { companyId: string; }) {}
+  constructor(public payload: { companyId: string }) {}
 }
 export class GetAllCompanyCommentsSuccess implements Action {
   readonly type = GET_ALL_COMPANY_COMMENTS_SUCCESS;
@@ -80,6 +83,11 @@ export class GetAllCompanyCommentsSuccess implements Action {
 export class GetAllCompanyCommentsError implements Action {
   readonly type = GET_ALL_COMPANY_COMMENTS_ERROR;
   constructor() {}
+
+}
+export class ApplyOrderToCompanyComments implements Action {
+  readonly type = APPLY_ORDER_TO_COMPANY_COMMENTS;
+  constructor(public payload: { companyId: string, query: QueryPayloadInput }) {}
 }
 
 export type Actions =
@@ -94,4 +102,5 @@ export type Actions =
   | RemoveCompanyCommentError
   | GetAllCompanyComments
   | GetAllCompanyCommentsSuccess
-  | GetAllCompanyCommentsError;
+  | GetAllCompanyCommentsError
+  | ApplyOrderToCompanyComments;

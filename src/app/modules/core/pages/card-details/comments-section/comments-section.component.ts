@@ -9,7 +9,7 @@ import {
 import { AngularFirestore } from '@angular/fire/firestore';
 import { SafeComponent } from 'src/app/shared/helpers';
 import { Observable, Subscription } from 'rxjs';
-import { takeUntil, map, tap, take } from 'rxjs/operators';
+import { takeUntil, map, tap, take, filter } from 'rxjs/operators';
 import { NbPopoverDirective } from '@nebular/theme';
 import { AppState } from 'src/app/app.state';
 import { Store } from '@ngrx/store';
@@ -25,9 +25,16 @@ import {
   REMOVE_COMPANY_COMMENT,
   UpdateCompanyComment,
   AddCompanyComment,
-  RemoveCompanyComment
+  RemoveCompanyComment,
+  ApplyOrderToCompanyComments
 } from 'src/app/store/actions/comment.action';
-import { RecalculateCompanyRatingError, RecalculateCompanyRating } from 'src/app/store/actions/rating.action';
+import { RecalculateCompanyRating } from 'src/app/store/actions/rating.action';
+import { QueryPayloadInput } from 'src/app/shared/models/query/query-payload.model';
+import { selectCommentFeatureQuery } from 'src/app/store/states/comment.state';
+
+type Dictionary<T extends string | symbol | number, U> = {
+    [K in T]?: U;
+};
 
 @Component({
   selector: 'wd-comments-section',
@@ -54,6 +61,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
   public loader: Loader = Loader.instance;
   public comments: Comment[] = [];
   public user$: Observable<User> = this.store.select('user');
+  public commentsQuery$: Observable<QueryPayloadInput> = this.store.select(selectCommentFeatureQuery);
   public user: User;
   public uid: string;
   public loading: string | boolean;
@@ -86,6 +94,18 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     this.sortingFormInit();
     this.feedbackFormInit();
     this.answerFormInit();
+
+    this.commentsQuery$
+        .pipe(
+            takeUntil(this.unsubscriber),
+            take(1),
+            tap(query => this.sortingFormInit(query?.order?.selectedRaw))
+        ).subscribe();
+
+    this.sortingForm.controls.sort.valueChanges.pipe(
+        takeUntil(this.unsubscriber),
+        tap(value => this.sortChange(value))
+    ).subscribe();
 
     this.user$
       .pipe(
@@ -161,9 +181,9 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     });
   }
 
-  private sortingFormInit(): void {
+  private sortingFormInit(initValue: string = 'Date' ): void {
     this.sortingForm = this.formBuilder.group({
-      sort: ['Date']
+      sort: [initValue]
     })
   }
 
@@ -361,5 +381,16 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
 
   public closePopover(): void {
     this.popover.hide();
+  }
+
+  public sortChange(value: string) {
+    type OrderingValues = 'Rating (descending)'| 'Rating (ascending)' | 'Date';
+    const queries: Dictionary<OrderingValues, QueryPayloadInput> = {
+        'Rating (descending)' : { order: { direction: 'desc', fieldName: 'rating', selectedRaw: 'Rating (descending)' } },
+        'Rating (ascending)' : { order: { direction: 'asc', fieldName: 'rating', selectedRaw: 'Rating (ascending)' } },
+        'Date' : { order: { direction: 'asc', fieldName: 'date', selectedRaw: 'Date' } },
+    };
+
+    this.store.dispatch(new ApplyOrderToCompanyComments({companyId: this.cid, query: queries[value]}));
   }
 }
