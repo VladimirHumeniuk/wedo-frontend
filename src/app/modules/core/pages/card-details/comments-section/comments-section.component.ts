@@ -388,7 +388,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
     const queries: Dictionary<OrderingValues, QueryPayloadInput> = {
         'Rating (descending)' : { order: { direction: 'desc', fieldName: 'rating', selectedRaw: 'Rating (descending)' } },
         'Rating (ascending)' : { order: { direction: 'asc', fieldName: 'rating', selectedRaw: 'Rating (ascending)' } },
-        'Date' : { order: { direction: 'asc', fieldName: 'date', selectedRaw: 'Date' } },
+        'Date' : { order: { direction: 'desc', fieldName: 'date', selectedRaw: 'Date' } },
     };
 
     this.store.dispatch(new ApplyOrderToCompanyComments({companyId: this.cid, query: queries[value]}));
