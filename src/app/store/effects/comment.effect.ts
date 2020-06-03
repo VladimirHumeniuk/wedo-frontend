@@ -1,3 +1,4 @@
+import { selectCommentFeatureQuery } from './../states/comment.state';
 import {
   AddCompanyCommentSuccess,
   GET_ALL_COMPANY_COMMENTS,
@@ -12,14 +13,16 @@ import {
   UPDATE_COMPANY_COMMENT,
   UpdateCompanyComment,
   UpdateCompanyCommentSuccess,
-  UpdateCompanyCommentError
+  UpdateCompanyCommentError,
+  ApplyOrderToCompanyComments,
+  APPLY_ORDER_TO_COMPANY_COMMENTS
 } from './../actions/comment.action';
 import { CommentService } from 'src/app/shared/services/comment.service';
 import { Injectable } from '@angular/core';
 import { Effect, Actions, ofType } from '@ngrx/effects';
-import { Observable, of, pipe, UnaryFunction } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { map, catchError, switchMap, tap, delay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Action, Store } from '@ngrx/store';
+import { map, catchError, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import {
   ADD_COMPANY_COMMENT,
@@ -27,15 +30,17 @@ import {
 } from 'src/app/store/actions/comment.action';
 import { Loader } from 'src/app/shared/helpers/loader';
 import { trackExecution } from 'src/app/shared/helpers/custom-operators';
+import { AppState } from 'src/app/app.state';
+import { QueryPayloadInput } from 'src/app/shared/models/query/query-payload.model';
 
 @Injectable()
 export class CommentEffects {
 
-    private readonly loader: Loader = Loader.instance;
 
   constructor(
     private readonly actions: Actions,
-    private readonly commentService: CommentService
+    private readonly commentService: CommentService,
+    private readonly store: Store<AppState>,
   ) {}
 
   @Effect()
@@ -55,7 +60,7 @@ export class CommentEffects {
           ]),
         )
     ),
-    catchError(x => of(new AddCompanyCommentError()))
+    catchError(() => of(new AddCompanyCommentError()))
   );
 
   @Effect()
@@ -75,7 +80,7 @@ export class CommentEffects {
           ]),
         )
     ),
-    catchError(x => of(new UpdateCompanyCommentError()))
+    catchError(() => of(new UpdateCompanyCommentError()))
   );
 
   @Effect()
@@ -95,18 +100,27 @@ export class CommentEffects {
       new RemoveCompanyCommentSuccess({ commentId }),
       new GetAllCompanyComments({ companyId })
     ]),
-    catchError(x => of(new RemoveCompanyCommentError()))
+    catchError(() => of(new RemoveCompanyCommentError()))
   );
 
   @Effect()
   getAllCompanyComments$: Observable<Action> = this.actions.pipe(
     ofType(GET_ALL_COMPANY_COMMENTS),
-    trackExecution(GET_ALL_COMPANY_COMMENTS, (action: GetAllCompanyComments) => this.commentService
-        .getCompanyComments(action.payload.companyId).pipe(
-            map(comments => new GetAllCompanyCommentsSuccess({ comments })),
+    withLatestFrom(this.store.select(selectCommentFeatureQuery)),
+    trackExecution(GET_ALL_COMPANY_COMMENTS, ([action, query]: [GetAllCompanyComments, QueryPayloadInput]) =>
+        this.commentService.getCompanyComments(action.payload.companyId, query).pipe(
+            map(comments => new GetAllCompanyCommentsSuccess({ comments }))
         )
     ),
-    catchError(x => of(new GetAllCompanyCommentsError()))
+    catchError((e) => { console.log(e); return of(new GetAllCompanyCommentsError())})
+  );
+
+  @Effect()
+  applyOrderToCompanyComments$: Observable<Action> = this.actions.pipe(
+    ofType(APPLY_ORDER_TO_COMPANY_COMMENTS),
+    map((action: ApplyOrderToCompanyComments) => new GetAllCompanyComments({
+        companyId: action.payload.companyId
+    }))
   );
 }
 

@@ -114,6 +114,13 @@ export function commentReducer(
       };
     }
 
+    case CommentActions.APPLY_ORDER_TO_COMPANY_COMMENTS: {
+        return {
+          ...state,
+          query: {...state.query, order: {...action.payload.query.order }}
+        };
+      }
+
     default:
       return state;
   }
