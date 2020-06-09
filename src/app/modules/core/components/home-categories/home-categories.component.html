@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-card-body class="home-categories">
+    <h3 class="home-categories__title">Popular categories:</h3>
+
+    <div class="home-categories__tags">
+      <a
+      *ngFor="let c of popular"
+      class="home-categories__tag"
+      [routerLink]="'/'"
+      [queryParams]="{ q_category: c.id }"
+      skipLocationChange>
+        <span>{{ getCategoryTitle(c.id) }}</span>
+      </a>
+    </div>
+  </nb-card-body>
+</nb-card>
