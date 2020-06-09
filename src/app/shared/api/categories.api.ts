@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { categoryFieldsFragment } from './common/api.fragments';
+import { categoryFieldsFragment, popularFieldsFragment } from './common/api.fragments';
 
 // API
 export const getAllCategoriesQuery = gql`
@@ -18,6 +18,15 @@ export const getCategoryQuery = gql`
         }
     }
     ${categoryFieldsFragment}
+`;
+
+export const getPopularQuery = gql`
+    query {
+        getPopular {
+            ...popularFields
+        }
+    }
+    ${popularFieldsFragment}
 `;
 
 // Mutation

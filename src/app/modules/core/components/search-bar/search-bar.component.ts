@@ -2,10 +2,11 @@ import { Component, OnInit, Output, EventEmitter, Input, OnChanges, SimpleChange
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CompanyCard, Category, CompanyPreview, SearchResult } from 'src/app/shared/models';
 import { CategoriesService, AlgoliaService } from 'src/app/shared/services';
-import { take, map, tap, takeUntil, filter, takeWhile, distinctUntilChanged } from 'rxjs/operators';
+import { take, map, tap, takeUntil, filter, distinctUntilChanged } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { SafeComponent } from 'src/app/shared/helpers';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'wd-search-bar',
@@ -40,6 +41,8 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
   public showResults: boolean = false;
 
   constructor(
+    private readonly router: Router,
+    private readonly activeRoute: ActivatedRoute,
     private readonly formBuilder: FormBuilder,
     private readonly categoriesService: CategoriesService,
     private readonly algoliaService: AlgoliaService
@@ -57,6 +60,7 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
 
   private getAllCategories(): void {
     this.categoriesService.getAllCategories().pipe(
+      takeUntil(this.unsubscriber),
       take(1)
     ).subscribe((categories: Category[]) => {
       this.categories = categories
@@ -127,10 +131,20 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
               this.total.emit(result.total)
             }
 
-            if (this.homeSearch.dirty) {
-              this.loading = false
+            if (!isKeyup && this.homeSearch.dirty) {
+
+              if (search !== '') {
+                this.router.navigate([], {
+                  relativeTo: this.activeRoute,
+                  queryParams: { q_query: search },
+                  queryParamsHandling: 'merge',
+                })
+              }
+
               this.homeSearch.markAsPristine()
             }
+
+            this.loading = false
           })
         ).subscribe()
     }
@@ -138,14 +152,58 @@ export class SearchBarComponent extends SafeComponent implements OnInit, OnChang
 
   ngOnInit(): void {
     this.formInit()
-    this.search()
     this.getAllCategories()
 
-    this.homeSearch.get('search').valueChanges.pipe(
+    this.homeSearch.valueChanges.pipe(
       distinctUntilChanged(),
+      takeUntil(this.unsubscriber),
       tap(val => {
-        if (val === '') this.hits = []
+        const { search, category, sort } = val
+
+        const queryParams = {
+          q_category: category,
+          q_sort: sort
+        }
+
+        if (search === '') this.hits = []
+
+        this.router.navigate([], {
+          relativeTo: this.activeRoute,
+          queryParams: queryParams,
+          queryParamsHandling: 'merge',
+        })
       })
     ).subscribe()
+
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+      const possible = ['q_category', 'q_query', 'q_sort']
+
+      if (Object.keys(params).length > 0) {
+        for (let i = 0; i < possible.length; i++) {
+          const param = possible[i]
+
+          if (params[param] !== undefined) {
+            switch (param) {
+              case 'q_sort':
+                this.homeSearch.patchValue({ sort: params[param] })
+                break
+              case 'q_category':
+                this.homeSearch.patchValue({ category: parseInt(params[param]) })
+                break
+              case 'q_query':
+                if (params[param] !== '') {
+                  this.homeSearch.patchValue({ search: params[param] })
+                }
+                break
+
+              default:
+                break;
+            }
+          }
+        }
+      }
+
+      this.search()
+    })
   }
 }

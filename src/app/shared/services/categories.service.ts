@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Category } from '../models';
+import { Category, Popular } from '../models';
 import { Observable, of } from 'rxjs';
 import { BaseApolloService } from 'src/app/shared/services/base/base.apollo.service';
 import {
   getAllCategoriesQuery,
   getCategoryQuery,
+  getPopularQuery,
   addCategoryMutation,
   removeCategoryMutation
 } from '../api/categories.api';
@@ -31,6 +32,13 @@ export class CategoriesService extends SafeComponent {
 
   public getCategory(id: number): Observable<Category> {
     const source$ = this.baseApolloService.query<{ id: number }, Category>(getCategoryQuery, (data) => data.getCategory, { id });
+    return source$;
+  }
+
+  public getPopular(): Observable<any[]> {
+    const source$ = this.baseApolloService.query<{}, Popular[]>(
+      getPopularQuery, (data) => data.getPopular
+    )
     return source$;
   }
 

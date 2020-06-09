@@ -71,6 +71,7 @@ import { PageTitleComponent } from './components/page-title/page-title.component
 import { CardRowComponent } from './components/card-row/card-row.component';
 import { CommentsSectionComponent } from './pages/card-details/comments-section/comments-section.component';
 import { CommentComponent } from './pages/card-details/comment/comment.component';
+import { HomeCategoriesComponent } from './components/home-categories/home-categories.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { CommentComponent } from './pages/card-details/comment/comment.component
     PageTitleComponent,
     CardRowComponent,
     CommentsSectionComponent,
-    CommentComponent
+    CommentComponent,
+    HomeCategoriesComponent
   ],
   imports: [
     AngularFireAuthModule,

@@ -7,10 +7,13 @@ import { CategoriesService } from 'src/app/shared/services';
 
 import {
   GET_ALL_CATEGORIES,
+  GET_POPULAR,
   REMOVE_CATEGORY,
   GetAllCategoriesSuccess,
   GetAllCategoriesError,
   GetAllCategories,
+  GetPopularCategoriesSuccess,
+  GetPopularCategoriesError,
   RemoveCategory,
   RemoveCategorySuccess,
   RemoveCategoryError
@@ -28,6 +31,14 @@ export class CategoriesEffects {
     ofType(GET_ALL_CATEGORIES),
     switchMap(_ => this.categoriesService.getAllCategories()),
     map(categories => new GetAllCategoriesSuccess({ categories })),
+    catchError(_ => of(new GetAllCategoriesError()))
+  );
+
+  @Effect()
+  getPopularCategories$: Observable<Action> = this.actions.pipe(
+    ofType(GET_POPULAR),
+    switchMap(_ => this.categoriesService.getPopular()),
+    map(popular => new GetPopularCategoriesSuccess({ popular })),
     catchError(_ => of(new GetAllCategoriesError()))
   );
 

@@ -1,7 +1,7 @@
 
 import { CategoriesState } from 'src/app/store/states/categories.state';
 import * as CategoriesActions from '../actions/categories.action';
-import { Category } from 'src/app/shared/models';
+import { Category, Popular } from 'src/app/shared/models';
 
 export function categoriesReducer(
   state: CategoriesState = new CategoriesState(),
@@ -27,6 +27,27 @@ export function categoriesReducer(
         ...state,
         loading: false,
         error: 'All Categories are not fetched',
+      }
+    }
+
+    case CategoriesActions.GET_POPULAR: {
+      return { ...state, loading: true, error: null };
+    }
+
+    case CategoriesActions.GET_POPULAR_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        popular: [...action.payload.popular]
+      };
+    }
+
+    case CategoriesActions.GET_POPULAR_ERROR: {
+      return {
+        ...state,
+        loading: false,
+        error: 'Popular Categories are not fetched',
       }
     }
 
