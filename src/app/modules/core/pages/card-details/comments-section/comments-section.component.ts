@@ -250,6 +250,7 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
         )
         .then(() => {
           this.loading = null;
+          this.store.dispatch(new GetAllCompanyComments({ companyId: this.cid }));
           this.answerForm.reset();
         })
         .finally(() => {
@@ -335,10 +336,10 @@ export class CommentsSectionComponent extends SafeComponent implements OnInit {
       .doc(id)
       .set(
         { answer: null },
-        {
-          merge: true
-        }
-      );
+        { merge: true }
+      ).then(() => {
+        this.store.dispatch(new GetAllCompanyComments({ companyId: this.cid }));
+      });
   }
 
   public toggleEdit(
