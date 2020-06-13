@@ -20,7 +20,7 @@
       <a routerLink="/sign-in">Login</a> to write a review
     </div>
 
-    <div *ngIf="user.roles.readonly">
+    <div *ngIf="user.uid && user.roles.readonly">
       Please, <a routerLink="/verify-email">verify email</a> to write a review
     </div>
   </article>
