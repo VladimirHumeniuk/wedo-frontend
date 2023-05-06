@@ -46,7 +46,7 @@
     "ngrx-store-logger": "^0.2.3",
     "ngx-autosize": "^1.7.5",
     "ngx-countdown": "^9.0.1",
-    "ngx-mapbox-gl": "^4.5.0",
+    "ngx-mapbox-gl": "^9.1.0",
     "ngx-mask": "^9.0.2",
     "ngx-pagination": "^5.0.0",
     "rxjs": "~6.5.5",
@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.3",
-    "@angular/cli": "~9.1.7",
+    "@angular/cli": "~16.0.0",
     "@angular/compiler-cli": "~9.1.7",
     "@angular/language-service": "~9.1.7",
     "@schematics/angular": "~9.1.7",
